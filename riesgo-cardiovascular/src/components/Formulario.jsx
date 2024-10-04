@@ -185,10 +185,11 @@ const Formulario = () => {
             renal,
             infarto,
             peso,
-            talla
+            talla,
+            cintura
         } = datosPaciente;
 
-        if (!edad || !cuil || !ubicacion || !peso || !talla || !genero || !diabetes || !fumador || !presionArterial || !hipertenso || !acv || !renal || !infarto) {
+        if (!edad || !cuil || !ubicacion || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !hipertenso || !acv || !renal || !infarto) {
             setError('Por favor, complete todos los campos obligatorios.');
             return false;
         }
@@ -250,8 +251,8 @@ const Formulario = () => {
             setError('La talla debe estar entre 130 y 230 cm.');
             return false;
         }
-        if (!talla || talla < 30 || talla > 300) {
-            setError('La talla debe estar entre 30 y 300 cm.');
+        if (!cintura || cintura < 30 || cintura > 300) {
+            setError('La cintura debe estar entre 30 y 300 cm.');
             return false;
         }
     
