@@ -53,8 +53,11 @@ const Formulario = () => {
     const validarCuil = (cuil) => {
         const soloNumeros = /^\d+$/; // Expresión regular para solo números
 
-        if (cuil.length < 7 || !soloNumeros.test(cuil)) {
+        // Solo validar si tiene al menos 7 dígitos
+        if (cuil.length > 0 && cuil.length < 7) {
             setError('El CUIL o DNI debe tener al menos 7 dígitos y contener solo números.');
+        } else if (cuil.length >= 7 && !soloNumeros.test(cuil)) {
+            setError('El CUIL o DNI debe contener solo números.');
         } else {
             setError('');
         }
@@ -976,7 +979,7 @@ const Formulario = () => {
                     Guardar Paciente
                     </button>
                 </div>
-                
+                <p><strong>Cuil o DNI:</strong> {datosPaciente.cuil}</p>
                 <p><strong>Edad:</strong> {datosPaciente.edad}</p>
                 <p><strong>Género:</strong> {datosPaciente.genero}</p>
                 <p><strong>Diabetes:</strong> {datosPaciente.diabetes}</p>
@@ -985,6 +988,7 @@ const Formulario = () => {
                 <p><strong>Colesterol:</strong> {datosPaciente.colesterol || 'No especificado'}</p>
                 <p><strong>Peso:</strong> {datosPaciente.peso || 'No especificado'}</p>
                 <p><strong>Talla:</strong> {datosPaciente.talla || 'No especificada'} cm</p>
+                <p><strong>Cintura:</strong> {datosPaciente.cintura || 'No especificada'} cm</p>
                 <p><strong>IMC:</strong> {datosPaciente.imc || 'No calculado'}</p>
                 <p><strong>Ubicación:</strong> {datosPaciente.ubicacion}</p>
                 <p><strong>Fecha de Registro:</strong> {datosPaciente.fechaRegistro}</p>
