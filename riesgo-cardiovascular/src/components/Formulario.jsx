@@ -413,21 +413,14 @@ const Formulario = () => {
                         className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                     >
                         <option value="">Seleccione una ubicación</option>
-                        {hasCardiologoRole ? (
-                            // Mostrar todas las ubicaciones si es administrador
-                            ubicaciones.map(ubicacion => (
-                                <option key={ubicacion.id} value={ubicacion.nombre}>
-                                    {ubicacion.nombre}
-                                </option>
-                            ))
-                        ) : (
-                            // Mostrar solo la ubicación asignada al usuario normal
-                            <option key={user.ubicacion?.id} value={user.ubicacion?.nombre}>
-                                {user.ubicacion?.nombre}
+                        {ubicaciones.map(ubicacion => (
+                            <option key={ubicacion.id} value={ubicacion.nombre}>
+                                {ubicacion.nombre}
                             </option>
-                        )}
+                        ))}
                     </select>
                 </div>
+
 
                 {/* Cuil */}
                 <div className="flex flex-col">
@@ -717,21 +710,14 @@ const Formulario = () => {
                                 className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                             >
                                 <option value="">Seleccione una ubicación</option>
-                                {hasCardiologoRole ? (
-                                    // Mostrar todas las ubicaciones si es administrador
-                                    ubicaciones.map(ubicacion => (
-                                        <option key={ubicacion.id} value={ubicacion.nombre}>
-                                            {ubicacion.nombre}
-                                        </option>
-                                    ))
-                                ) : (
-                                    // Mostrar solo la ubicación asignada al usuario normal
-                                    <option key={user.ubicacion?.id} value={user.ubicacion?.nombre}>
-                                        {user.ubicacion?.nombre}
+                                {ubicaciones.map(ubicacion => (
+                                    <option key={ubicacion.id} value={ubicacion.nombre}>
+                                        {ubicacion.nombre}
                                     </option>
-                                )}
+                                ))}
                             </select>
                         </div>
+
                             {/* Cuil */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">CUIL o DNI:</label>
