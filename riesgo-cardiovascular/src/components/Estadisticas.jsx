@@ -199,6 +199,7 @@ function Estadisticas() {
   const copiarDatos = (paciente) => {
     const datos = `
       ID: ${paciente.id}
+      CUIL o DNI: ${paciente.cuil}
       Edad: ${paciente.edad}
       Género: ${paciente.genero}
       Diabetes: ${paciente.diabetes}
