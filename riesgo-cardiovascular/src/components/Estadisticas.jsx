@@ -210,6 +210,7 @@ function Estadisticas() {
       IMC: ${paciente.imc}
       PESO: ${paciente.peso}
       TALLA: ${paciente.talla}
+      CINTURA: ${paciente.cintura}
       FECHA DE REGISTRO: ${paciente.fechaRegistro}
       HIPERTENSO: ${paciente.hipertenso}
       ACV: ${paciente.acv}
