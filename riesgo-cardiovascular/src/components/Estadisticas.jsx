@@ -440,9 +440,10 @@ function Estadisticas() {
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
                 <option value="">Todos</option>
-                <option value="menor-88">Menor de 88</option>
-                <option value="mayor-88-menor-102">Mayor de 88 y menor de 102</option>
-                <option value="mayor-102">Mayor de 102</option>
+                <option value="<88">Menor de 88</option>
+                <option value="88+">Mayor de 88</option>
+                <option value="<102">Menor de 102</option>
+                <option value="102+">Mayor de 102</option>
               </select>
             </div>
 
