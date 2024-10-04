@@ -443,7 +443,6 @@ const Formulario = () => {
                         className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                         style={{ appearance: 'none' }}
                     />
-                    {error && <p className="text-red-500 text-sm">{error}</p>}
                 </div>
 
                 {/* Edad */}
@@ -740,7 +739,6 @@ const Formulario = () => {
                                     className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                     style={{ appearance: 'none' }}
                                 />
-                                {error && <p className="text-red-500 text-sm">{error}</p>}
                             </div>
 
                             {/* Edad */}
