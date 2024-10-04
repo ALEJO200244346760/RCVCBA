@@ -20,6 +20,7 @@ function Estadisticas() {
     imc: '',
     infarto: '',
     acv: '',
+    cintura: '',
     hipertenso: '',
   });
   const [nivelColesterolConocido, setNivelColesterolConocido] = useState('todos'); // Estado para el conocimiento del nivel de colesterol
@@ -100,6 +101,7 @@ function Estadisticas() {
   const aplicarFiltros = () => {
     const filtrados = pacientes.filter(paciente => {
       const edadFiltro = filtros.edad === '' ? null : filtros.edad;
+      const cinturaFiltro = filtros.cintura === '' ? null : filtros.cintura;
       const presionArterialFiltro = filtros.presionArterial === '' ? null : filtros.presionArterial;
       const nivelColesterolFiltro = filtros.nivelColesterol === '' ? null : Number(filtros.nivelColesterol);
 
@@ -123,9 +125,21 @@ function Estadisticas() {
           }
         }
 
+        let cinturaValida = true;
+        if (cinturaFiltro) {
+          const [min, max] = edadFiltro.split('-').map(Number);
+          if (isNaN(max)) {
+            // Si max es NaN, significa que es el rango "71+"
+            edadValida = paciente.edad > 102;
+          } else {
+            edadValida = paciente.edad >= min && paciente.edad <= (max || Number.MAX_VALUE);
+          }
+        }
+
         // Restante lógica de filtrado
         return (
           edadValida &&
+          cinturaValida &&
         (filtros.genero === '' || paciente.genero.toLowerCase() === filtros.genero.toLowerCase()) &&
         (filtros.diabetes === '' || paciente.diabetes.toLowerCase() === filtros.diabetes.toLowerCase()) &&
         (filtros.fumador === '' || paciente.fumador.toLowerCase() === filtros.fumador.toLowerCase()) &&
@@ -417,6 +431,21 @@ function Estadisticas() {
               </select>
 
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Cintura</label>
+              <select
+                name="cintura"
+                value={filtros.cintura || ''}
+                onChange={manejarCambio}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option value="">Todos</option>
+                <option value="menor-88">Menor de 88</option>
+                <option value="mayor-88-menor-102">Mayor de 88 y menor de 102</option>
+                <option value="mayor-102">Mayor de 102</option>
+              </select>
+            </div>
+
           </div>
 
           <button
@@ -488,6 +517,7 @@ function Estadisticas() {
                 { label: "Fecha de Registro", value: paciente.fechaRegistro },
                 { label: "Hipertenso", value: paciente.hipertenso },
                 { label: "ACV", value: paciente.acv },
+                { label: "Cintura", value: paciente.cintura },
                 { label: "RENAL", value: paciente.renal },
                 { label: "Infarto", value: paciente.infarto },
                 { label: "Hipertensión Arterial", value: paciente.hipertensionArterial !== null ? paciente.hipertensionArterial : 'N/A' },
