@@ -127,12 +127,14 @@ function Estadisticas() {
 
         let cinturaValida = true;
         if (cinturaFiltro) {
-          const [min, max] = edadFiltro.split('-').map(Number);
-          if (isNaN(max)) {
-            // Si max es NaN, significa que es el rango "71+"
-            edadValida = paciente.edad > 102;
-          } else {
-            edadValida = paciente.edad >= min && paciente.edad <= (max || Number.MAX_VALUE);
+          if (cinturaFiltro === "<88") {
+            cinturaValida = paciente.cintura < 88;
+          } else if (cinturaFiltro === "88+") {
+            cinturaValida = paciente.cintura > 88;
+          } else if (cinturaFiltro === "<102") {
+            cinturaValida = paciente.cintura < 102;
+          } else if (cinturaFiltro === "102+") {
+            cinturaValida = paciente.cintura > 102;
           }
         }
 

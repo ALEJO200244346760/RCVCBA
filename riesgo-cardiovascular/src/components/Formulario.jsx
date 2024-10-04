@@ -129,6 +129,9 @@ const Formulario = () => {
         if (name === 'talla') {
             validarCampos(value);
         }
+        if (name === 'cintura') {
+            validarCampos(value);
+        }
     };
 
     const manejarSeleccionColesterol = (value) => {
@@ -242,6 +245,10 @@ const Formulario = () => {
         }
         if (!talla || talla < 130 || talla > 230) {
             setError('La talla debe estar entre 130 y 230 cm.');
+            return false;
+        }
+        if (!talla || talla < 30 || talla > 300) {
+            setError('La talla debe estar entre 30 y 300 cm.');
             return false;
         }
     
@@ -680,6 +687,7 @@ const Formulario = () => {
                                 <p><strong>Colesterol:</strong> {pacienteEncontrado.colesterol}</p>
                                 <p><strong>Peso:</strong> {pacienteEncontrado.peso}</p>
                                 <p><strong>Talla:</strong> {pacienteEncontrado.talla}</p>
+                                <p><strong>Cintura:</strong> {pacienteEncontrado.cintura}</p>
                                 <p><strong>IMC:</strong> {pacienteEncontrado.imc}</p>
                                 <p><strong>Hipertenso:</strong> {pacienteEncontrado.hipertenso}</p>
                                 <p><strong>Infarto:</strong> {pacienteEncontrado.infarto}</p>
