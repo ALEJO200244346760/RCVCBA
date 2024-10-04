@@ -35,7 +35,7 @@ function Estadisticas() {
   };
 
   // Configuración de la URL base para la API
-  const apiBaseURL = 'http://localhost:3000';
+  const apiBaseURL = 'https://rcvcba-production.up.railway.app';
 
   // Hook useEffect para obtener datos de pacientes desde la API
   useEffect(() => {
