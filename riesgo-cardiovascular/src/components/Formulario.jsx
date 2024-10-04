@@ -445,6 +445,18 @@ const Formulario = () => {
                         className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
+                
+                {/* Cintura */}
+                <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Cintura (cm):</label>
+                                <input
+                                    type="number"
+                                    name="cintura"
+                                    value={datosPaciente.cintura}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                            </div>
 
                 {/* Hipertenso */}
                 <div className="flex flex-col">
@@ -732,6 +744,18 @@ const Formulario = () => {
                                     type="number"
                                     name="talla"
                                     value={datosPaciente.talla}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                            </div>
+
+                            {/* Cintura */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Cintura (cm):</label>
+                                <input
+                                    type="number"
+                                    name="cintura"
+                                    value={datosPaciente.cintura}
                                     onChange={manejarCambio}
                                     className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                 />
