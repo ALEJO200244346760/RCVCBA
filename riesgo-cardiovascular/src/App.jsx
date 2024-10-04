@@ -8,7 +8,6 @@ import TomarPresion from './components/TomarPresion';
 import Login from './components/Login';
 import Register from './components/Register';
 import AdminPanel from './components/AdminPanel';
-import Rcv from './components/Rcv';
 import RoleProtectedRoute from './components/RoleProtectedRoute';
 import { useAuth } from './context/AuthContext';
 
@@ -23,17 +22,11 @@ function App() {
     <Router>
       <Header />
       <Routes>
-        <Route 
-          path="/" 
-          element={
-            (token && (isCardiologo || isCardiologia)) 
-              ? <Formulario /> 
-              : <Navigate to="/rcv" />
-          } 
-        />
-        <Route path="/rcv" element={<Rcv />} />
+        {/* Página principal es Formulario para todos */}
+        <Route path="/" element={<Formulario />} />
+
         <Route path="/tomarPresion" element={<TomarPresion />} />
-        
+
         {/* Permitir acceso solo a CARDIOLOGO para Estadisticas */}
         <Route 
           path="/estadisticas" 
