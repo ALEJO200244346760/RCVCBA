@@ -466,8 +466,6 @@ function Estadisticas() {
       </div>
 
       {/* Gráficos */}
-      <EstadisticasGraficos pacientesFiltrados={pacientesFiltrados} />
-
       {/* Pestaña para los gráficos */}
       <button 
         onClick={toggleGraficos} 
