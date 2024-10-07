@@ -199,23 +199,22 @@ function Estadisticas() {
   const copiarDatos = (paciente) => {
     const datos = `
       ID: ${paciente.id}
+      FECHA DE REGISTRO: ${paciente.fechaRegistro}
       CUIL o DNI: ${paciente.cuil}
       Edad: ${paciente.edad}
       Género: ${paciente.genero}
+      HIPERTENSO: ${paciente.hipertenso}
       Diabetes: ${paciente.diabetes}
       Fumador: ${paciente.fumador}
       Presión Arterial: ${paciente.presionArterial}
       Colesterol: ${paciente.colesterol}
-      Nivel de Riesgo: ${paciente.nivelRiesgo}
-      Ubicación: ${paciente.ubicacion}
       IMC: ${paciente.imc}
       PESO: ${paciente.peso}
       TALLA: ${paciente.talla}
       CINTURA: ${paciente.cintura}
-      FECHA DE REGISTRO: ${paciente.fechaRegistro}
-      HIPERTENSO: ${paciente.hipertenso}
       ACV: ${paciente.acv}
       INFARTO: ${paciente.infarto}
+      Nivel de Riesgo: ${paciente.nivelRiesgo}
       NOTIFICACION DE RIESGO: ${paciente.notificacionRiesgo}
       HIPERTENCION ARTERIAL: ${paciente.hipertensionArterial}
       MEDICACION PRESCRIPCION: ${paciente.medicacionPrescripcion}
