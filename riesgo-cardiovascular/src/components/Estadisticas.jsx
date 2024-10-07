@@ -516,6 +516,8 @@ function Estadisticas() {
             {mostrarDetalles[paciente.id] && (
               <div className="mt-0">
               {[
+                { label: "FUMA", value: paciente.fumador },
+                { label: "COLESTEROL", value: paciente.colesterol },
                 { label: "IMC", value: paciente.imc },
                 { label: "Peso", value: paciente.peso },
                 { label: "Talla", value: paciente.talla },

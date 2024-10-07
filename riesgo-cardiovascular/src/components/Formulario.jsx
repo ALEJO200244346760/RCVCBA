@@ -415,24 +415,7 @@ const Formulario = () => {
         ) : esPrimeraVisita ? (
             <form className="w-full space-y-6">
                 <h1 className="text-3xl font-bold mb-6">Formulario de Evaluación de Riesgo Cardiovascular</h1>
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Ubicación:</label>
-                    <select
-                        name="ubicacion"
-                        value={datosPaciente.ubicacion}
-                        onChange={manejarCambio}
-                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                        <option value="">Seleccione una ubicación</option>
-                        {ubicaciones.map(ubicacion => (
-                            <option key={ubicacion.id} value={ubicacion.nombre}>
-                                {ubicacion.nombre}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-
+                
                 {/* Cuil */}
                 <div className="flex flex-col">
                     <label className="text-sm font-medium text-gray-700">CUIL o DNI:</label>
@@ -508,55 +491,6 @@ const Formulario = () => {
                         ))}
                     </div>
                 </div>
-
-                {/* Presión Arterial */}
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
-                    <input
-                        type="number"
-                        name="presionArterial"
-                        value={datosPaciente.presionArterial}
-                        onChange={manejarCambio}
-                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                        style={{ appearance: 'none' }}
-                    />
-                </div>
-
-                {/* Peso */}
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Peso (kg):</label>
-                    <input
-                        type="number"
-                        name="peso"
-                        value={datosPaciente.peso}
-                        onChange={manejarCambio}
-                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                    />
-                </div>
-
-                {/* Talla */}
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Talla (cm):</label>
-                    <input
-                        type="number"
-                        name="talla"
-                        value={datosPaciente.talla}
-                        onChange={manejarCambio}
-                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                    />
-                </div>
-
-                {/* Cintura */}
-                <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Cintura (cm):</label>
-                                <input
-                                    type="number"
-                                    name="cintura"
-                                    value={datosPaciente.cintura}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                            </div>
 
                 {/* Hipertenso */}
                 <div className="flex flex-col">
@@ -652,6 +586,56 @@ const Formulario = () => {
                         />
                     )}
                 </div>
+
+                {/* Presión Arterial */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+                    <input
+                        type="number"
+                        name="presionArterial"
+                        value={datosPaciente.presionArterial}
+                        onChange={manejarCambio}
+                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        style={{ appearance: 'none' }}
+                    />
+                </div>
+
+                {/* Peso */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">Peso (kg):</label>
+                    <input
+                        type="number"
+                        name="peso"
+                        value={datosPaciente.peso}
+                        onChange={manejarCambio}
+                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    />
+                </div>
+
+                {/* Talla */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">Talla (cm):</label>
+                    <input
+                        type="number"
+                        name="talla"
+                        value={datosPaciente.talla}
+                        onChange={manejarCambio}
+                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    />
+                </div>
+
+                {/* Cintura */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">Cintura (cm):</label>
+                    <input
+                    type="number"
+                    name="cintura"
+                    value={datosPaciente.cintura}
+                    onChange={manejarCambio}
+                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    />
+                </div>
+
                 <button
                     type="button"
                     onClick={calcularRiesgo}
@@ -712,23 +696,8 @@ const Formulario = () => {
                     <div className="flex-1 bg-gray-100 p-4 rounded-md">
                         <h3 className="text-lg font-bold">Formulario de Registro:</h3>
                         <form className="w-full space-y-6">
-                        <div className="flex flex-col">
-                            <label className="text-sm font-medium text-gray-700">Ubicación:</label>
-                            <select
-                                name="ubicacion"
-                                value={datosPaciente.ubicacion}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            >
-                                <option value="">Seleccione una ubicación</option>
-                                {ubicaciones.map(ubicacion => (
-                                    <option key={ubicacion.id} value={ubicacion.nombre}>
-                                        {ubicacion.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
+                            <h1 className="text-3xl font-bold mb-6">Formulario de Evaluación de Riesgo Cardiovascular</h1>
+                            
                             {/* Cuil */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">CUIL o DNI:</label>
@@ -805,58 +774,9 @@ const Formulario = () => {
                                 </div>
                             </div>
 
-                            {/* Presión Arterial */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
-                                <input
-                                    type="number"
-                                    name="presionArterial"
-                                    value={datosPaciente.presionArterial}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                    style={{ appearance: 'none' }}
-                                />
-                            </div>
-
-                            {/* Peso */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Peso (kg):</label>
-                                <input
-                                    type="number"
-                                    name="peso"
-                                    value={datosPaciente.peso}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                            </div>
-
-                            {/* Talla */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Talla (cm):</label>
-                                <input
-                                    type="number"
-                                    name="talla"
-                                    value={datosPaciente.talla}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                            </div>
-
-                            {/* Cintura */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Cintura (cm):</label>
-                                <input
-                                    type="number"
-                                    name="cintura"
-                                    value={datosPaciente.cintura}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                            </div>
-
                             {/* Hipertenso */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Es hipertenso o toma medicamentos para la hipertension?</label>
+                                <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
                                 <div className="flex space-x-2 mb-2">
                                     {['Sí', 'No'].map(option => (
                                         <button
@@ -910,14 +830,14 @@ const Formulario = () => {
                                 <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad Renal Crónica?</label>
                                 <div className="flex space-x-2 mb-2">
                                     {['Sí', 'No'].map(option => (
-                                        <button
-                                            key={option}
-                                            type="button"
-                                            onClick={() => setDatosPaciente({ ...datosPaciente, renal : option })}
-                                            className={`p-2 border rounded-md ${datosPaciente.renal === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-                                        >
-                                            {option}
-                                        </button>
+                                    <button
+                                    key={option}
+                                    type="button"
+                                    onClick={() => setDatosPaciente({ ...datosPaciente, renal : option })}
+                                    className={`p-2 border rounded-md ${datosPaciente.renal === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                                    >
+                                    {option}
+                                    </button>
                                     ))}
                                 </div>
                             </div>
@@ -947,6 +867,55 @@ const Formulario = () => {
                                         style={{ appearance: 'none' }}
                                     />
                                 )}
+                            </div>
+
+                            {/* Presión Arterial */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+                                <input
+                                    type="number"
+                                    name="presionArterial"
+                                    value={datosPaciente.presionArterial}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    style={{ appearance: 'none' }}
+                                />
+                            </div>
+
+                            {/* Peso */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Peso (kg):</label>
+                                <input
+                                    type="number"
+                                    name="peso"
+                                    value={datosPaciente.peso}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                            </div>
+
+                            {/* Talla */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Talla (cm):</label>
+                                <input
+                                    type="number"
+                                    name="talla"
+                                    value={datosPaciente.talla}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                            </div>
+
+                            {/* Cintura */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Cintura (cm):</label>
+                                <input
+                                type="number"
+                                name="cintura"
+                                value={datosPaciente.cintura}
+                                onChange={manejarCambio}
+                                className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                />
                             </div>
                             <button type="button" onClick={calcularRiesgo} className="w-full py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600">
                                 Calcular Riesgo
