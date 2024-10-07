@@ -214,10 +214,6 @@ const Formulario = () => {
             setError('Por favor, indique si es fumador.');
             return false;
         }
-        if (!ubicacion) {
-            setError('Por favor, seleccione una ubicación.');
-            return false;
-        }
         if (!presionArterial || presionArterial < 80 || presionArterial > 250) {
             setError('La presión arterial debe estar entre 80 y 250.');
             return false;
