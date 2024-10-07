@@ -196,6 +196,7 @@ function Estadisticas() {
         return '';
     }
   };
+  
   const toggleGraficos = () => {
     setMostrarGraficos(prev => !prev);
   };

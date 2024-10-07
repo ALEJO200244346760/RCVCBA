@@ -178,7 +178,6 @@ const Formulario = () => {
             diabetes,
             fumador,
             presionArterial,
-            ubicacion,
             colesterol,
             hipertenso,
             acv,
@@ -189,7 +188,7 @@ const Formulario = () => {
             cintura
         } = datosPaciente;
 
-        if (!edad || !cuil || !ubicacion || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !hipertenso || !acv || !renal || !infarto) {
+        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !hipertenso || !acv || !renal || !infarto) {
             setError('Por favor, complete todos los campos obligatorios.');
             return false;
         }
