@@ -469,51 +469,49 @@ function Estadisticas() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {pacientesFiltrados.map(paciente => (
-          <div key={paciente.id} className="bg-white shadow-md rounded-lg p-4">
-            {/* Datos siempre visibles */}
-            <div className="flex justify-between items-start mb-2">
-              <div className="text-sm font-medium text-gray-900">ID:</div>
-              <div className="text-sm text-gray-500">{paciente.id}</div>
+      {pacientesFiltrados.slice().reverse().map(paciente => ( // Aquí usamos slice() para no mutar el array original
+        <div key={paciente.id} className="bg-white shadow-md rounded-lg p-4">
+          {/* Datos siempre visibles */}
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">ID:</div>
+            <div className="text-sm text-gray-500">{paciente.id}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">Edad:</div>
+            <div className="text-sm text-gray-500">{paciente.edad}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">CUIL/DNI:</div>
+            <div className="text-sm text-gray-500">{paciente.cuil}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">Presión Arterial:</div>
+            <div className="text-sm text-gray-500">{paciente.presionArterial}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">Peso:</div>
+            <div className="text-sm text-gray-500">{paciente.peso}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">Talla:</div>
+            <div className="text-sm text-gray-500">{paciente.talla}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">Ubicación:</div>
+            <div className="text-sm text-gray-500">{paciente.ubicacion}</div>
+          </div>
+          <div className="flex justify-between items-start mb-1">
+            <div className="text-sm font-medium text-gray-900">Nivel de Riesgo:</div>
+            <div className="text-sm text-gray-500">
+              <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${obtenerColorRiesgo(paciente.nivelRiesgo)}`}>
+                {paciente.nivelRiesgo}
+              </span>
             </div>
-            <div className="flex justify-between items-start mb-2">
-              <div className="text-sm font-medium text-gray-900">Edad:</div>
-              <div className="text-sm text-gray-500">{paciente.edad}</div>
-            </div>
-            <div className="flex justify-between items-start mb-2">
-              <div className="text-sm font-medium text-gray-900">CUIL/DNI:</div>
-              <div className="text-sm text-gray-500">{paciente.cuil}</div>
-            </div>
-            <div className="flex justify-between items-start mb-2">
-                  <div className="text-sm font-medium text-gray-900">Presión Arterial:</div>
-                  <div className="text-sm text-gray-500">{paciente.presionArterial}</div>
-            </div>
-            <div className="flex justify-between items-start mb-2">
-              <div className="text-sm font-medium text-gray-900">Peso:</div>
-              <div className="text-sm text-gray-500">{paciente.peso}</div>
-            </div>
-            <div className="flex justify-between items-start mb-2">
-              <div className="text-sm font-medium text-gray-900">Talla:</div>
-              <div className="text-sm text-gray-500">{paciente.talla}</div>
-            </div>
-            <div className="flex justify-between items-start mb-2">
-              <div className="text-sm font-medium text-gray-900">Ubicación:</div>
-              <div className="text-sm text-gray-500">{paciente.ubicacion}</div>
-            </div>
-            <div className="flex justify-between items-start mb-1">
-              <div className="text-sm font-medium text-gray-900">Nivel de Riesgo:</div>
-              <div className="text-sm text-gray-500">
-                <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${obtenerColorRiesgo(paciente.nivelRiesgo)}`}>
-                  {paciente.nivelRiesgo}
-                </span>
-              </div>
-            </div>
-            
+          </div>
 
-
-            {/* Mostrar detalles adicionales solo si están activados */}
-            {mostrarDetalles[paciente.id] && (
-              <div className="mt-0">
+          {/* Mostrar detalles adicionales solo si están activados */}
+          {mostrarDetalles[paciente.id] && (
+            <div className="mt-0">
               {[
                 { label: "FUMA", value: paciente.fumador },
                 { label: "COLESTEROL", value: paciente.colesterol },
@@ -533,33 +531,34 @@ function Estadisticas() {
                 { label: "Tabaquismo", value: paciente.tabaquismo !== null ? paciente.tabaquismo : 'N/A' },
                 { label: "Laboratorio", value: paciente.laboratorio !== null ? paciente.laboratorio : 'N/A' },
               ].map(({ label, value }) => (
-                <div className="flex justify-between mb-2">
+                <div className="flex justify-between mb-2" key={label}>
                   <div className="w-2/5 text-sm font-medium text-gray-900">{label}:</div>
                   <div className="w-2/5 text-sm text-gray-500 text-right">{value}</div>
                 </div>
               ))}
             </div>
-            )}
+          )}
 
-            {/* Botón "Mostrar más" o "Mostrar menos" */}
-            <button onClick={() => toggleDetalles(paciente.id)} className="text-indigo-600 hover:text-indigo-900 mt-2">
-              {mostrarDetalles[paciente.id] ? 'Mostrar menos' : 'Mostrar más'}
+          {/* Botón "Mostrar más" o "Mostrar menos" */}
+          <button onClick={() => toggleDetalles(paciente.id)} className="text-indigo-600 hover:text-indigo-900 mt-2">
+            {mostrarDetalles[paciente.id] ? 'Mostrar menos' : 'Mostrar más'}
+          </button>
+
+          <div className="flex justify-end mt-4">
+            <button onClick={() => editarPaciente(paciente.id)} className="text-indigo-600 hover:text-indigo-900 mr-4">
+              Editar
             </button>
-
-            <div className="flex justify-end mt-4">
-              <button onClick={() => editarPaciente(paciente.id)} className="text-indigo-600 hover:text-indigo-900 mr-4">
-                Editar
-              </button>
-              <button onClick={() => eliminarPaciente(paciente.id)} className="text-red-600 hover:text-red-900 mr-4">
-                Eliminar
-              </button>
-              <button onClick={() => copiarDatos(paciente)} className="text-blue-600 hover:text-blue-900">
-                Copiar
-              </button>
-            </div>
+            <button onClick={() => eliminarPaciente(paciente.id)} className="text-red-600 hover:text-red-900 mr-4">
+              Eliminar
+            </button>
+            <button onClick={() => copiarDatos(paciente)} className="text-blue-600 hover:text-blue-900">
+              Copiar
+            </button>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
+    </div>
+
     </div>
 );
 }
