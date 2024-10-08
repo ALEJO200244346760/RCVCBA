@@ -196,7 +196,7 @@ function Estadisticas() {
         return '';
     }
   };
-  
+
   const toggleGraficos = () => {
     setMostrarGraficos(prev => !prev);
   };
@@ -333,11 +333,11 @@ function Estadisticas() {
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   <option value="">Seleccione un Nivel</option>
-                  <option value="4">Muy Bajo</option>
-                  <option value="5">Bajo</option>
-                  <option value="6">Moderado</option>
-                  <option value="7">Alto</option>
-                  <option value="8">Muy Alto</option>
+                  <option value="4">Muy Bajo (&lt;154) </option>
+                  <option value="5">Bajo (155 - 192)</option>
+                  <option value="6">Moderado (193 - 231)</option>
+                  <option value="7">Alto (232 - 269)</option>
+                  <option value="8">Muy Alto (&gt;270)</option>
                 </select>
               )}
             </div>
