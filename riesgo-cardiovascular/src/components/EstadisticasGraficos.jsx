@@ -160,6 +160,22 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
     }]
   };
 
+    // Datos para Cintura
+    const cintura = pacientesFiltrados.reduce((acc, paciente) => {
+      acc[paciente.cintura] = (acc[paciente.cintura] || 0) + 1;
+      return acc;
+    }, {});
+    const dataCintura = {
+      labels: Object.keys(cintura),
+      datasets: [{
+        label: 'Cantidad',
+        data: Object.values(cintura),
+        backgroundColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#B91C1C'],
+        borderColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#B91C1C'],
+        borderWidth: 1
+      }]
+    };
+
   // Agrupación de IMC
   const imcCategorias = ['<18.5', '18.5-24.9', '25-29.9', '30-34.9', '35-39.9', '40+'];
   const conteoIMC = imcCategorias.reduce((acc, categoria) => {
@@ -190,7 +206,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
   return (
     <div>
       <div style={{ width: '30%', display: 'inline-block' }}>
-        <h3>Edad</h3>
+        <h3 className="text-xl font-semibold mb-8">Edad</h3>
         <Bar data={dataEdad} options={{ 
           responsive: true,
           plugins: { 
@@ -203,7 +219,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3>Presión Arterial</h3>
+        <h3 className="text-xl font-semibold mb-8">Presión Arterial</h3>
         <Bar data={dataPresion} options={{ 
           responsive: true,
           plugins: { 
@@ -219,7 +235,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block' }}>
-        <h3>Colesterol</h3>
+        <h3 className="text-xl font-semibold mb-8">Colesterol</h3>
         <Bar data={dataColesterol} options={{ 
           responsive: true,
           plugins: { 
@@ -234,8 +250,8 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
           }
         }} />
       </div>
-      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3>Nivel de Riesgo</h3>
+      <div>
+        <h3 className="text-xl font-semibold mb-8">Nivel de Riesgo</h3>
         <Bar data={dataRiesgo} options={{ 
           responsive: true,
           plugins: { 
@@ -245,13 +261,13 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
           scales: {
             y: { 
               ticks: { stepSize: 1 },
-              suggestedMax: 100
+              suggestedMax: 10
             }
           }
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block' }}>
-        <h3>Género</h3>
+        <h3 className="text-xl font-semibold mb-8">Género</h3>
         <Pie data={dataGenero} options={{ 
           responsive: true,
           plugins: { 
@@ -261,7 +277,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3>Diabetes</h3>
+        <h3 className="text-xl font-semibold mb-8">Diabetes</h3>
         <Pie data={dataDiabetes} options={{ 
           responsive: true,
           plugins: { 
@@ -271,7 +287,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block' }}>
-        <h3>Fumador</h3>
+        <h3 className="text-xl font-semibold mb-8">Fumador</h3>
         <Pie data={dataFumador} options={{ 
           responsive: true,
           plugins: { 
@@ -281,7 +297,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3>Ubicación</h3>
+        <h3 className="text-xl font-semibold mb-8">Ubicación</h3>
         <Pie data={dataUbicacion} options={{ 
           responsive: true,
           plugins: { 
@@ -290,8 +306,18 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
           }
         }} />
       </div>
+      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
+        <h3 className="text-xl font-semibold mb-8">Cintura</h3>
+        <Pie data={dataCintura} options={{ 
+          responsive: true,
+          plugins: { 
+            legend: { display: true }, 
+            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(ubicaciones)[tooltipItem.label]}%)` } }
+          }
+        }} />
+      </div>
       <div>
-          <h2 className="text-xl font-semibold mb-4">Distribución de IMC</h2>
+          <h2 className="text-xl font-semibold mb-8">Distribución de IMC</h2>
           <Bar data={dataIMC} />
       </div>
     </div>
