@@ -14,6 +14,8 @@ public class Paciente {
     @Column
     private String ubicacion;
     @Column
+    private String telefono;
+    @Column
     private String cuil;
     @Column
     private String edad;

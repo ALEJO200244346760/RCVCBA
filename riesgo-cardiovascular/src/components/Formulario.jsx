@@ -195,7 +195,7 @@ const Formulario = () => {
     
         // Verificar que todos los campos obligatorios tengan respuesta
         if (!cuil || cuil.length < 7) {
-            setError('El CUIL o DNI debe tener al menos 7 dígitos.');
+            setError('El DNI debe tener al menos 7 dígitos.');
             return false;
         }
         if (!edad || edad < 1 || edad > 120) {
@@ -413,7 +413,7 @@ const Formulario = () => {
                 
                 {/* Cuil */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">CUIL o DNI:</label>
+                    <label className="text-sm font-medium text-gray-700">DNI:</label>
                     <input
                         type="text" // Cambiado a texto para permitir más de 9 dígitos
                         name="cuil"
@@ -421,6 +421,18 @@ const Formulario = () => {
                         onChange={manejarCambio}
                         className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                         style={{ appearance: 'none' }}
+                    />
+                </div>
+
+                {/* Telefono */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">Télefono:</label>
+                    <input
+                        type="number"
+                        name="telefono"
+                        value={datosPaciente.telefono}
+                        onChange={manejarCambio}
+                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                     />
                 </div>
 
@@ -659,13 +671,13 @@ const Formulario = () => {
                         {pacienteEncontrado ? (
                             <>
                                 <p><strong>Edad:</strong> {pacienteEncontrado.edad}</p>
-                                <p><strong>CUIL:</strong> {pacienteEncontrado.cuil}</p>
+                                <p><strong>DNI:</strong> {pacienteEncontrado.cuil}</p>
                                 <p><strong>Ubicación:</strong> {pacienteEncontrado.ubicacion}</p>
                                 <p><strong>Fecha registro:</strong> {pacienteEncontrado.fechaRegistro}</p>
                                 <p><strong>Género:</strong> {pacienteEncontrado.genero}</p>
                                 <p><strong>Diabetes:</strong> {pacienteEncontrado.diabetes}</p>
                                 <p><strong>Fumador:</strong> {pacienteEncontrado.fumador}</p>
-                                <p><strong>Presión:</strong> {pacienteEncontrado.presionArterial}</p>
+                                <p><strong>Presión Arterial sistólica:</strong> {pacienteEncontrado.presionArterial}</p>
                                 <p><strong>Colesterol:</strong> {pacienteEncontrado.colesterol}</p>
                                 <p><strong>Peso:</strong> {pacienteEncontrado.peso}</p>
                                 <p><strong>Talla:</strong> {pacienteEncontrado.talla}</p>
@@ -695,7 +707,7 @@ const Formulario = () => {
                             
                             {/* Cuil */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">CUIL o DNI:</label>
+                                <label className="text-sm font-medium text-gray-700">DNI:</label>
                                 <input
                                     type="text" // Cambiado a texto para permitir más de 9 dígitos
                                     name="cuil"
@@ -703,6 +715,18 @@ const Formulario = () => {
                                     onChange={manejarCambio}
                                     className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                     style={{ appearance: 'none' }}
+                                />
+                            </div>
+
+                            {/* Telefono */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Télefono:</label>
+                                <input
+                                    type="number"
+                                    name="telefono"
+                                    value={datosPaciente.telefono}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                 />
                             </div>
 
@@ -947,7 +971,7 @@ const Formulario = () => {
                 <p><strong>Género:</strong> {datosPaciente.genero}</p>
                 <p><strong>Diabetes:</strong> {datosPaciente.diabetes}</p>
                 <p><strong>Fumador:</strong> {datosPaciente.fumador}</p>
-                <p><strong>Presión Arterial:</strong> {datosPaciente.presionArterial}</p>
+                <p><strong>Presión Arterial sistólica:</strong> {datosPaciente.presionArterial}</p>
                 <p><strong>Colesterol:</strong> {datosPaciente.colesterol || 'No especificado'}</p>
                 <p><strong>Peso:</strong> {datosPaciente.peso || 'No especificado'}</p>
                 <p><strong>Talla:</strong> {datosPaciente.talla || 'No especificada'} cm</p>

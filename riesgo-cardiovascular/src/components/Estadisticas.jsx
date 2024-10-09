@@ -205,7 +205,8 @@ function Estadisticas() {
     const datos = `
       ID: ${paciente.id}
       FECHA DE REGISTRO: ${paciente.fechaRegistro}
-      CUIL o DNI: ${paciente.cuil}
+      DNI: ${paciente.cuil}
+      TELEFONO: ${paciente.telefono}
       Edad: ${paciente.edad}
       Género: ${paciente.genero}
       HIPERTENSO: ${paciente.hipertenso}
@@ -499,7 +500,11 @@ function Estadisticas() {
             <div className="text-sm text-gray-500">{paciente.edad}</div>
           </div>
           <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">CUIL/DNI:</div>
+            <div className="text-sm font-medium text-gray-900">TELEFONO:</div>
+            <div className="text-sm text-gray-500">{paciente.telefono}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">DNI:</div>
             <div className="text-sm text-gray-500">{paciente.cuil}</div>
           </div>
           <div className="flex justify-between items-start mb-2">

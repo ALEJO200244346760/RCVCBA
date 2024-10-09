@@ -1,6 +1,7 @@
 // ConstFormulario.jsx
 export const DatosPacienteInicial = {
     cuil: '',
+    telefono: '',
     edad: '',
     genero: '',
     diabetes: '',
