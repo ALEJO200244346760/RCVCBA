@@ -18,6 +18,7 @@ export const DatosPacienteInicial = {
     infarto: '',
     acv: '',
     renal: '',
+    doctor: '',
     notificacionRiesgo: [],
     hipertensionArterial: [],
     medicacionPrescripcion: [],

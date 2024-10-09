@@ -660,6 +660,23 @@ const Formulario = () => {
                     />
                 </div>
 
+                {/* Doctor */}
+                <div className="flex flex-col mt-4">
+                                <label className="text-sm font-medium text-gray-700">Doctor:</label>
+                                <div className="flex justify-end space-x-2">
+                                    {['doctor1', 'doctor2', 'doctor3'].map(doctor => (
+                                        <button
+                                            key={doctor}
+                                            type="button"
+                                            className={`p-2 border rounded ${datosPaciente.doctor === doctor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, doctor }))}
+                                        >
+                                            {doctor.charAt(0).toUpperCase() + doctor.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
                 <button
                     type="button"
                     onClick={calcularRiesgo}
@@ -970,6 +987,24 @@ const Formulario = () => {
                                 className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                 />
                             </div>
+
+                            {/* Doctor */}
+                            <div className="flex flex-col mt-4">
+                                <label className="text-sm font-medium text-gray-700">Doctor:</label>
+                                <div className="flex justify-end space-x-2">
+                                    {['doctor1', 'doctor2', 'doctor3'].map(doctor => (
+                                        <button
+                                            key={doctor}
+                                            type="button"
+                                            className={`p-2 border rounded ${datosPaciente.doctor === doctor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, doctor }))}
+                                        >
+                                            {doctor.charAt(0).toUpperCase() + doctor.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
                             <button type="button" onClick={calcularRiesgo} className="w-full py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600">
                                 Calcular Riesgo
                             </button>
