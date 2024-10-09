@@ -206,7 +206,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
 
     // Datos para Cintura
     const cinturasMasculino = pacientesFiltrados.reduce((acc, paciente) => {
-      if (paciente.sexo === 'masculino') {
+      if (paciente.genero === 'masculino') {
         const rango = paciente.cintura > 102 ? 'Más de 102' : 'Menos de 102';
         acc[rango] = (acc[rango] || 0) + 1;
       }
@@ -214,7 +214,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
     }, {});
 
     const cinturasFemenino = pacientesFiltrados.reduce((acc, paciente) => {
-      if (paciente.sexo === 'femenino') {
+      if (paciente.genero === 'femenino') {
         const rango = paciente.cintura > 88 ? 'Más de 88' : 'Menos de 88';
         acc[rango] = (acc[rango] || 0) + 1;
       }
