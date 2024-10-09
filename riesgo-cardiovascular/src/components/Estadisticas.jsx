@@ -553,6 +553,8 @@ function Estadisticas() {
                 { label: "Medicaciones Prescripción", value: paciente.medicacionPrescripcion !== null ? paciente.medicacionPrescripcion : 'N/A' },
                 { label: "Tabaquismo", value: paciente.tabaquismo !== null ? paciente.tabaquismo : 'N/A' },
                 { label: "Laboratorio", value: paciente.laboratorio !== null ? paciente.laboratorio : 'N/A' },
+                { label: "Doctor", value: paciente.doctor },
+
               ].map(({ label, value }) => (
                 <div className="flex justify-between mb-2" key={label}>
                   <div className="w-2/5 text-sm font-medium text-gray-900">{label}:</div>
