@@ -78,36 +78,38 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
   };
 
   // Datos para Presión Arterial
-const presiones = pacientesFiltrados.reduce((acc, paciente) => {
-  let rango;
+  const presiones = pacientesFiltrados.reduce((acc, paciente) => {
+    let rango;
 
-  // Determinar el rango de presión arterial
-  if (paciente.presionArterial <= 120) {
-    rango = '-120';
-  } else if (paciente.presionArterial >= 121 && paciente.presionArterial <= 140) {
-    rango = '140';
-  } else if (paciente.presionArterial >= 141 && paciente.presionArterial <= 160) {
-    rango = '160';
-  } else if (paciente.presionArterial >= 161 && paciente.presionArterial <= 180) {
-    rango = '180';
-  } else {
-    rango = '+180';
-  }
+    // Determinar el rango de presión arterial
+    if (paciente.presionArterial <= 120) {
+      rango = '-120';
+    } else if (paciente.presionArterial >= 121 && paciente.presionArterial <= 140) {
+      rango = '140';
+    } else if (paciente.presionArterial >= 141 && paciente.presionArterial <= 160) {
+      rango = '160';
+    } else if (paciente.presionArterial >= 161 && paciente.presionArterial <= 180) {
+      rango = '180';
+    } else {
+      rango = '+180';
+    }
 
-  acc[rango] = (acc[rango] || 0) + 1;
-  return acc;
-}, {});
+    acc[rango] = (acc[rango] || 0) + 1;
+    return acc;
+  }, {});
 
-const dataPresion = {
-  labels: Object.keys(presiones),
-  datasets: [{
-    label: 'Cantidad',
-    data: Object.values(presiones),
-    backgroundColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#FFB74D'], // Agregar color para +180
-    borderColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#FFB74D'],
-    borderWidth: 1
-  }]
-};
+  // Definir el orden específico de los labels
+  const ordenLabels = ['-120', '140', '160', '180', '+180'];
+  const dataPresion = {
+    labels: ordenLabels,
+    datasets: [{
+      label: 'Cantidad',
+      data: ordenLabels.map(label => presiones[label] || 0), // Asegurar que haya un valor para cada label
+      backgroundColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#FFB74D'],
+      borderColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#FFB74D'],
+      borderWidth: 1
+    }]
+  };
 
   // Datos para Colesterol
   const calcularRangoColesterol = (colesterol) => {
