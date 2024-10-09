@@ -15,16 +15,42 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
 
   // Datos para Edad
   const edades = pacientesFiltrados.reduce((acc, paciente) => {
-    acc[paciente.edad] = (acc[paciente.edad] || 0) + 1;
+    let rango;
+
+    // Determinar el rango de edad
+    if (paciente.edad < 20) {
+      rango = '-20';
+    } else if (paciente.edad >= 21 && paciente.edad <= 30) {
+      rango = '30';
+    } else if (paciente.edad >= 31 && paciente.edad <= 40) {
+      rango = '40';
+    } else if (paciente.edad >= 41 && paciente.edad <= 50) {
+      rango = '50';
+    } else if (paciente.edad >= 51 && paciente.edad <= 60) {
+      rango = '60';
+    } else if (paciente.edad >= 61 && paciente.edad <= 70) {
+      rango = '70';
+    } else if (paciente.edad >= 71 && paciente.edad <= 80) {
+      rango = '80';
+    } else if (paciente.edad >= 81 && paciente.edad <= 90) {
+      rango = '90';
+    } else {
+      rango = '90'; // Para 91 y más
+    }
+
+    acc[rango] = (acc[rango] || 0) + 1;
     return acc;
   }, {});
+
+  // Definir el orden específico de los labels
+  const ordenLabelsEdad = ['-20', '30', '40', '50', '60', '70', '80', '90'];
   const dataEdad = {
-    labels: Object.keys(edades),
+    labels: ordenLabelsEdad,
     datasets: [{
       label: 'Cantidad',
-      data: Object.values(edades),
-      backgroundColor: ['#34D399', '#FDE047', '#F97316', '#EF4444'],
-      borderColor: ['#34D399', '#FDE047', '#F97316', '#EF4444'],
+      data: ordenLabelsEdad.map(label => edades[label] || 0), // Asegurar que haya un valor para cada label
+      backgroundColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#FFB74D', '#4F46E5', '#3B82F6', '#F43F5E'],
+      borderColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#FFB74D', '#4F46E5', '#3B82F6', '#F43F5E'],
       borderWidth: 1
     }]
   };
@@ -237,7 +263,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3 className="text-xl font-semibold mb-8">Presión Arterial</h3>
+        <h3 className="text-xl font-semibold mb-8">Presión Arterial sistólica</h3>
         <Bar data={dataPresion} options={{ 
           responsive: true,
           plugins: { 
