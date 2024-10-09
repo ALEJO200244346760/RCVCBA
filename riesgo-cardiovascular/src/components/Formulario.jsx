@@ -662,7 +662,6 @@ const Formulario = () => {
 
                 {/* Doctor */}
                 <div className="flex flex-col mt-4">
-                                <label className="text-sm font-medium text-gray-700">Doctor:</label>
                                 <div className="flex justify-end space-x-2">
                                     {['doctor1', 'doctor2', 'doctor3'].map(doctor => (
                                         <button
@@ -990,7 +989,6 @@ const Formulario = () => {
 
                             {/* Doctor */}
                             <div className="flex flex-col mt-4">
-                                <label className="text-sm font-medium text-gray-700">Doctor:</label>
                                 <div className="flex justify-end space-x-2">
                                     {['doctor1', 'doctor2', 'doctor3'].map(doctor => (
                                         <button
