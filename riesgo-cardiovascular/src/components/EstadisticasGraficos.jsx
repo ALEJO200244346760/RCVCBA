@@ -188,22 +188,6 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
     }]
   };
 
-  // Datos para Ubicación
-  const ubicaciones = pacientesFiltrados.reduce((acc, paciente) => {
-    acc[paciente.ubicacion] = (acc[paciente.ubicacion] || 0) + 1;
-    return acc;
-  }, {});
-  const dataUbicacion = {
-    labels: Object.keys(ubicaciones),
-    datasets: [{
-      label: 'Cantidad',
-      data: Object.values(ubicaciones),
-      backgroundColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#B91C1C'],
-      borderColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#B91C1C'],
-      borderWidth: 1
-    }]
-  };
-
     // Datos para Cintura
     const cinturasMasculino = pacientesFiltrados.reduce((acc, paciente) => {
       if (paciente.genero === 'masculino') {
@@ -365,16 +349,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
           }
         }} />
       </div>
-      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3 className="text-xl font-semibold mb-8">Ubicación</h3>
-        <Pie data={dataUbicacion} options={{ 
-          responsive: true,
-          plugins: { 
-            legend: { display: true }, 
-            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(ubicaciones)[tooltipItem.label]}%)` } }
-          }
-        }} />
-      </div>
+
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
         <h3 className="text-xl font-semibold mb-8">Cintura (Masculino)</h3>
         <Pie data={dataCinturaMasculino} options={{ 
