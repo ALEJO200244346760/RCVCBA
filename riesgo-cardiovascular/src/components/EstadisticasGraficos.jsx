@@ -205,17 +205,42 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
   };
 
     // Datos para Cintura
-    const cintura = pacientesFiltrados.reduce((acc, paciente) => {
-      acc[paciente.cintura] = (acc[paciente.cintura] || 0) + 1;
+    const cinturasMasculino = pacientesFiltrados.reduce((acc, paciente) => {
+      if (paciente.sexo === 'masculino') {
+        const rango = paciente.cintura > 102 ? 'Más de 102' : 'Menos de 102';
+        acc[rango] = (acc[rango] || 0) + 1;
+      }
       return acc;
     }, {});
-    const dataCintura = {
-      labels: Object.keys(cintura),
+
+    const cinturasFemenino = pacientesFiltrados.reduce((acc, paciente) => {
+      if (paciente.sexo === 'femenino') {
+        const rango = paciente.cintura > 88 ? 'Más de 88' : 'Menos de 88';
+        acc[rango] = (acc[rango] || 0) + 1;
+      }
+      return acc;
+    }, {});
+
+    // Datos para gráfico masculino
+    const dataCinturaMasculino = {
+      labels: ['Menos de 102', 'Más de 102'],
       datasets: [{
-        label: 'Cantidad',
-        data: Object.values(cintura),
-        backgroundColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#B91C1C'],
-        borderColor: ['#34D399', '#FDE047', '#F97316', '#EF4444', '#B91C1C'],
+        label: 'Cantidad (Masculino)',
+        data: [cinturasMasculino['Menos de 102'] || 0, cinturasMasculino['Más de 102'] || 0],
+        backgroundColor: ['#34D399', '#F97316'],
+        borderColor: ['#34D399', '#F97316'],
+        borderWidth: 1
+      }]
+    };
+
+    // Datos para gráfico femenino
+    const dataCinturaFemenino = {
+      labels: ['Menos de 88', 'Más de 88'],
+      datasets: [{
+        label: 'Cantidad (Femenino)',
+        data: [cinturasFemenino['Menos de 88'] || 0, cinturasFemenino['Más de 88'] || 0],
+        backgroundColor: ['#FDE047', '#EF4444'],
+        borderColor: ['#FDE047', '#EF4444'],
         borderWidth: 1
       }]
     };
@@ -351,12 +376,23 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3 className="text-xl font-semibold mb-8">Cintura</h3>
-        <Pie data={dataCintura} options={{ 
+        <h3 className="text-xl font-semibold mb-8">Cintura (Masculino)</h3>
+        <Pie data={dataCinturaMasculino} options={{ 
           responsive: true,
           plugins: { 
             legend: { display: true }, 
-            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(ubicaciones)[tooltipItem.label]}%)` } }
+            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(cinturasMasculino)[tooltipItem.label]}%)` } }
+          }
+        }} />
+      </div>
+
+      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
+        <h3 className="text-xl font-semibold mb-8">Cintura (Femenino)</h3>
+        <Pie data={dataCinturaFemenino} options={{ 
+          responsive: true,
+          plugins: { 
+            legend: { display: true }, 
+            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(cinturasFemenino)[tooltipItem.label]}%)` } }
           }
         }} />
       </div>
