@@ -519,10 +519,6 @@ function Estadisticas() {
             <div className="text-sm font-medium text-gray-900">Talla:</div>
             <div className="text-sm text-gray-500">{paciente.talla}</div>
           </div>
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Ubicación:</div>
-            <div className="text-sm text-gray-500">{paciente.ubicacion}</div>
-          </div>
           <div className="flex justify-between items-start mb-1">
             <div className="text-sm font-medium text-gray-900">Nivel de Riesgo:</div>
             <div className="text-sm text-gray-500">
