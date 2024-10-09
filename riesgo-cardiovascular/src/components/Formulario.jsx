@@ -596,16 +596,33 @@ const Formulario = () => {
 
                 {/* Presión Arterial */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
-                    <input
-                        type="number"
-                        name="presionArterial"
-                        value={datosPaciente.presionArterial}
-                        onChange={manejarCambio}
-                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                        style={{ appearance: 'none' }}
-                    />
-                </div>
+                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+                                <input
+                                    type="number"
+                                    name="presionArterial"
+                                    value={datosPaciente.presionArterial}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    style={{ appearance: 'none' }}
+                                />
+                                <div className="mt-2 flex space-x-2">
+                                    {[120, 140, 160, 180].map(valor => (
+                                        <button
+                                            key={valor}
+                                            type="button"
+                                            className={`p-2 border rounded ${datosPaciente.presionArterial === valor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: valor }))}
+                                        >
+                                            {valor}
+                                        </button>
+                                    ))}
+                                    <button
+                                        type="button"
+                                        className={`p-2 border rounded ${datosPaciente.presionArterial > 180 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: 181 }))}
+                                        >+180</button>
+                                </div>
+                            </div>
 
                 {/* Peso */}
                 <div className="flex flex-col">
@@ -759,6 +776,36 @@ const Formulario = () => {
                                 </div>
                             </div>
 
+                            {/* Presión Arterial */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+                                <input
+                                    type="number"
+                                    name="presionArterial"
+                                    value={datosPaciente.presionArterial}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    style={{ appearance: 'none' }}
+                                />
+                                <div className="mt-2 flex space-x-2">
+                                    {[120, 140, 160, 180].map(valor => (
+                                        <button
+                                            key={valor}
+                                            type="button"
+                                            className={`p-2 border rounded ${datosPaciente.presionArterial === valor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: valor }))}
+                                        >
+                                            {valor}
+                                        </button>
+                                    ))}
+                                    <button
+                                        type="button"
+                                        className={`p-2 border rounded ${datosPaciente.presionArterial > 180 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: 181 }))}
+                                        >+180</button>
+                                </div>
+                            </div>
+
                             {/* Diabetes */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Diabetes:</label>
@@ -886,19 +933,6 @@ const Formulario = () => {
                                         style={{ appearance: 'none' }}
                                     />
                                 )}
-                            </div>
-
-                            {/* Presión Arterial */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
-                                <input
-                                    type="number"
-                                    name="presionArterial"
-                                    value={datosPaciente.presionArterial}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                    style={{ appearance: 'none' }}
-                                />
                             </div>
 
                             {/* Peso */}
