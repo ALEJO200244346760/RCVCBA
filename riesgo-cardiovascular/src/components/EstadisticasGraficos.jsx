@@ -87,6 +87,22 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
     }]
   };
 
+  // Datos para Obra Social
+  const obra = pacientesFiltrados.reduce((acc, paciente) => {
+    acc[paciente.obra] = (acc[paciente.obra] || 0) + 1;
+    return acc;
+  }, {});
+  const dataObra = {
+    labels: Object.keys(obra),
+    datasets: [{
+      label: 'Cantidad',
+      data: Object.values(obra),
+      backgroundColor: ['#34D399', '#EF4444'],
+      borderColor: ['#34D399', '#EF4444'],
+      borderWidth: 1
+    }]
+  };
+
   // Datos para Fumador
   const fumadores = pacientesFiltrados.reduce((acc, paciente) => {
     acc[paciente.fumador] = (acc[paciente.fumador] || 0) + 1;
@@ -268,6 +284,16 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
           },
           scales: {
             y: { ticks: { stepSize: 1 } }
+          }
+        }} />
+      </div>
+      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
+        <h3 className="text-xl font-semibold mb-8">Obra Social</h3>
+        <Pie data={dataObra} options={{ 
+          responsive: true,
+          plugins: { 
+            legend: { display: true }, 
+            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(obra)[tooltipItem.label]}%)` } }
           }
         }} />
       </div>

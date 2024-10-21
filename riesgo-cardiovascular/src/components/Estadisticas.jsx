@@ -378,24 +378,6 @@ function Estadisticas() {
                 <option value=">40% Crítico">Crítico</option>
               </select>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Ubicación</label>
-              <select
-                name="ubicacion"
-                value={filtros.ubicacion || ''}
-                onChange={manejarCambio}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              >
-                <option value="">Todos</option>
-                <option value="DEM NORTE">DEM NORTE</option>
-                <option value="DEM CENTRO">DEM CENTRO</option>
-                <option value="DEM OESTE">DEM OESTE</option>
-                <option value="DAPS">DAPS</option>
-                <option value="HPA">HPA</option>
-                <option value="HU">HU</option>
-              </select>
-            </div>
           </div>
 
           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
