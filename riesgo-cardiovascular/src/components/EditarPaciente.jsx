@@ -85,13 +85,18 @@ function EditarPaciente() {
   const manejarSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/pacientes/${id}`, datosPaciente);
+      await axios.put(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`, datosPaciente, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       navigate('/estadisticas');
     } catch (error) {
       setError('Error al actualizar el paciente.');
       console.error('Error al actualizar el paciente:', error);
     }
   };
+
 
   if (loading) return <p>Cargando...</p>;
 
