@@ -77,12 +77,13 @@ function EditarPaciente() {
   };
 
   const manejarSeleccionColesterol = (value) => {
-    setNivelColesterolConocido(value === 'si');
-    setDatosPaciente({
-        ...datosPaciente,
-        colesterol: value === 'no' ? 'No' : datosPaciente.colesterol
-    });
-};
+      const conoceColesterol = value === 'si';
+      setNivelColesterolConocido(conoceColesterol);
+      setDatosPaciente(prev => ({
+          ...prev,
+          colesterol: conoceColesterol ? '' : 'No', // establece a '' si conoce el nivel
+      }));
+  };
 
   const calcularIMC = (data) => {
     const peso = parseFloat(data.peso);
@@ -307,34 +308,31 @@ function EditarPaciente() {
 
         {/* Colesterol */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
-          <div className="flex space-x-2 mb-2">
-            {['sí', 'no'].map(option => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => {
-                  const nuevoValor = option === 'sí' ? '' : null; // null si no conoce el nivel
-                  setDatosPaciente(prev => ({ ...prev, colesterol: nuevoValor }));
-                }}
-                className={`p-2 border rounded-md ${datosPaciente.colesterol === (option === 'sí' ? '' : null) ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-              >
-                {option.charAt(0).toUpperCase() + option.slice(1)}
-              </button>
-            ))}
-          </div>
-          {datosPaciente.colesterol === '' && (
-            <input
-              type="number"
-              name="colesterol"
-              value={datosPaciente.colesterol !== null ? datosPaciente.colesterol : ''}
-              onChange={(e) => setDatosPaciente(prev => ({ ...prev, colesterol: e.target.value }))}
-              className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Ingrese su nivel de colesterol"
-            />
-          )}
+            <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
+            <div className="flex space-x-2 mb-2">
+                {['si', 'no'].map(option => (
+                    <button
+                        key={option}
+                        type="button"
+                        onClick={() => manejarSeleccionColesterol(option)}
+                        className={`p-2 border rounded-md ${nivelColesterolConocido === (option === 'si') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                    >
+                        {option.charAt(0).toUpperCase() + option.slice(1)}
+                    </button>
+                ))}
+            </div>
+            {nivelColesterolConocido && (
+                <input
+                    type="number"
+                    name="colesterol"
+                    value={datosPaciente.colesterol === 'No' ? '' : datosPaciente.colesterol} // Muestra vacío si es 'No'
+                    onChange={(e) => setDatosPaciente(prev => ({ ...prev, colesterol: e.target.value }))}
+                    className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Ingrese su nivel de colesterol"
+                    style={{ appearance: 'none' }}
+                />
+            )}
         </div>
-
 
         {/* Presión Arterial */}
         <div className="flex flex-col">
