@@ -72,13 +72,15 @@ function EditarPaciente() {
 
   const calcularRiesgo = (data) => {
     const { edad, genero, diabetes, fumador, presionArterial, colesterol, infarto, acv, renal } = data;
-    let riesgo = "Bajo"; 
     if (infarto === "Sí" || acv === "Sí" || renal === "Sí") {
-      riesgo = ">20% <30% Alto";
-    } else if (parseInt(edad) > 50 && (diabetes === "Sí" || fumador === "Sí")) {
-      riesgo = "Medio";
+      setDatosPaciente(prev => ({ ...prev, nivelRiesgo: ">20% <30% Alto" }));
+      return;
     }
-    setDatosPaciente(prev => ({ ...prev, nivelRiesgo: riesgo }));
+
+    const edadAjustada = ajustarEdad(parseInt(edad, 10));
+    const presionAjustada = ajustarPresionArterial(parseInt(presionArterial, 10));
+    const nivelRiesgo = calcularRiesgoCardiovascular(edadAjustada, genero, diabetes, fumador, presionAjustada, colesterol);
+    setDatosPaciente(prev => ({ ...prev, nivelRiesgo }));
   };
 
   const manejarCambio = (e) => {
@@ -365,6 +367,17 @@ function EditarPaciente() {
           />
         </div>
 
+        {/* Mostrar el nivel de riesgo */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Nivel de Riesgo:</label>
+          <input
+            type="text"
+            value={datosPaciente.nivelRiesgo}
+            readOnly
+            className="mt-1 p-2 border border-gray-300 rounded-md bg-gray-200"
+          />
+        </div>
+
         {/* Notificación de Riesgo */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Notificación de Riesgo</label>
@@ -497,4 +510,3 @@ function EditarPaciente() {
 }
 
 export default EditarPaciente;
-
