@@ -9,6 +9,8 @@ import {
   listaTabaquismo,
   listaLaboratorio
 } from './ConstFormulario'; // Asegúrate de que estos se importen correctamente
+import { calcularRiesgoCardiovascular } from './Calculadora'; // Ensure this is correctly imported
+
 
 const DatosPacienteInicial = {
   cuil: '',
@@ -59,6 +61,20 @@ function EditarPaciente() {
         setLoading(false);
       });
   }, [id]);
+
+  const ajustarEdad = (edad) => {
+    if (edad < 50) return 40;
+    if (edad >= 50 && edad <= 59) return 50;
+    if (edad >= 60 && edad <= 69) return 60;
+    return 70;
+};
+
+const ajustarPresionArterial = (presion) => {
+    if (presion < 140) return 120;
+    if (presion >= 140 && presion <= 159) return 140;
+    if (presion >= 160 && presion <= 179) return 160;
+    return 180;
+};
 
   const calcularIMC = (data) => {
     const peso = parseFloat(data.peso);
