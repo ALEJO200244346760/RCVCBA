@@ -123,6 +123,9 @@ const Formulario = () => {
         if (name === 'presionArterial') {
             validarCampos(value);
         }
+        if (name === 'taMin') {
+            validarCampos(value);
+        }
         if (name === 'colesterol') {
             validarCampos(value);
         }
@@ -178,6 +181,7 @@ const Formulario = () => {
             diabetes,
             fumador,
             presionArterial,
+            taMin,
             colesterol,
             hipertenso,
             acv,
@@ -188,7 +192,7 @@ const Formulario = () => {
             cintura
         } = datosPaciente;
 
-        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !hipertenso || !acv || !renal || !infarto) {
+        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !infarto) {
             setError('Por favor, complete todos los campos obligatorios.');
             return false;
         }
@@ -216,6 +220,10 @@ const Formulario = () => {
         }
         if (!presionArterial || presionArterial < 80 || presionArterial > 250) {
             setError('La presión arterial debe estar entre 80 y 250.');
+            return false;
+        }
+        if (!taMin || taMin < 70 || taMin > 150) {
+            setError('La tensión arterial mínima debe estar entre 70 y 150.');
             return false;
         }
         if (nivelColesterolConocido && (colesterol < 150 || colesterol > 400) && colesterol !== 'No') {
@@ -624,6 +632,36 @@ const Formulario = () => {
                                 </div>
                             </div>
 
+                {/* Tension Arterial Minima */}
+                <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">TA Min.:</label>
+                                <input
+                                    type="number"
+                                    name="presionArterial"
+                                    value={datosPaciente.taMin}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    style={{ appearance: 'none' }}
+                                />
+                                <div className="mt-2 flex space-x-2">
+                                    {[80, 90, 100, 110].map(valor => (
+                                        <button
+                                            key={valor}
+                                            type="button"
+                                            className={`p-2 border rounded ${datosPaciente.taMin === valor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, taMin: valor }))}
+                                        >
+                                            {valor}
+                                        </button>
+                                    ))}
+                                    <button
+                                        type="button"
+                                        className={`p-2 border rounded ${datosPaciente.taMin > 110 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, taMin: 111 }))}
+                                        >+110</button>
+                                </div>
+                            </div>
+
                 {/* Peso */}
                 <div className="flex flex-col">
                     <label className="text-sm font-medium text-gray-700">Peso (kg):</label>
@@ -792,36 +830,6 @@ const Formulario = () => {
                                 </div>
                             </div>
 
-                            {/* Presión Arterial */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
-                                <input
-                                    type="number"
-                                    name="presionArterial"
-                                    value={datosPaciente.presionArterial}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                    style={{ appearance: 'none' }}
-                                />
-                                <div className="mt-2 flex space-x-2">
-                                    {[120, 140, 160, 180].map(valor => (
-                                        <button
-                                            key={valor}
-                                            type="button"
-                                            className={`p-2 border rounded ${datosPaciente.presionArterial === valor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
-                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: valor }))}
-                                        >
-                                            {valor}
-                                        </button>
-                                    ))}
-                                    <button
-                                        type="button"
-                                        className={`p-2 border rounded ${datosPaciente.presionArterial > 180 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
-                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: 181 }))}
-                                        >+180</button>
-                                </div>
-                            </div>
-
                             {/* Diabetes */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Diabetes:</label>
@@ -949,6 +957,66 @@ const Formulario = () => {
                                         style={{ appearance: 'none' }}
                                     />
                                 )}
+                            </div>
+
+                            {/* Presión Arterial */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+                                <input
+                                    type="number"
+                                    name="presionArterial"
+                                    value={datosPaciente.presionArterial}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    style={{ appearance: 'none' }}
+                                />
+                                <div className="mt-2 flex space-x-2">
+                                    {[120, 140, 160, 180].map(valor => (
+                                        <button
+                                            key={valor}
+                                            type="button"
+                                            className={`p-2 border rounded ${datosPaciente.presionArterial === valor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: valor }))}
+                                        >
+                                            {valor}
+                                        </button>
+                                    ))}
+                                    <button
+                                        type="button"
+                                        className={`p-2 border rounded ${datosPaciente.presionArterial > 180 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: 181 }))}
+                                        >+180</button>
+                                </div>
+                            </div>
+
+                            {/* Tension Arterial Minima */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">TA Min.:</label>
+                                <input
+                                    type="number"
+                                    name="presionArterial"
+                                    value={datosPaciente.taMin}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    style={{ appearance: 'none' }}
+                                />
+                                <div className="mt-2 flex space-x-2">
+                                    {[80, 90, 100, 110].map(valor => (
+                                        <button
+                                            key={valor}
+                                            type="button"
+                                            className={`p-2 border rounded ${datosPaciente.taMin === valor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                            onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, taMin: valor }))}
+                                        >
+                                            {valor}
+                                        </button>
+                                    ))}
+                                    <button
+                                        type="button"
+                                        className={`p-2 border rounded ${datosPaciente.taMin > 110 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, taMin: 111 }))}
+                                        >+110</button>
+                                </div>
                             </div>
 
                             {/* Peso */}

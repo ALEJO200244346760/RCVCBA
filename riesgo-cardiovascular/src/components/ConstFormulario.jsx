@@ -7,6 +7,7 @@ export const DatosPacienteInicial = {
     diabetes: '',
     fumador: '',
     presionArterial: '',
+    taMin: '',
     colesterol: '',
     peso: '',
     talla: '', // Talla en centímetros

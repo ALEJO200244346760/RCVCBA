@@ -213,6 +213,7 @@ function Estadisticas() {
       Diabetes: ${paciente.diabetes}
       Fumador: ${paciente.fumador}
       Presión Arterial: ${paciente.presionArterial}
+      TA Mín.: ${paciente.taMin}
       Colesterol: ${paciente.colesterol}
       IMC: ${paciente.imc}
       PESO: ${paciente.peso}
@@ -508,8 +509,12 @@ function Estadisticas() {
             <div className="text-sm text-gray-500">{paciente.cuil}</div>
           </div>
           <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Presión Arterial:</div>
+            <div className="text-sm font-medium text-gray-900">Presión Arterial Sístolica:</div>
             <div className="text-sm text-gray-500">{paciente.presionArterial}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">TA Mín.:</div>
+            <div className="text-sm text-gray-500">{paciente.taMin}</div>
           </div>
           <div className="flex justify-between items-start mb-2">
             <div className="text-sm font-medium text-gray-900">Peso:</div>

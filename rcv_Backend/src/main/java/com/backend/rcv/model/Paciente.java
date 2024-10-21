@@ -30,6 +30,8 @@ public class Paciente {
     @Column
     private String presionArterial;
     @Column
+    private String taMin;
+    @Column
     private String colesterol;
     @Column
     private String nivelRiesgo;

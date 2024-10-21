@@ -53,12 +53,12 @@ function EditarPaciente() {
         const data = {
           ...DatosPacienteInicial,
           ...response.data,
-          notificacionRiesgo: response.data.notificacionRiesgo || [],
-          hipertensionArterial: response.data.hipertensionArterial || [],
-          medicacionPrescripcion: response.data.medicacionPrescripcion || [],
-          medicacionDispensa: response.data.medicacionDispensa || [],
-          tabaquismo: response.data.tabaquismo || [],
-          laboratorio: response.data.laboratorio || []
+          notificacionRiesgo: response.data.notificacionRiesgo ? response.data.notificacionRiesgo.split(',') : [],
+          hipertensionArterial: response.data.hipertensionArterial ? response.data.hipertensionArterial.split(',') : [],
+          medicacionPrescripcion: response.data.medicacionPrescripcion ? response.data.medicacionPrescripcion.split(',') : [],
+          medicacionDispensa: response.data.medicacionDispensa ? response.data.medicacionDispensa.split(',') : [],
+          tabaquismo: response.data.tabaquismo ? response.data.tabaquismo.split(',') : [],
+          laboratorio: response.data.laboratorio ? response.data.laboratorio.split(',') : []
         };
         setFormData(data);
         calcularIMC(data);
@@ -133,7 +133,7 @@ function EditarPaciente() {
   const manejarCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
     setFormData(prev => {
-      const currentList = prev[name] || []; // Asegurarse de que sea un arreglo
+      const currentList = prev[name] || [];
       if (checked) {
         return { ...prev, [name]: [...currentList, value] };
       } else {
@@ -194,7 +194,18 @@ function EditarPaciente() {
       return;
     }
 
-    axios.put(`/api/pacientes/${id}`, formData)
+    // Convertir los campos de lista a cadenas
+    const dataToSend = {
+      ...formData,
+      notificacionRiesgo: formData.notificacionRiesgo.join(','),
+      hipertensionArterial: formData.hipertensionArterial.join(','),
+      medicacionPrescripcion: formData.medicacionPrescripcion.join(','),
+      medicacionDispensa: formData.medicacionDispensa.join(','),
+      tabaquismo: formData.tabaquismo.join(','),
+      laboratorio: formData.laboratorio.join(',')
+    };
+
+    axios.put(`/api/pacientes/${id}`, dataToSend)
       .then(() => {
         navigate('/estadisticas');
       })
