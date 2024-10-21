@@ -33,7 +33,7 @@ function EditarPaciente() {
 
   useEffect(() => {
     setLoading(true); // Asegúrate de que loading se establezca en true al iniciar la carga
-    axios.get(`/api/pacientes/${id}`)
+    axios.get(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`)
       .then(response => {
         console.log('Datos del paciente:', response.data); // Verifica los datos recibidos
         setDatosPaciente(response.data);
