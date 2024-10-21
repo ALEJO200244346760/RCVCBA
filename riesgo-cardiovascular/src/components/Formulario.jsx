@@ -456,6 +456,23 @@ const Formulario = () => {
                     />
                 </div>
 
+                {/* Obra Social */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">Obra Social:</label>
+                    <div className="flex space-x-2">
+                        {['Sí', 'No'].map(option => (
+                            <button
+                                key={option}
+                                type="button"
+                                onClick={() => setDatosPaciente({ ...datosPaciente, obra: option })}
+                                className={`p-2 border rounded-md ${datosPaciente.obra === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                            >
+                                {option.charAt(0).toUpperCase() + option.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Género */}
                 <div className="flex flex-col">
                     <label className="text-sm font-medium text-gray-700">Género:</label>
@@ -742,6 +759,7 @@ const Formulario = () => {
                         {pacienteEncontrado ? (
                             <>
                                 <p><strong>Edad:</strong> {pacienteEncontrado.edad}</p>
+                                <p><strong>Obra Social:</strong> {datosPaciente.obra}</p>
                                 <p><strong>DNI:</strong> {pacienteEncontrado.cuil}</p>
                                 <p><strong>Ubicación:</strong> {pacienteEncontrado.ubicacion}</p>
                                 <p><strong>Fecha registro:</strong> {pacienteEncontrado.fechaRegistro}</p>
@@ -812,6 +830,23 @@ const Formulario = () => {
                                     onChange={manejarCambio}
                                     className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                                 />
+                            </div>
+
+                            {/* Obra Social */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Obra Social:</label>
+                                <div className="flex space-x-2">
+                                    {['Sí', 'No'].map(option => (
+                                        <button
+                                            key={option}
+                                            type="button"
+                                            onClick={() => setDatosPaciente({ ...datosPaciente, obra: option })}
+                                            className={`p-2 border rounded-md ${datosPaciente.obra === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                                        >
+                                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* Género */}
@@ -1104,6 +1139,7 @@ const Formulario = () => {
                 </div>
                 <p><strong>Cuil o DNI:</strong> {datosPaciente.cuil}</p>
                 <p><strong>Edad:</strong> {datosPaciente.edad}</p>
+                <p><strong>Obra Social:</strong> {datosPaciente.obra}</p>
                 <p><strong>Género:</strong> {datosPaciente.genero}</p>
                 <p><strong>Diabetes:</strong> {datosPaciente.diabetes}</p>
                 <p><strong>Fumador:</strong> {datosPaciente.fumador}</p>

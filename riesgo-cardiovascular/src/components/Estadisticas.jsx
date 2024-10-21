@@ -8,6 +8,7 @@ function Estadisticas() {
   const [pacientesFiltrados, setPacientesFiltrados] = useState([]);
   const [filtros, setFiltros] = useState({
     edad: '',
+    obra: '',
     cuil: '',
     genero: '',
     diabetes: '',
@@ -22,6 +23,7 @@ function Estadisticas() {
     acv: '',
     cintura: '',
     hipertenso: '',
+    doctor: '',
   });
   const [nivelColesterolConocido, setNivelColesterolConocido] = useState('todos'); // Estado para el conocimiento del nivel de colesterol
   const [loading, setLoading] = useState(true);
@@ -144,6 +146,8 @@ function Estadisticas() {
           edadValida &&
           cinturaValida &&
         (filtros.genero === '' || paciente.genero.toLowerCase() === filtros.genero.toLowerCase()) &&
+        (filtros.obra === '' || paciente.obra.toLowerCase() === filtros.obra.toLowerCase()) &&
+        (filtros.doctor === '' || paciente.doctor.toLowerCase() === filtros.doctor.toLowerCase()) &&
         (filtros.diabetes === '' || paciente.diabetes.toLowerCase() === filtros.diabetes.toLowerCase()) &&
         (filtros.fumador === '' || paciente.fumador.toLowerCase() === filtros.fumador.toLowerCase()) &&
         (presionArterialFiltro === null || paciente.presionArterial.toString() === presionArterialFiltro) &&
@@ -208,6 +212,7 @@ function Estadisticas() {
       DNI: ${paciente.cuil}
       TELEFONO: ${paciente.telefono}
       Edad: ${paciente.edad}
+      Obra Social: ${paciente.obra}
       Género: ${paciente.genero}
       HIPERTENSO: ${paciente.hipertenso}
       Diabetes: ${paciente.diabetes}
@@ -258,6 +263,19 @@ function Estadisticas() {
                 <option value="51-60">Entre 51 y 60</option>
                 <option value="61-70">Entre 61 y 70</option>
                 <option value="71+">Mayores de 71</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">¿Obra Social?</label>
+              <select
+                name="obra"
+                value={filtros.obra || ''}
+                onChange={manejarCambio}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option value="">Todos</option>
+                <option value="Sí">Sí</option>
+                <option value="No">No</option>
               </select>
             </div>
             <div>
@@ -456,6 +474,20 @@ function Estadisticas() {
                 <option value="102+">Mayor de 102</option>
               </select>
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Doctor</label>
+              <select
+                name="cintura"
+                value={filtros.doctor || ''}
+                onChange={manejarCambio}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option value="">Todos</option>
+                <option value="doctor1">Doctor 1</option>
+                <option value="doctor2">Doctor 2</option>
+                <option value="doctor3">Doctor 3</option>
+              </select>
+            </div>
 
           </div>
 
@@ -499,6 +531,10 @@ function Estadisticas() {
           <div className="flex justify-between items-start mb-2">
             <div className="text-sm font-medium text-gray-900">Edad:</div>
             <div className="text-sm text-gray-500">{paciente.edad}</div>
+          </div>
+          <div className="flex justify-between items-start mb-2">
+            <div className="text-sm font-medium text-gray-900">Obra Social:</div>
+            <div className="text-sm text-gray-500">{paciente.obra}</div>
           </div>
           <div className="flex justify-between items-start mb-2">
             <div className="text-sm font-medium text-gray-900">TELEFONO:</div>

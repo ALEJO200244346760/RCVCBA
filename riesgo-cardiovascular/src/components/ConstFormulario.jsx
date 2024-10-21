@@ -3,6 +3,7 @@ export const DatosPacienteInicial = {
     cuil: '',
     telefono: '',
     edad: '',
+    obra: '',
     genero: '',
     diabetes: '',
     fumador: '',
