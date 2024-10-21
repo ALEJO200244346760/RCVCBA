@@ -126,7 +126,7 @@ function EditarPaciente() {
     <div className="flex-1 bg-gray-100 p-4 rounded-md">
       <h1 className="text-3xl font-bold mb-6">Editar Paciente</h1>
       <form onSubmit={manejarSubmit} className="w-full space-y-6">
-        {/* Cuil */}
+        {/* Cui */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">DNI:</label>
           <input
