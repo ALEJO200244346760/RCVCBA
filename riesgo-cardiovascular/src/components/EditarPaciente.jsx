@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import {
+  listaNotificacionRiesgo,
+  listaHipertensionArterial,
+  listaMedicacionPrescripcion,
+  listaMedicacionDispensa,
+  listaTabaquismo,
+  listaLaboratorio
+} from './ConstFormulario'; // Asegúrate de que estos se importen correctamente
 
 const DatosPacienteInicial = {
   cuil: '',
@@ -21,7 +29,13 @@ const DatosPacienteInicial = {
   infarto: '',
   acv: '',
   renal: '',
-  hipertenso: ''
+  hipertenso: '',
+  notificacionRiesgo: [],
+  hipertensionArterial: [],
+  medicacionPrescripcion: [],
+  medicacionDispensa: [],
+  tabaquismo: [],
+  laboratorio: [],
 };
 
 function EditarPaciente() {
@@ -32,27 +46,25 @@ function EditarPaciente() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    setLoading(true); // Asegúrate de que loading se establezca en true al iniciar la carga
+    setLoading(true);
     axios.get(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`)
       .then(response => {
-        console.log('Datos del paciente:', response.data); // Verifica los datos recibidos
         setDatosPaciente(response.data);
         calcularIMC(response.data);
         calcularRiesgo(response.data);
-        setLoading(false); // Cambia loading a false solo después de procesar los datos
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error al obtener los datos del paciente:', error);
-        setLoading(false); // También establece loading en false en caso de error
+        setLoading(false);
       });
   }, [id]);
-  
 
   const calcularIMC = (data) => {
     const peso = parseFloat(data.peso);
     const tallaCm = parseFloat(data.talla);
     if (peso && tallaCm) {
-      const tallaM = tallaCm / 100; // Convertir a metros
+      const tallaM = tallaCm / 100; 
       const imc = peso / (tallaM * tallaM);
       setDatosPaciente(prev => ({ ...prev, imc: imc.toFixed(2) }));
     }
@@ -60,9 +72,7 @@ function EditarPaciente() {
 
   const calcularRiesgo = (data) => {
     const { edad, genero, diabetes, fumador, presionArterial, colesterol, infarto, acv, renal } = data;
-
-    // Lógica para calcular el nivel de riesgo (ajusta según sea necesario)
-    let riesgo = "Bajo"; // Este es un ejemplo; ajusta según tu lógica
+    let riesgo = "Bajo"; 
     if (infarto === "Sí" || acv === "Sí" || renal === "Sí") {
       riesgo = ">20% <30% Alto";
     } else if (parseInt(edad) > 50 && (diabetes === "Sí" || fumador === "Sí")) {
@@ -74,12 +84,23 @@ function EditarPaciente() {
   const manejarCambio = (e) => {
     const { name, value } = e.target;
     setDatosPaciente(prev => ({ ...prev, [name]: value }));
-    
-    // Recalcular IMC y riesgo si es necesario
+
     if (['peso', 'talla', 'edad', 'genero', 'diabetes', 'fumador', 'presionArterial', 'colesterol', 'infarto', 'acv', 'renal'].includes(name)) {
       calcularIMC({ ...datosPaciente, [name]: value });
       calcularRiesgo({ ...datosPaciente, [name]: value });
     }
+  };
+
+  const manejarCheckboxChange = (e) => {
+    const { name, value, checked } = e.target;
+    setDatosPaciente(prev => {
+      const currentList = prev[name];
+      if (checked) {
+        return { ...prev, [name]: [...currentList, value] };
+      } else {
+        return { ...prev, [name]: currentList.filter(item => item !== value) };
+      }
+    });
   };
 
   const manejarSubmit = async (e) => {
@@ -96,7 +117,6 @@ function EditarPaciente() {
       console.error('Error al actualizar el paciente:', error);
     }
   };
-
 
   if (loading) return <p>Cargando...</p>;
 
@@ -345,6 +365,110 @@ function EditarPaciente() {
           />
         </div>
 
+        {/* Notificación de Riesgo */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Notificación de Riesgo</label>
+          {listaNotificacionRiesgo.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="notificacionRiesgo"
+                value={item}
+                checked={datosPaciente.notificacionRiesgo.includes(item)}
+                onChange={manejarCheckboxChange}
+                className="mr-2"
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Hipertensión Arterial */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Hipertensión Arterial</label>
+          {listaHipertensionArterial.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="hipertensionArterial"
+                value={item}
+                checked={datosPaciente.hipertensionArterial.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Medicación Prescripción */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Medicacion Prescripcion</label>
+          {listaMedicacionPrescripcion.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="medicacionPrescripcion"
+                value={item}
+                checked={datosPaciente.medicacionPrescripcion.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Medicación Dispensa */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Medicacion Dispensa</label>
+          {listaMedicacionDispensa.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="medicacionDispensa"
+                value={item}
+                checked={datosPaciente.medicacionDispensa.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Tabaquismo */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Tabaquismo</label>
+          {listaTabaquismo.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="tabaquismo"
+                value={item}
+                checked={datosPaciente.tabaquismo.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Laboratorio */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Laboratorio</label>
+          {listaLaboratorio.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="laboratorio"
+                value={item}
+                checked={datosPaciente.laboratorio.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+
         {/* Doctor */}
         <div className="flex flex-col mt-4">
           <div className="flex justify-end space-x-2">
@@ -361,6 +485,7 @@ function EditarPaciente() {
           </div>
         </div>
 
+        {/* Botón de guardar */}
         <button type="submit" className="w-full py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600">
           Guardar Cambios
         </button>
@@ -372,3 +497,4 @@ function EditarPaciente() {
 }
 
 export default EditarPaciente;
+
