@@ -288,16 +288,6 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
         }} />
       </div>
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
-        <h3 className="text-xl font-semibold mb-8">Obra Social</h3>
-        <Pie data={dataObra} options={{ 
-          responsive: true,
-          plugins: { 
-            legend: { display: true }, 
-            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(obra)[tooltipItem.label]}%)` } }
-          }
-        }} />
-      </div>
-      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
         <h3 className="text-xl font-semibold mb-8">Presión Arterial sistólica</h3>
         <Bar data={dataPresion} options={{ 
           responsive: true,
@@ -326,6 +316,16 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
               ticks: { stepSize: 1 },
               suggestedMax: 100
             }
+          }
+        }} />
+      </div>
+      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
+        <h3 className="text-xl font-semibold mb-8">Obra Social</h3>
+        <Pie data={dataObra} options={{ 
+          responsive: true,
+          plugins: { 
+            legend: { display: true }, 
+            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(obra)[tooltipItem.label]}%)` } }
           }
         }} />
       </div>
