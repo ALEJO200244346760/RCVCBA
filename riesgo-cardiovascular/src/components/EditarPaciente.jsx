@@ -108,7 +108,7 @@ function EditarPaciente() {
           />
         </div>
 
-        {/* Telefono */}
+        {/* Teléfono */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Teléfono:</label>
           <input
