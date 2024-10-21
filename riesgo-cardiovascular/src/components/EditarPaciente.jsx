@@ -11,7 +11,6 @@ import {
 } from './ConstFormulario';
 import { calcularRiesgoCardiovascular } from './Calculadora';
 
-
 const DatosPacienteInicial = {
   cuil: '',
   telefono: '',
@@ -46,17 +45,24 @@ function EditarPaciente() {
   const [formData, setFormData] = useState(DatosPacienteInicial);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [mostrarModal, setMostrarModal] = useState(false);
-  const [nivelRiesgo, setNivelRiesgo] = useState(''); // Mover aquí
-
 
   // Obtener datos del paciente al cargar el componente
   useEffect(() => {
     axios.get(`/api/pacientes/${id}`)
       .then(response => {
-        setFormData(response.data);
-        calcularIMC(response.data); // Calcular IMC al cargar los datos
-        calcularRiesgo(response.data); // Calcular riesgo al cargar los datos
+        const data = {
+          ...DatosPacienteInicial,
+          ...response.data,
+          notificacionRiesgo: response.data.notificacionRiesgo || [],
+          hipertensionArterial: response.data.hipertensionArterial || [],
+          medicacionPrescripcion: response.data.medicacionPrescripcion || [],
+          medicacionDispensa: response.data.medicacionDispensa || [],
+          tabaquismo: response.data.tabaquismo || [],
+          laboratorio: response.data.laboratorio || [],
+        };
+        setFormData(data);
+        calcularIMC(data);
+        calcularRiesgo(data);
         setLoading(false);
       })
       .catch(error => {
@@ -72,7 +78,7 @@ function EditarPaciente() {
     if (peso && tallaCm) {
       const tallaM = tallaCm / 100; // Convertir centímetros a metros
       const imc = peso / (tallaM * tallaM);
-      setFormData(prev => ({ ...prev, imc: imc.toFixed(2) })); // Guarda el IMC en el estado
+      setFormData(prev => ({ ...prev, imc: imc.toFixed(2) }));
     }
   };
 
@@ -81,7 +87,7 @@ function EditarPaciente() {
     const { edad, genero, diabetes, fumador, presionArterial, colesterol, infarto, acv, renal } = data;
 
     if (infarto === "Sí" || acv === "Sí" || renal === "Sí") {
-      setFormData(prev => ({ ...prev, nivelRiesgo: ">20% <30% Alto" })); // Guarda el nivel de riesgo en el estado
+      setFormData(prev => ({ ...prev, nivelRiesgo: ">20% <30% Alto" }));
       return;
     }
 
@@ -89,7 +95,7 @@ function EditarPaciente() {
     const presionAjustada = ajustarPresionArterial(parseInt(presionArterial, 10));
 
     const nivelRiesgoCalculado = calcularRiesgoCardiovascular(edadAjustada, genero, diabetes, fumador, presionAjustada, colesterol);
-    setFormData(prev => ({ ...prev, nivelRiesgo: nivelRiesgoCalculado })); // Guarda el nivel de riesgo en el estado
+    setFormData(prev => ({ ...prev, nivelRiesgo: nivelRiesgoCalculado }));
   };
 
   // Ajustar la edad según criterios establecidos
@@ -145,6 +151,7 @@ function EditarPaciente() {
       diabetes,
       fumador,
       presionArterial,
+      taMin,
       colesterol,
       hipertenso,
       acv,
@@ -155,7 +162,7 @@ function EditarPaciente() {
       cintura
     } = formData;
 
-    if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !hipertenso || !acv || !renal || !infarto) {
+    if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !infarto) {
       setError('Por favor, complete todos los campos obligatorios.');
       return false;
     }
@@ -170,6 +177,10 @@ function EditarPaciente() {
     }
     if (!presionArterial || presionArterial < 80 || presionArterial > 250) {
       setError('La presión arterial debe estar entre 80 y 250.');
+      return false;
+    }
+    if (!taMin || taMin < 70 || taMin > 150) {
+      setError('La tensión arterial mínima debe estar entre 70 y 150.');
       return false;
     }
     if (formData.colesterol && (colesterol < 150 || colesterol > 400)) {
@@ -188,7 +199,7 @@ function EditarPaciente() {
       return;
     }
 
-    axios.put(`/api/pacientes/${id}`, formData) // Incluye formData que ahora tiene el nivelRiesgo
+    axios.put(`/api/pacientes/${id}`, formData)
       .then(() => {
         navigate('/estadisticas');
       })
@@ -225,7 +236,7 @@ function EditarPaciente() {
                 type="checkbox"
                 name="notificacionRiesgo"
                 value={item}
-                checked={formData.notificacionRiesgo.includes(item)}
+                checked={Array.isArray(formData.notificacionRiesgo) && formData.notificacionRiesgo.includes(item)}
                 onChange={manejarCheckboxChange}
                 className="mr-2"
               />
@@ -242,7 +253,7 @@ function EditarPaciente() {
                 type="checkbox"
                 name="hipertensionArterial"
                 value={item}
-                checked={formData.hipertensionArterial.includes(item)}
+                checked={Array.isArray(formData.hipertensionArterial) && formData.hipertensionArterial.includes(item)}
                 onChange={manejarCheckboxChange}
               />
               {item}
@@ -258,7 +269,7 @@ function EditarPaciente() {
                 type="checkbox"
                 name="medicacionPrescripcion"
                 value={item}
-                checked={formData.medicacionPrescripcion.includes(item)}
+                checked={Array.isArray(formData.medicacionPrescripcion) && formData.medicacionPrescripcion.includes(item)}
                 onChange={manejarCheckboxChange}
               />
               {item}
@@ -267,14 +278,14 @@ function EditarPaciente() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Medicacion dispensa</label>
+          <label className="block text-sm font-medium text-gray-700">Medicacion Dispensa</label>
           {listaMedicacionDispensa.map(item => (
             <div key={item}>
               <input
                 type="checkbox"
                 name="medicacionDispensa"
                 value={item}
-                checked={formData.medicacionDispensa.includes(item)}
+                checked={Array.isArray(formData.medicacionDispensa) && formData.medicacionDispensa.includes(item)}
                 onChange={manejarCheckboxChange}
               />
               {item}
@@ -290,7 +301,7 @@ function EditarPaciente() {
                 type="checkbox"
                 name="tabaquismo"
                 value={item}
-                checked={formData.tabaquismo.includes(item)}
+                checked={Array.isArray(formData.tabaquismo) && formData.tabaquismo.includes(item)}
                 onChange={manejarCheckboxChange}
               />
               {item}
@@ -306,7 +317,7 @@ function EditarPaciente() {
                 type="checkbox"
                 name="laboratorio"
                 value={item}
-                checked={formData.laboratorio.includes(item)}
+                checked={Array.isArray(formData.laboratorio) && formData.laboratorio.includes(item)}
                 onChange={manejarCheckboxChange}
               />
               {item}
@@ -315,16 +326,15 @@ function EditarPaciente() {
         </div>
 
         <button
-  type="submit"
-  className="px-4 py-2 bg-indigo-600 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700"
->
-  Guardar Cambios
-</button>
-</form>
-{error && <p className="text-red-500">{error}</p>} {/* Mostrar errores */}
-
-</div>
-);
+          type="submit"
+          className="px-4 py-2 bg-indigo-600 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700"
+        >
+          Guardar Cambios
+        </button>
+      </form>
+      {error && <p className="text-red-500">{error}</p>}
+    </div>
+  );
 }
 
 export default EditarPaciente;
