@@ -67,13 +67,21 @@ function EditarPaciente() {
     if (edad >= 50 && edad <= 59) return 50;
     if (edad >= 60 && edad <= 69) return 60;
     return 70;
-};
+  };
 
-const ajustarPresionArterial = (presion) => {
-    if (presion < 140) return 120;
-    if (presion >= 140 && presion <= 159) return 140;
-    if (presion >= 160 && presion <= 179) return 160;
-    return 180;
+  const ajustarPresionArterial = (presion) => {
+      if (presion < 140) return 120;
+      if (presion >= 140 && presion <= 159) return 140;
+      if (presion >= 160 && presion <= 179) return 160;
+      return 180;
+  };
+
+  const manejarSeleccionColesterol = (value) => {
+    setNivelColesterolConocido(value === 'si');
+    setDatosPaciente({
+        ...datosPaciente,
+        colesterol: value === 'no' ? 'No' : datosPaciente.colesterol
+    });
 };
 
   const calcularIMC = (data) => {
@@ -305,23 +313,28 @@ const ajustarPresionArterial = (presion) => {
               <button
                 key={option}
                 type="button"
-                onClick={() => setDatosPaciente(prev => ({ ...prev, colesterol: option === 'sí' ? '' : datosPaciente.colesterol }))}
-                className={`p-2 border rounded-md ${datosPaciente.colesterol === (option === 'sí') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                onClick={() => {
+                  const nuevoValor = option === 'sí' ? '' : null; // null si no conoce el nivel
+                  setDatosPaciente(prev => ({ ...prev, colesterol: nuevoValor }));
+                }}
+                className={`p-2 border rounded-md ${datosPaciente.colesterol === (option === 'sí' ? '' : null) ? 'bg-green-500 text-white' : 'border-gray-300'}`}
               >
                 {option.charAt(0).toUpperCase() + option.slice(1)}
               </button>
             ))}
           </div>
-          {datosPaciente.colesterol === 'sí' && (
+          {datosPaciente.colesterol === '' && (
             <input
               type="number"
               name="colesterol"
-              value={datosPaciente.colesterol === 'No' ? '' : datosPaciente.colesterol}
-              onChange={manejarCambio}
+              value={datosPaciente.colesterol !== null ? datosPaciente.colesterol : ''}
+              onChange={(e) => setDatosPaciente(prev => ({ ...prev, colesterol: e.target.value }))}
               className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="Ingrese su nivel de colesterol"
             />
           )}
         </div>
+
 
         {/* Presión Arterial */}
         <div className="flex flex-col">
