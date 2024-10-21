@@ -32,18 +32,21 @@ function EditarPaciente() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    setLoading(true); // Asegúrate de que loading se establezca en true al iniciar la carga
     axios.get(`/api/pacientes/${id}`)
       .then(response => {
+        console.log('Datos del paciente:', response.data); // Verifica los datos recibidos
         setDatosPaciente(response.data);
         calcularIMC(response.data);
         calcularRiesgo(response.data);
-        setLoading(false);
+        setLoading(false); // Cambia loading a false solo después de procesar los datos
       })
       .catch(error => {
         console.error('Error al obtener los datos del paciente:', error);
-        setLoading(false);
+        setLoading(false); // También establece loading en false en caso de error
       });
   }, [id]);
+  
 
   const calcularIMC = (data) => {
     const peso = parseFloat(data.peso);
