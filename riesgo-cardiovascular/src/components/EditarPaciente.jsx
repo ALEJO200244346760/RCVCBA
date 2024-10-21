@@ -11,7 +11,6 @@ import {
 } from './ConstFormulario';
 import { calcularRiesgoCardiovascular } from './Calculadora';
 
-
 const DatosPacienteInicial = {
   cuil: '',
   telefono: '',
@@ -46,17 +45,24 @@ function EditarPaciente() {
   const [formData, setFormData] = useState(DatosPacienteInicial);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [mostrarModal, setMostrarModal] = useState(false);
-  const [nivelRiesgo, setNivelRiesgo] = useState(''); // Mover aquí
-
 
   // Obtener datos del paciente al cargar el componente
   useEffect(() => {
     axios.get(`/api/pacientes/${id}`)
       .then(response => {
-        setFormData(response.data);
-        calcularIMC(response.data); // Calcular IMC al cargar los datos
-        calcularRiesgo(response.data); // Calcular riesgo al cargar los datos
+        const data = {
+          ...DatosPacienteInicial,
+          ...response.data,
+          notificacionRiesgo: response.data.notificacionRiesgo || [],
+          hipertensionArterial: response.data.hipertensionArterial || [],
+          medicacionPrescripcion: response.data.medicacionPrescripcion || [],
+          medicacionDispensa: response.data.medicacionDispensa || [],
+          tabaquismo: response.data.tabaquismo || [],
+          laboratorio: response.data.laboratorio || []
+        };
+        setFormData(data);
+        calcularIMC(data);
+        calcularRiesgo(data);
         setLoading(false);
       })
       .catch(error => {
@@ -72,7 +78,7 @@ function EditarPaciente() {
     if (peso && tallaCm) {
       const tallaM = tallaCm / 100; // Convertir centímetros a metros
       const imc = peso / (tallaM * tallaM);
-      setFormData(prev => ({ ...prev, imc: imc.toFixed(2) })); // Guarda el IMC en el estado
+      setFormData(prev => ({ ...prev, imc: imc.toFixed(2) }));
     }
   };
 
@@ -81,7 +87,7 @@ function EditarPaciente() {
     const { edad, genero, diabetes, fumador, presionArterial, colesterol, infarto, acv, renal } = data;
 
     if (infarto === "Sí" || acv === "Sí" || renal === "Sí") {
-      setFormData(prev => ({ ...prev, nivelRiesgo: ">20% <30% Alto" })); // Guarda el nivel de riesgo en el estado
+      setFormData(prev => ({ ...prev, nivelRiesgo: ">20% <30% Alto" }));
       return;
     }
 
@@ -89,7 +95,7 @@ function EditarPaciente() {
     const presionAjustada = ajustarPresionArterial(parseInt(presionArterial, 10));
 
     const nivelRiesgoCalculado = calcularRiesgoCardiovascular(edadAjustada, genero, diabetes, fumador, presionAjustada, colesterol);
-    setFormData(prev => ({ ...prev, nivelRiesgo: nivelRiesgoCalculado })); // Guarda el nivel de riesgo en el estado
+    setFormData(prev => ({ ...prev, nivelRiesgo: nivelRiesgoCalculado }));
   };
 
   // Ajustar la edad según criterios establecidos
@@ -127,7 +133,7 @@ function EditarPaciente() {
   const manejarCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
     setFormData(prev => {
-      const currentList = prev[name];
+      const currentList = prev[name] || []; // Asegurarse de que sea un arreglo
       if (checked) {
         return { ...prev, [name]: [...currentList, value] };
       } else {
@@ -188,7 +194,7 @@ function EditarPaciente() {
       return;
     }
 
-    axios.put(`/api/pacientes/${id}`, formData) // Incluye formData que ahora tiene el nivelRiesgo
+    axios.put(`/api/pacientes/${id}`, formData)
       .then(() => {
         navigate('/estadisticas');
       })
@@ -267,7 +273,7 @@ function EditarPaciente() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Medicacion dispensa</label>
+          <label className="block text-sm font-medium text-gray-700">Medicacion Dispensa</label>
           {listaMedicacionDispensa.map(item => (
             <div key={item}>
               <input
@@ -315,16 +321,15 @@ function EditarPaciente() {
         </div>
 
         <button
-  type="submit"
-  className="px-4 py-2 bg-indigo-600 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700"
->
-  Guardar Cambios
-</button>
-</form>
-{error && <p className="text-red-500">{error}</p>} {/* Mostrar errores */}
-
-</div>
-);
+          type="submit"
+          className="px-4 py-2 bg-indigo-600 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700"
+        >
+          Guardar Cambios
+        </button>
+      </form>
+      {error && <p className="text-red-500">{error}</p>} {/* Mostrar errores */}
+    </div>
+  );
 }
 
 export default EditarPaciente;
