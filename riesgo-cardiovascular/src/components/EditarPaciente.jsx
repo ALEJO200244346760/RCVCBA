@@ -46,7 +46,7 @@ function EditarPaciente() {
   const [datosPaciente, setDatosPaciente] = useState(DatosPacienteInicial);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [nivelColesterolConocido, setNivelColesterolConocido] = useState(false); // Añadir aquí
+  const [nivelColesterolConocido, setNivelColesterolConocido] = useState(datosPaciente.colesterol !== 'No' && datosPaciente.colesterol !== '');
 
 
   useEffect(() => {
@@ -54,6 +54,7 @@ function EditarPaciente() {
     axios.get(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`)
       .then(response => {
         setDatosPaciente(response.data);
+        setNivelColesterolConocido(response.data.colesterol !== 'No' && response.data.colesterol !== '');
         calcularIMC(response.data);
         calcularRiesgo(response.data);
         setLoading(false);
@@ -79,12 +80,12 @@ function EditarPaciente() {
   };
 
   const manejarSeleccionColesterol = (value) => {
-      const conoceColesterol = value === 'si';
-      setNivelColesterolConocido(conoceColesterol);
-      setDatosPaciente(prev => ({
-          ...prev,
-          colesterol: conoceColesterol ? '' : 'No', // establece a '' si conoce el nivel
-      }));
+    const conoceColesterol = value === 'si';
+    setNivelColesterolConocido(conoceColesterol);
+    setDatosPaciente(prev => ({
+      ...prev,
+      colesterol: conoceColesterol ? (prev.colesterol === 'No' ? '' : prev.colesterol) : 'No',
+    }));
   };
 
   const calcularIMC = (data) => {
@@ -325,14 +326,14 @@ function EditarPaciente() {
             </div>
             {nivelColesterolConocido && (
                 <input
-                    type="number"
-                    name="colesterol"
-                    value={datosPaciente.colesterol === 'No' ? '' : datosPaciente.colesterol} // Muestra vacío si es 'No'
-                    onChange={(e) => setDatosPaciente(prev => ({ ...prev, colesterol: e.target.value }))}
-                    className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="Ingrese su nivel de colesterol"
-                    style={{ appearance: 'none' }}
-                />
+                type="number"
+                name="colesterol"
+                value={nivelColesterolConocido ? datosPaciente.colesterol : ''} // Muestra el valor de colesterol si se conoce
+                onChange={(e) => setDatosPaciente(prev => ({ ...prev, colesterol: e.target.value }))}
+                className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Ingrese su nivel de colesterol"
+                style={{ appearance: 'none' }}
+              />
             )}
         </div>
 
