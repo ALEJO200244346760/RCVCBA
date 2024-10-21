@@ -749,6 +749,7 @@ const Formulario = () => {
                                 <p><strong>Diabetes:</strong> {pacienteEncontrado.diabetes}</p>
                                 <p><strong>Fumador:</strong> {pacienteEncontrado.fumador}</p>
                                 <p><strong>Presión Arterial sistólica:</strong> {pacienteEncontrado.presionArterial}</p>
+                                <p><strong>Tensión Arterial Mínima:</strong> {pacienteEncontrado.taMin}</p>
                                 <p><strong>Colesterol:</strong> {pacienteEncontrado.colesterol}</p>
                                 <p><strong>Peso:</strong> {pacienteEncontrado.peso}</p>
                                 <p><strong>Talla:</strong> {pacienteEncontrado.talla}</p>
@@ -1107,6 +1108,7 @@ const Formulario = () => {
                 <p><strong>Diabetes:</strong> {datosPaciente.diabetes}</p>
                 <p><strong>Fumador:</strong> {datosPaciente.fumador}</p>
                 <p><strong>Presión Arterial sistólica:</strong> {datosPaciente.presionArterial}</p>
+                <p><strong>Tensión Arterial Mínima:</strong> {datosPaciente.taMin}</p>
                 <p><strong>Colesterol:</strong> {datosPaciente.colesterol || 'No especificado'}</p>
                 <p><strong>Peso:</strong> {datosPaciente.peso || 'No especificado'}</p>
                 <p><strong>Talla:</strong> {datosPaciente.talla || 'No especificada'} cm</p>

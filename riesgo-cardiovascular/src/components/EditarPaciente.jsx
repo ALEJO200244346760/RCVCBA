@@ -78,7 +78,7 @@ function EditarPaciente() {
     if (peso && tallaCm) {
       const tallaM = tallaCm / 100; // Convertir centímetros a metros
       const imc = peso / (tallaM * tallaM);
-      setFormData(prev => ({ ...prev, imc: imc.toFixed(2) }));
+      setFormData(prev => ({ ...prev, imc: imc.toFixed(2) })); // Guarda el IMC en el estado
     }
   };
 
@@ -194,18 +194,7 @@ function EditarPaciente() {
       return;
     }
 
-    // Convertir los campos de lista a cadenas
-    const dataToSend = {
-      ...formData,
-      notificacionRiesgo: formData.notificacionRiesgo.join(','),
-      hipertensionArterial: formData.hipertensionArterial.join(','),
-      medicacionPrescripcion: formData.medicacionPrescripcion.join(','),
-      medicacionDispensa: formData.medicacionDispensa.join(','),
-      tabaquismo: formData.tabaquismo.join(','),
-      laboratorio: formData.laboratorio.join(',')
-    };
-
-    axios.put(`/api/pacientes/${id}`, dataToSend)
+    axios.put(`/api/pacientes/${id}`, formData)
       .then(() => {
         navigate('/estadisticas');
       })
