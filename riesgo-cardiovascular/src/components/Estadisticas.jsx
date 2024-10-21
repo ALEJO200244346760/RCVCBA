@@ -145,25 +145,25 @@ function Estadisticas() {
         return (
           edadValida &&
           cinturaValida &&
-        (filtros.genero === '' || paciente.genero.toLowerCase() === filtros.genero.toLowerCase()) &&
-        (filtros.obra === '' || paciente.obra.toLowerCase() === filtros.obra.toLowerCase()) &&
-        (filtros.doctor === '' || paciente.doctor.toLowerCase() === filtros.doctor.toLowerCase()) &&
-        (filtros.diabetes === '' || paciente.diabetes.toLowerCase() === filtros.diabetes.toLowerCase()) &&
-        (filtros.fumador === '' || paciente.fumador.toLowerCase() === filtros.fumador.toLowerCase()) &&
-        (presionArterialFiltro === null || paciente.presionArterial.toString() === presionArterialFiltro) &&
-        (
-          nivelColesterolConocido === 'todos' || 
-          (nivelColesterolConocido === 'no' && (paciente.colesterol === 'No' || paciente.colesterol === null)) || // Si el nivel de colesterol es "no", solo mostrar pacientes con colesterol "No" o null
-          (nivelColesterolConocido === 'si' && paciente.colesterol !== null && paciente.colesterol !== 'No' && (filtros.nivelColesterol === '' || nivelColesterolPaciente === nivelColesterolFiltro)) // Si se conoce el colesterol, filtrar por nivel
-        ) &&
-        (filtros.nivelRiesgo === '' || paciente.nivelRiesgo.toLowerCase() === filtros.nivelRiesgo.toLowerCase()) &&
-        (filtros.ubicacion === '' || (paciente.ubicacion && paciente.ubicacion.toLowerCase() === filtros.ubicacion.toLowerCase())) &&
-        (filtros.imc === '' || filtros.imc === categoriaIMC)&&
-        (filtros.infarto === '' || paciente.infarto.toLowerCase() === filtros.infarto.toLowerCase()) &&
-        (filtros.acv === '' || paciente.acv.toLowerCase() === filtros.acv.toLowerCase()) &&
-        (filtros.hipertenso === '' || paciente.hipertenso.toLowerCase() === filtros.hipertenso.toLowerCase())
-    );
-    });
+          (filtros.genero === '' || (paciente.genero && paciente.genero.toLowerCase() === filtros.genero.toLowerCase())) &&
+          (filtros.obra === '' || (paciente.obra && paciente.obra.toLowerCase() === filtros.obra.toLowerCase())) &&
+          (filtros.doctor === '' || (paciente.doctor && paciente.doctor.toLowerCase() === filtros.doctor.toLowerCase())) &&
+          (filtros.diabetes === '' || (paciente.diabetes && paciente.diabetes.toLowerCase() === filtros.diabetes.toLowerCase())) &&
+          (filtros.fumador === '' || (paciente.fumador && paciente.fumador.toLowerCase() === filtros.fumador.toLowerCase())) &&
+          (presionArterialFiltro === null || paciente.presionArterial.toString() === presionArterialFiltro) &&
+          (
+            nivelColesterolConocido === 'todos' || 
+            (nivelColesterolConocido === 'no' && (paciente.colesterol === 'No' || paciente.colesterol === null)) || 
+            (nivelColesterolConocido === 'si' && paciente.colesterol !== null && paciente.colesterol !== 'No' && (filtros.nivelColesterol === '' || nivelColesterolPaciente === nivelColesterolFiltro))
+          ) &&
+          (filtros.nivelRiesgo === '' || (paciente.nivelRiesgo && paciente.nivelRiesgo.toLowerCase() === filtros.nivelRiesgo.toLowerCase())) &&
+          (filtros.ubicacion === '' || (paciente.ubicacion && paciente.ubicacion.toLowerCase() === filtros.ubicacion.toLowerCase())) &&
+          (filtros.imc === '' || filtros.imc === categoriaIMC) &&
+          (filtros.infarto === '' || (paciente.infarto && paciente.infarto.toLowerCase() === filtros.infarto.toLowerCase())) &&
+          (filtros.acv === '' || (paciente.acv && paciente.acv.toLowerCase() === filtros.acv.toLowerCase())) &&
+          (filtros.hipertenso === '' || (paciente.hipertenso && paciente.hipertenso.toLowerCase() === filtros.hipertenso.toLowerCase()))
+        );
+      });
 
     setPacientesFiltrados(filtrados);
   };
