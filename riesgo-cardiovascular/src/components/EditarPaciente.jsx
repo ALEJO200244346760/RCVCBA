@@ -46,6 +46,8 @@ function EditarPaciente() {
   const [datosPaciente, setDatosPaciente] = useState(DatosPacienteInicial);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [nivelColesterolConocido, setNivelColesterolConocido] = useState(false); // Añadir aquí
+
 
   useEffect(() => {
     setLoading(true);
