@@ -7,8 +7,10 @@ import {
   listaMedicacionPrescripcion,
   listaMedicacionDispensa,
   listaTabaquismo,
-  listaLaboratorio
-} from './ConstFormulario'; // Asegúrate de que estos se importen correctamente
+  listaLaboratorio,
+  listaConsulta,
+  listaPractica
+} from './ConstFormulario'; // Ensure these are correctly imported
 import { calcularRiesgoCardiovascular } from './Calculadora'; // Ensure this is correctly imported
 
 
@@ -40,6 +42,8 @@ const DatosPacienteInicial = {
   medicacionDispensa: [],
   tabaquismo: [],
   laboratorio: [],
+  consulta: [], // Added for handling consulta
+  practica: [], // Added for handling practica
 };
 
 function EditarPaciente() {
@@ -49,7 +53,6 @@ function EditarPaciente() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [nivelColesterolConocido, setNivelColesterolConocido] = useState(datosPaciente.colesterol !== 'No' && datosPaciente.colesterol !== '');
-
 
   useEffect(() => {
     setLoading(true);
@@ -137,11 +140,24 @@ function EditarPaciente() {
 
   const manejarSubmit = async (e) => {
     e.preventDefault();
+
+    const formatList = (list) => (list.length > 0 ? list.join('; ') : '');
+
+    const pacienteFormatted = {
+      ...datosPaciente,
+      notificacionRiesgo: formatList(datosPaciente.notificacionRiesgo),
+      hipertensionArterial: formatList(datosPaciente.hipertensionArterial),
+      medicacionPrescripcion: formatList(datosPaciente.medicacionPrescripcion),
+      medicacionDispensa: formatList(datosPaciente.medicacionDispensa),
+      tabaquismo: formatList(datosPaciente.tabaquismo),
+      laboratorio: formatList(datosPaciente.laboratorio),
+      consulta: formatList(datosPaciente.consulta), // Added consulta
+      practica: formatList(datosPaciente.practica), // Added practica
+    };
+
     try {
-      await axios.put(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`, datosPaciente, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      await axios.put(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`, pacienteFormatted, {
+        headers: { 'Content-Type': 'application/json' },
       });
       navigate('/estadisticas');
     } catch (error) {
@@ -445,6 +461,40 @@ function EditarPaciente() {
           ))}
         </div>
 
+        {/* Consulta */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Consulta</label>
+          {listaConsulta.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="consulta"
+                value={item}
+                checked={datosPaciente.consulta.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Practica */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Práctica</label>
+          {listaPractica.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="practica"
+                value={item}
+                checked={datosPaciente.practica.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+        
         {/* Hipertensión Arterial */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Hipertensión Arterial</label>
