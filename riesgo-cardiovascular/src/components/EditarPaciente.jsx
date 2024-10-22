@@ -129,14 +129,16 @@ function EditarPaciente() {
   const manejarCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
     setDatosPaciente(prev => {
-      const currentList = prev[name];
+      const currentList = prev[name] || []; // Ensure the field is always treated as an array
       if (checked) {
+        // Add the value if checked
         return { ...prev, [name]: [...currentList, value] };
       } else {
+        // Remove the value if unchecked
         return { ...prev, [name]: currentList.filter(item => item !== value) };
       }
     });
-  };
+  };  
 
   const formatList = (list) => {
     // Return a formatted string or an empty string if the list is not an array
@@ -145,19 +147,20 @@ function EditarPaciente() {
 
   const manejarSubmit = async (e) => {
     e.preventDefault();
-
+  
     const pacienteFormatted = {
       ...datosPaciente,
-      notificacionRiesgo: formatList(datosPaciente.notificacionRiesgo),
-      hipertensionArterial: formatList(datosPaciente.hipertensionArterial),
-      medicacionPrescripcion: formatList(datosPaciente.medicacionPrescripcion),
-      medicacionDispensa: formatList(datosPaciente.medicacionDispensa),
-      tabaquismo: formatList(datosPaciente.tabaquismo),
-      laboratorio: formatList(datosPaciente.laboratorio),
-      consulta: formatList(datosPaciente.consulta), // Added consulta
-      practica: formatList(datosPaciente.practica), // Added practica
+      // Ensure all lists are formatted as strings or retain their current values
+      notificacionRiesgo: datosPaciente.notificacionRiesgo ? datosPaciente.notificacionRiesgo.join('; ') : datosPaciente.notificacionRiesgo || "",
+      hipertensionArterial: datosPaciente.hipertensionArterial ? datosPaciente.hipertensionArterial.join('; ') : datosPaciente.hipertensionArterial || "",
+      medicacionPrescripcion: datosPaciente.medicacionPrescripcion ? datosPaciente.medicacionPrescripcion.join('; ') : datosPaciente.medicacionPrescripcion || "",
+      medicacionDispensa: datosPaciente.medicacionDispensa ? datosPaciente.medicacionDispensa.join('; ') : datosPaciente.medicacionDispensa || "",
+      tabaquismo: datosPaciente.tabaquismo ? datosPaciente.tabaquismo.join('; ') : datosPaciente.tabaquismo || "",
+      laboratorio: datosPaciente.laboratorio ? datosPaciente.laboratorio.join('; ') : datosPaciente.laboratorio || "",
+      consulta: datosPaciente.consulta ? datosPaciente.consulta : "", // Retain the existing value if not empty
+      practica: datosPaciente.practica ? datosPaciente.practica : "", // Retain the existing value if not empty
     };
-
+  
     try {
       await axios.put(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`, pacienteFormatted, {
         headers: { 'Content-Type': 'application/json' },
@@ -168,6 +171,7 @@ function EditarPaciente() {
       console.error('Error al actualizar el paciente:', error);
     }
   };
+  
 
   if (loading) return <p>Cargando...</p>;
 
