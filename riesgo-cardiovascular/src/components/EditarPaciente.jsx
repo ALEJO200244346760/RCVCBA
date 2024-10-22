@@ -152,6 +152,7 @@ function EditarPaciente() {
 
   const manejarSubmit = async (e) => {
     e.preventDefault();
+    console.log('Datos a enviar:', datosPaciente); // Añade esto para depurar
     try {
       await axios.put(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`, datosPaciente, {
         headers: {
@@ -164,6 +165,7 @@ function EditarPaciente() {
       console.error('Error al actualizar el paciente:', error);
     }
   };
+  
 
   if (loading) return <p>Cargando...</p>;
 
