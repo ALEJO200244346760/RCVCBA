@@ -58,10 +58,21 @@ function EditarPaciente() {
     setLoading(true);
     axios.get(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`)
       .then(response => {
-        setDatosPaciente(response.data);
-        setNivelColesterolConocido(response.data.colesterol !== 'No' && response.data.colesterol !== '');
-        calcularIMC(response.data);
-        calcularRiesgo(response.data);
+        const { data } = response;
+        setDatosPaciente({
+          ...data,
+          notificacionRiesgo: data.notificacionRiesgo || [],
+          consulta: data.consulta || [],
+          practica: data.practica || [],
+          hipertensionArterial: data.hipertensionArterial || [],
+          medicacionPrescripcion: data.medicacionPrescripcion || [],
+          medicacionDispensa: data.medicacionDispensa || [],
+          tabaquismo: data.tabaquismo || [],
+          laboratorio: data.laboratorio || [],
+        });
+        setNivelColesterolConocido(data.colesterol !== 'No' && data.colesterol !== '');
+        calcularIMC(data);
+        calcularRiesgo(data);
         setLoading(false);
       })
       .catch(error => {
@@ -69,6 +80,7 @@ function EditarPaciente() {
         setLoading(false);
       });
   }, [id]);
+  
 
   const ajustarEdad = (edad) => {
     if (edad < 50) return 40;
@@ -129,7 +141,7 @@ function EditarPaciente() {
   const manejarCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
     setDatosPaciente(prev => {
-      const currentList = prev[name] || []; // Ensure currentList is an array
+      const currentList = prev[name];
       if (checked) {
         return { ...prev, [name]: [...currentList, value] };
       } else {
