@@ -111,7 +111,6 @@ export const listaConsulta = [
 export const listaPractica = [
 
     "P004 - ELECTROCARDIOGRAMA",
-    "A98 - MEDICINA PREVEN/PROMOCIÓN SALUD",
 ];
 
 export const listaHipertensionArterial = [
