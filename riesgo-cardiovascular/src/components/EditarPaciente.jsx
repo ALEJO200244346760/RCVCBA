@@ -271,6 +271,102 @@ function EditarPaciente() {
             ))}
           </div>
         </div>
+
+        {/* Hipertenso */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
+          <div className="flex space-x-2 mb-2">
+            {['Sí', 'No'].map(option => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setDatosPaciente(prev => ({ ...prev, hipertenso: option }))}
+                className={`p-2 border rounded-md ${datosPaciente.hipertenso === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Infarto */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">¿Ha tenido un infarto?</label>
+          <div className="flex space-x-2 mb-2">
+            {['Sí', 'No'].map(option => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setDatosPaciente(prev => ({ ...prev, infarto: option }))}
+                className={`p-2 border rounded-md ${datosPaciente.infarto === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* ACV */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">¿Ha tenido un ACV?</label>
+          <div className="flex space-x-2 mb-2">
+            {['Sí', 'No'].map(option => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setDatosPaciente(prev => ({ ...prev, acv: option }))}
+                className={`p-2 border rounded-md ${datosPaciente.acv === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Enfermedad Renal Crónica */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad Renal Crónica?</label>
+          <div className="flex space-x-2 mb-2">
+            {['Sí', 'No'].map(option => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setDatosPaciente(prev => ({ ...prev, renal: option }))}
+                className={`p-2 border rounded-md ${datosPaciente.renal === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Colesterol */}
+        <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
+            <div className="flex space-x-2 mb-2">
+                {['si', 'no'].map(option => (
+                    <button
+                        key={option}
+                        type="button"
+                        onClick={() => manejarSeleccionColesterol(option)}
+                        className={`p-2 border rounded-md ${nivelColesterolConocido === (option === 'si') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                    >
+                        {option.charAt(0).toUpperCase() + option.slice(1)}
+                    </button>
+                ))}
+            </div>
+            {nivelColesterolConocido && (
+                <input
+                type="number"
+                name="colesterol"
+                value={nivelColesterolConocido ? datosPaciente.colesterol : ''} // Muestra el valor de colesterol si se conoce
+                onChange={(e) => setDatosPaciente(prev => ({ ...prev, colesterol: e.target.value }))}
+                className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Ingrese su nivel de colesterol"
+                style={{ appearance: 'none' }}
+              />
+            )}
+        </div>
         {/* Presión arterial */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Presión Arterial:</label>
@@ -293,24 +389,7 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-        {/* Colesterol */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">Colesterol:</label>
-          <select
-            name="colesterol"
-            value={datosPaciente.colesterol}
-            onChange={(e) => {
-              manejarCambio(e);
-              manejarSeleccionColesterol(e.target.value);
-            }}
-            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="">Seleccione...</option>
-            <option value="No">No</option>
-            <option value="si">Sí</option>
-            <option value="conocido">Conocido</option>
-          </select>
-        </div>
+      
         {/* Peso */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Peso (kg):</label>
