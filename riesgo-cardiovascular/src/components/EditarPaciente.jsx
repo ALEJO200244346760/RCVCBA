@@ -3,14 +3,15 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   listaNotificacionRiesgo,
+  listaConsulta,
   listaHipertensionArterial,
   listaMedicacionPrescripcion,
   listaMedicacionDispensa,
   listaTabaquismo,
-  listaLaboratorio
+  listaLaboratorio,
+  listaPractica
 } from './ConstFormulario'; // Asegúrate de que estos se importen correctamente
-import { calcularRiesgoCardiovascular } from './Calculadora'; // Ensure this is correctly imported
-
+import { calcularRiesgoCardiovascular } from './Calculadora'; // Asegúrate de que esto esté correctamente importado
 
 const DatosPacienteInicial = {
   cuil: '',
@@ -34,6 +35,8 @@ const DatosPacienteInicial = {
   renal: '',
   hipertenso: '',
   notificacionRiesgo: [],
+  consulta: [],
+  practica: [],
   hipertensionArterial: [],
   medicacionPrescripcion: [],
   medicacionDispensa: [],
@@ -49,15 +52,25 @@ function EditarPaciente() {
   const [error, setError] = useState('');
   const [nivelColesterolConocido, setNivelColesterolConocido] = useState(datosPaciente.colesterol !== 'No' && datosPaciente.colesterol !== '');
 
-
   useEffect(() => {
     setLoading(true);
     axios.get(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`)
       .then(response => {
-        setDatosPaciente(response.data);
-        setNivelColesterolConocido(response.data.colesterol !== 'No' && response.data.colesterol !== '');
-        calcularIMC(response.data);
-        calcularRiesgo(response.data);
+        const { data } = response;
+        setDatosPaciente({
+          ...data,
+          notificacionRiesgo: data.notificacionRiesgo || [],
+          consulta: data.consulta || [],
+          practica: data.practica || [],
+          hipertensionArterial: data.hipertensionArterial || [],
+          medicacionPrescripcion: data.medicacionPrescripcion || [],
+          medicacionDispensa: data.medicacionDispensa || [],
+          tabaquismo: data.tabaquismo || [],
+          laboratorio: data.laboratorio || [],
+        });
+        setNivelColesterolConocido(data.colesterol !== 'No' && data.colesterol !== '');
+        calcularIMC(data);
+        calcularRiesgo(data);
         setLoading(false);
       })
       .catch(error => {
@@ -74,10 +87,10 @@ function EditarPaciente() {
   };
 
   const ajustarPresionArterial = (presion) => {
-      if (presion < 140) return 120;
-      if (presion >= 140 && presion <= 159) return 140;
-      if (presion >= 160 && presion <= 179) return 160;
-      return 180;
+    if (presion < 140) return 120;
+    if (presion >= 140 && presion <= 159) return 140;
+    if (presion >= 160 && presion <= 179) return 160;
+    return 180;
   };
 
   const manejarSeleccionColesterol = (value) => {
@@ -93,7 +106,7 @@ function EditarPaciente() {
     const peso = parseFloat(data.peso);
     const tallaCm = parseFloat(data.talla);
     if (peso && tallaCm) {
-      const tallaM = tallaCm / 100; 
+      const tallaM = tallaCm / 100;
       const imc = peso / (tallaM * tallaM);
       setDatosPaciente(prev => ({ ...prev, imc: imc.toFixed(2) }));
     }
@@ -136,6 +149,7 @@ function EditarPaciente() {
 
   const manejarSubmit = async (e) => {
     e.preventDefault();
+    console.log(datosPaciente);
     try {
       await axios.put(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`, datosPaciente, {
         headers: {
@@ -155,6 +169,7 @@ function EditarPaciente() {
     <div className="flex-1 bg-gray-100 p-4 rounded-md">
       <h1 className="text-3xl font-bold mb-6">Editar Paciente</h1>
       <form onSubmit={manejarSubmit} className="w-full space-y-6">
+        {/* Campos básicos */}
         {/* Cuil */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">DNI:</label>
@@ -166,7 +181,6 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
         {/* Teléfono */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Teléfono:</label>
@@ -178,7 +192,6 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
         {/* Edad */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Edad:</label>
@@ -190,7 +203,6 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
         {/* Obra social */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">¿Tiene Obra Social?</label>
@@ -199,7 +211,7 @@ function EditarPaciente() {
               <button
                 key={option}
                 type="button"
-                onClick={() => setDatosPaciente(prev => ({ ...prev, renal: option }))}
+                onClick={() => setDatosPaciente(prev => ({ ...prev, obra: option }))}
                 className={`p-2 border rounded-md ${datosPaciente.obra === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
               >
                 {option}
@@ -207,7 +219,6 @@ function EditarPaciente() {
             ))}
           </div>
         </div>
-
         {/* Género */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Género:</label>
@@ -216,148 +227,52 @@ function EditarPaciente() {
               <button
                 key={option}
                 type="button"
-                className={`p-2 border rounded ${datosPaciente.genero === option ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
                 onClick={() => setDatosPaciente(prev => ({ ...prev, genero: option }))}
+                className={`p-2 border rounded-md ${datosPaciente.genero === option ? 'bg-blue-500 text-white' : 'border-gray-300'}`}
               >
                 {option.charAt(0).toUpperCase() + option.slice(1)}
               </button>
             ))}
           </div>
         </div>
-
         {/* Diabetes */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Diabetes:</label>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 mb-2">
             {['Sí', 'No'].map(option => (
               <button
                 key={option}
                 type="button"
                 onClick={() => setDatosPaciente(prev => ({ ...prev, diabetes: option }))}
-                className={`p-2 border rounded-md ${datosPaciente.diabetes === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                className={`p-2 border rounded-md ${datosPaciente.diabetes === option ? 'bg-red-500 text-white' : 'border-gray-300'}`}
               >
-                {option.charAt(0).toUpperCase() + option.slice(1)}
+                {option}
               </button>
             ))}
           </div>
         </div>
-
         {/* Fumador */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">¿Es fumador?</label>
-          <div className="flex space-x-2 mb-2">
-            {['sí', 'no'].map(option => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => setDatosPaciente(prev => ({ ...prev, fumador: option }))}
-                className={`p-2 border rounded-md ${datosPaciente.fumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-              >
-                {option.charAt(0).toUpperCase() + option.slice(1)}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Hipertenso */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
+          <label className="text-sm font-medium text-gray-700">¿Fuma?</label>
           <div className="flex space-x-2 mb-2">
             {['Sí', 'No'].map(option => (
               <button
                 key={option}
                 type="button"
-                onClick={() => setDatosPaciente(prev => ({ ...prev, hipertenso: option }))}
-                className={`p-2 border rounded-md ${datosPaciente.hipertenso === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                onClick={() => {
+                  setDatosPaciente(prev => ({ ...prev, fumador: option }));
+                  manejarSeleccionColesterol(datosPaciente.colesterol);
+                }}
+                className={`p-2 border rounded-md ${datosPaciente.fumador === option ? 'bg-orange-500 text-white' : 'border-gray-300'}`}
               >
                 {option}
               </button>
             ))}
           </div>
         </div>
-
-        {/* Infarto */}
+        {/* Presión arterial */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">¿Ha tenido un infarto?</label>
-          <div className="flex space-x-2 mb-2">
-            {['Sí', 'No'].map(option => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => setDatosPaciente(prev => ({ ...prev, infarto: option }))}
-                className={`p-2 border rounded-md ${datosPaciente.infarto === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* ACV */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">¿Ha tenido un ACV?</label>
-          <div className="flex space-x-2 mb-2">
-            {['Sí', 'No'].map(option => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => setDatosPaciente(prev => ({ ...prev, acv: option }))}
-                className={`p-2 border rounded-md ${datosPaciente.acv === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Enfermedad Renal Crónica */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad Renal Crónica?</label>
-          <div className="flex space-x-2 mb-2">
-            {['Sí', 'No'].map(option => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => setDatosPaciente(prev => ({ ...prev, renal: option }))}
-                className={`p-2 border rounded-md ${datosPaciente.renal === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Colesterol */}
-        <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
-            <div className="flex space-x-2 mb-2">
-                {['si', 'no'].map(option => (
-                    <button
-                        key={option}
-                        type="button"
-                        onClick={() => manejarSeleccionColesterol(option)}
-                        className={`p-2 border rounded-md ${nivelColesterolConocido === (option === 'si') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-                    >
-                        {option.charAt(0).toUpperCase() + option.slice(1)}
-                    </button>
-                ))}
-            </div>
-            {nivelColesterolConocido && (
-                <input
-                type="number"
-                name="colesterol"
-                value={nivelColesterolConocido ? datosPaciente.colesterol : ''} // Muestra el valor de colesterol si se conoce
-                onChange={(e) => setDatosPaciente(prev => ({ ...prev, colesterol: e.target.value }))}
-                className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Ingrese su nivel de colesterol"
-                style={{ appearance: 'none' }}
-              />
-            )}
-        </div>
-
-        {/* Presión Arterial */}
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">TA Máx.:</label>
+          <label className="text-sm font-medium text-gray-700">Presión Arterial:</label>
           <input
             type="number"
             name="presionArterial"
@@ -366,10 +281,9 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
-        {/* Tensión Arterial Mínima */}
+        {/* Ta mínima */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">TA Min.:</label>
+          <label className="text-sm font-medium text-gray-700">TA Mínima:</label>
           <input
             type="number"
             name="taMin"
@@ -378,7 +292,24 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
+        {/* Colesterol */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Colesterol:</label>
+          <select
+            name="colesterol"
+            value={datosPaciente.colesterol}
+            onChange={(e) => {
+              manejarCambio(e);
+              manejarSeleccionColesterol(e.target.value);
+            }}
+            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="">Seleccione...</option>
+            <option value="No">No</option>
+            <option value="si">Sí</option>
+            <option value="conocido">Conocido</option>
+          </select>
+        </div>
         {/* Peso */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Peso (kg):</label>
@@ -390,7 +321,6 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
         {/* Talla */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Talla (cm):</label>
@@ -402,7 +332,6 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
         {/* Cintura */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Cintura (cm):</label>
@@ -414,147 +343,138 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
-        {/* Mostrar el nivel de riesgo */}
+        {/* Doctor */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Médico de cabecera:</label>
+          <input
+            type="text"
+            name="doctor"
+            value={datosPaciente.doctor}
+            onChange={manejarCambio}
+            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+        {/* IMC */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">IMC:</label>
+          <input
+            type="text"
+            name="imc"
+            value={datosPaciente.imc}
+            readOnly
+            className="mt-1 p-2 border border-gray-300 rounded-md bg-gray-200"
+          />
+        </div>
+        {/* Nivel de riesgo */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Nivel de Riesgo:</label>
           <input
             type="text"
+            name="nivelRiesgo"
             value={datosPaciente.nivelRiesgo}
             readOnly
             className="mt-1 p-2 border border-gray-300 rounded-md bg-gray-200"
           />
         </div>
-
-        {/* Notificación de Riesgo */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Notificación de Riesgo</label>
+        {/* Notificación de riesgo */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Notificación de Riesgo:</label>
           {listaNotificacionRiesgo.map(item => (
             <div key={item}>
-              <input
-                type="checkbox"
-                name="notificacionRiesgo"
-                value={item}
-                checked={datosPaciente.notificacionRiesgo.includes(item)}
-                onChange={manejarCheckboxChange}
-                className="mr-2"
-              />
-              {item}
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  value={item}
+                  checked={datosPaciente.notificacionRiesgo.includes(item)}
+                  onChange={manejarCheckboxChange}
+                  name="notificacionRiesgo"
+                  className="form-checkbox h-5 w-5 text-indigo-600"
+                />
+                <span className="ml-2 text-gray-700">{item}</span>
+              </label>
             </div>
           ))}
         </div>
-
-        {/* Hipertensión Arterial */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Hipertensión Arterial</label>
+        {/* Consultas */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Consulta:</label>
+          {listaConsulta.map(item => (
+            <div key={item}>
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  value={item}
+                  checked={datosPaciente.consulta.includes(item)}
+                  onChange={manejarCheckboxChange}
+                  name="consulta"
+                  className="form-checkbox h-5 w-5 text-indigo-600"
+                />
+                <span className="ml-2 text-gray-700">{item}</span>
+              </label>
+            </div>
+          ))}
+        </div>
+        {/* Prácticas */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Práctica:</label>
+          {listaPractica.map(item => (
+            <div key={item}>
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  value={item}
+                  checked={datosPaciente.practica.includes(item)}
+                  onChange={manejarCheckboxChange}
+                  name="practica"
+                  className="form-checkbox h-5 w-5 text-indigo-600"
+                />
+                <span className="ml-2 text-gray-700">{item}</span>
+              </label>
+            </div>
+          ))}
+        </div>
+        {/* Hipertensión arterial */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Hipertensión Arterial:</label>
           {listaHipertensionArterial.map(item => (
             <div key={item}>
-              <input
-                type="checkbox"
-                name="hipertensionArterial"
-                value={item}
-                checked={datosPaciente.hipertensionArterial.includes(item)}
-                onChange={manejarCheckboxChange}
-              />
-              {item}
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  value={item}
+                  checked={datosPaciente.hipertensionArterial.includes(item)}
+                  onChange={manejarCheckboxChange}
+                  name="hipertensionArterial"
+                  className="form-checkbox h-5 w-5 text-indigo-600"
+                />
+                <span className="ml-2 text-gray-700">{item}</span>
+              </label>
             </div>
           ))}
         </div>
-
         {/* Medicación Prescripción */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Medicacion Prescripcion</label>
-          {listaMedicacionPrescripcion.map(item => (
-            <div key={item}>
-              <input
-                type="checkbox"
-                name="medicacionPrescripcion"
-                value={item}
-                checked={datosPaciente.medicacionPrescripcion.includes(item)}
-                onChange={manejarCheckboxChange}
-              />
-              {item}
-            </div>
-          ))}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">Medicación Prescripción:</label>
+          <input
+            type="text"
+            name="medicacion"
+            value={datosPaciente.medicacion}
+            onChange={manejarCambio}
+            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+          />
         </div>
-
-        {/* Medicación Dispensa */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Medicacion Dispensa</label>
-          {listaMedicacionDispensa.map(item => (
-            <div key={item}>
-              <input
-                type="checkbox"
-                name="medicacionDispensa"
-                value={item}
-                checked={datosPaciente.medicacionDispensa.includes(item)}
-                onChange={manejarCheckboxChange}
-              />
-              {item}
-            </div>
-          ))}
+        {/* Botón de envío */}
+        <div className="flex justify-end mt-4">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
+          >
+            Guardar Paciente
+          </button>
         </div>
-
-        {/* Tabaquismo */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Tabaquismo</label>
-          {listaTabaquismo.map(item => (
-            <div key={item}>
-              <input
-                type="checkbox"
-                name="tabaquismo"
-                value={item}
-                checked={datosPaciente.tabaquismo.includes(item)}
-                onChange={manejarCheckboxChange}
-              />
-              {item}
-            </div>
-          ))}
-        </div>
-
-        {/* Laboratorio */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Laboratorio</label>
-          {listaLaboratorio.map(item => (
-            <div key={item}>
-              <input
-                type="checkbox"
-                name="laboratorio"
-                value={item}
-                checked={datosPaciente.laboratorio.includes(item)}
-                onChange={manejarCheckboxChange}
-              />
-              {item}
-            </div>
-          ))}
-        </div>
-
-
-        {/* Doctor */}
-        <div className="flex flex-col mt-4">
-          <div className="flex justify-end space-x-2">
-            {['doctor1', 'doctor2', 'doctor3'].map(doctor => (
-              <button
-                key={doctor}
-                type="button"
-                className={`p-2 border rounded ${datosPaciente.doctor === doctor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
-                onClick={() => setDatosPaciente(prev => ({ ...prev, doctor }))}
-              >
-                {doctor.charAt(0).toUpperCase() + doctor.slice(1)}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Botón de guardar */}
-        <button type="submit" className="w-full py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600">
-          Guardar Cambios
-        </button>
-
-        {error && <p className="text-red-500">{error}</p>}
       </form>
     </div>
   );
-}
+};
 
 export default EditarPaciente;
