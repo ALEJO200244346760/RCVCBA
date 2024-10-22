@@ -15,6 +15,7 @@ import { calcularRiesgoCardiovascular } from './Calculadora'; // Asegúrate de q
 
 const DatosPacienteInicial = {
   cuil: '',
+  ubicacion: '',
   telefono: '',
   edad: '',
   obra: '',
@@ -455,13 +456,34 @@ function EditarPaciente() {
         {/* Medicación Prescripción */}
         <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700">Medicación Prescripción:</label>
-          <input
-            type="text"
-            name="medicacion"
-            value={datosPaciente.medicacion}
-            onChange={manejarCambio}
-            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-          />
+          {listaMedicacionPrescripcion.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="medicacionPrescripcion"
+                value={item}
+                checked={datosPaciente.medicacionPrescripcion.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+        {/* Medicación Dispensa */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Medicacion Dispensa</label>
+          {listaMedicacionDispensa.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="medicacionDispensa"
+                value={item}
+                checked={datosPaciente.medicacionDispensa.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
         </div>
         {/* Tabaquismo */}
         <div>
