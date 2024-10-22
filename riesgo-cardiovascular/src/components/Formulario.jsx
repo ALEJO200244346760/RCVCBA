@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { calcularRiesgoCardiovascular } from './Calculadora';
-import { Advertencia, DatosPacienteInicial, obtenerColorRiesgo, obtenerTextoRiesgo,listaNotificacionRiesgo, listaHipertensionArterial, listaMedicacionPrescripcion, listaMedicacionDispensa, listaTabaquismo, listaLaboratorio } from './ConstFormulario';
+import { Advertencia, DatosPacienteInicial, obtenerColorRiesgo, obtenerTextoRiesgo,listaNotificacionRiesgo, listaHipertensionArterial, listaMedicacionPrescripcion, listaMedicacionDispensa, listaTabaquismo, listaLaboratorio, listaPractica } from './ConstFormulario';
 import { getLocations } from '../services/userService';
 import axiosInstance from '../axiosConfig';
 import { useAuth } from '../context/AuthContext'; // Importa el contexto de autenticación
@@ -19,6 +19,7 @@ const Formulario = () => {
     const [medicamentosSeleccionados, setMedicamentosSeleccionados] = useState({
         notificacionRiesgo: [],
         consulta: [],
+        practica: [],
         hipertensionArterial: [],
         medicacionPrescripcion: [],
         medicacionDispensa: [],
@@ -349,6 +350,8 @@ const Formulario = () => {
         const nuevosDatosPaciente = {
             ...datosPaciente,
             notificacionRiesgo: medicamentosSeleccionados.notificacionRiesgo.length > 0 ? medicamentosSeleccionados.notificacionRiesgo.join('; ') : '',
+            consulta: medicamentosSeleccionados.consulta.length > 0 ? medicamentosSeleccionados.consulta.join('; ') : '',
+            practica: medicamentosSeleccionados.practica.length > 0 ? medicamentosSeleccionados.practica.join('; ') : '',
             hipertensionArterial: medicamentosSeleccionados.hipertensionArterial.length > 0 ? medicamentosSeleccionados.hipertensionArterial.join('; ') : '',
             medicacionPrescripcion: medicamentosSeleccionados.medicacionPrescripcion.length > 0 ? medicamentosSeleccionados.medicacionPrescripcion.join('; ') : '',
             medicacionDispensa: medicamentosSeleccionados.medicacionDispensa.length > 0 ? medicamentosSeleccionados.medicacionDispensa.join('; ') : '',
@@ -778,6 +781,8 @@ const Formulario = () => {
                                 <p><strong>Infarto:</strong> {pacienteEncontrado.infarto}</p>
                                 <p><strong>ACV:</strong> {pacienteEncontrado.acv}</p>
                                 <p><strong>Notificacion de riesgo:</strong> {pacienteEncontrado.notificacionRiesgo}</p>
+                                <p><strong>Consutla:</strong> {pacienteEncontrado.consulta}</p>
+                                <p><strong>Práctica:</strong> {pacienteEncontrado.practica}</p>
                                 <p><strong>Hipertension Arterial:</strong> {pacienteEncontrado.hipertensionArterial}</p>
                                 <p><strong>Medicacion Prescripción:</strong> {pacienteEncontrado.medicacionPrescripcion}</p>
                                 <p><strong>Medicacion Dispensa:</strong> {pacienteEncontrado.medicacionDispensa}</p>
@@ -1196,6 +1201,18 @@ const Formulario = () => {
                                         type="checkbox"
                                         value={medicamento}
                                         onChange={(e) => handleMedicamentoChange('consulta', e)}
+                                    />
+                                    <label className="ml-2">{medicamento}</label>
+                                </div>
+                            ))}
+
+                            <h3 className="text-lg font-semibold mt-4 mb-2">PRÁCTICA</h3>
+                            {listaPractica.map((medicamento, index) => (
+                                <div key={index}>
+                                    <input
+                                        type="checkbox"
+                                        value={medicamento}
+                                        onChange={(e) => handleMedicamentoChange('practica', e)}
                                     />
                                     <label className="ml-2">{medicamento}</label>
                                 </div>

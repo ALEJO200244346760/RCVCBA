@@ -23,6 +23,7 @@ export const DatosPacienteInicial = {
     doctor: '',
     notificacionRiesgo: [],
     consulta: [],
+    practica: [],
     hipertensionArterial: [],
     medicacionPrescripcion: [],
     medicacionDispensa: [],
@@ -99,9 +100,18 @@ export const listaNotificacionRiesgo = [
 ];
 
 export const listaConsulta = [
+
     "936*Consulta para la evaluación de riesgo cardiovascular CTC048K22",
     "702*Consulta de seguimiento de persona con riesgo cardiovascular CTC049K22",
     "936*Consulta con cardiología en persona con alto RCV CTC044K22",
+    "C001 - CONSULTA POR CONTROL DE SALUD",
+    "C055 - INTER CONSULTA CON CARDIOLOGIA A98 - MEDICINA PREVEN/PROMOCIÓN SALUD",
+];
+
+export const listaPractica = [
+
+    "P004 - ELECTROCARDIOGRAMA",
+    "A98 - MEDICINA PREVEN/PROMOCIÓN SALUD",
 ];
 
 export const listaHipertensionArterial = [

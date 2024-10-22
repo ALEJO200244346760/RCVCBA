@@ -8,7 +8,8 @@ import {
   listaMedicacionPrescripcion,
   listaMedicacionDispensa,
   listaTabaquismo,
-  listaLaboratorio
+  listaLaboratorio,
+  listaPractica
 } from './ConstFormulario'; // Asegúrate de que estos se importen correctamente
 import { calcularRiesgoCardiovascular } from './Calculadora'; // Ensure this is correctly imported
 
@@ -36,6 +37,7 @@ const DatosPacienteInicial = {
   hipertenso: '',
   notificacionRiesgo: [],
   consulta: [],
+  practica: [],
   hipertensionArterial: [],
   medicacionPrescripcion: [],
   medicacionDispensa: [],
@@ -456,6 +458,24 @@ function EditarPaciente() {
                 name="consulta"
                 value={item}
                 checked={datosPaciente.consulta.includes(item)}
+                onChange={manejarCheckboxChange}
+                className="mr-2"
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Práctica */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Práctica</label>
+          {listaPractica.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="practica"
+                value={item}
+                checked={datosPaciente.practica.includes(item)}
                 onChange={manejarCheckboxChange}
                 className="mr-2"
               />
