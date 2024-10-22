@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   listaNotificacionRiesgo,
+  listaConsulta,
   listaHipertensionArterial,
   listaMedicacionPrescripcion,
   listaMedicacionDispensa,
@@ -34,6 +35,7 @@ const DatosPacienteInicial = {
   renal: '',
   hipertenso: '',
   notificacionRiesgo: [],
+  consulta: [],
   hipertensionArterial: [],
   medicacionPrescripcion: [],
   medicacionDispensa: [],
@@ -436,6 +438,24 @@ function EditarPaciente() {
                 name="notificacionRiesgo"
                 value={item}
                 checked={datosPaciente.notificacionRiesgo.includes(item)}
+                onChange={manejarCheckboxChange}
+                className="mr-2"
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+
+        {/* Consulta */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Consulta</label>
+          {listaConsulta.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="consulta"
+                value={item}
+                checked={datosPaciente.consulta.includes(item)}
                 onChange={manejarCheckboxChange}
                 className="mr-2"
               />

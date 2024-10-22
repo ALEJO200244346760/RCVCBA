@@ -22,6 +22,7 @@ export const DatosPacienteInicial = {
     renal: '',
     doctor: '',
     notificacionRiesgo: [],
+    consulta: [],
     hipertensionArterial: [],
     medicacionPrescripcion: [],
     medicacionDispensa: [],
@@ -95,6 +96,9 @@ export const listaNotificacionRiesgo = [
     "270*Notificación de riesgo cardiovascular 10% ≤ 20% (a partir de 18 años) NTN008K22",
     "270*Notificación de riesgo cardiovascular 20% ≤ 30% (a partir de 18 años) NTN009K22",
     "270*Notificación de riesgo cardiovascular ≥ 30% (a partir de 18 años) NTN010K22",
+];
+
+export const listaConsulta = [
     "936*Consulta para la evaluación de riesgo cardiovascular CTC048K22",
     "702*Consulta de seguimiento de persona con riesgo cardiovascular CTC049K22",
     "936*Consulta con cardiología en persona con alto RCV CTC044K22",

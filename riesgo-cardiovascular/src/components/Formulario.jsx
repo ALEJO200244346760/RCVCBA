@@ -18,6 +18,7 @@ const Formulario = () => {
     const [mostrarModalMedicamentos, setMostrarModalMedicamentos] = useState(false);
     const [medicamentosSeleccionados, setMedicamentosSeleccionados] = useState({
         notificacionRiesgo: [],
+        consulta: [],
         hipertensionArterial: [],
         medicacionPrescripcion: [],
         medicacionDispensa: [],
@@ -1183,6 +1184,18 @@ const Formulario = () => {
                                         type="checkbox"
                                         value={medicamento}
                                         onChange={(e) => handleMedicamentoChange('notificacionRiesgo', e)}
+                                    />
+                                    <label className="ml-2">{medicamento}</label>
+                                </div>
+                            ))}
+
+                            <h3 className="text-lg font-semibold mt-4 mb-2">CONSULTA</h3>
+                            {listaConsulta.map((medicamento, index) => (
+                                <div key={index}>
+                                    <input
+                                        type="checkbox"
+                                        value={medicamento}
+                                        onChange={(e) => handleMedicamentoChange('consulta', e)}
                                     />
                                     <label className="ml-2">{medicamento}</label>
                                 </div>

@@ -228,6 +228,7 @@ function Estadisticas() {
       INFARTO: ${paciente.infarto}
       Nivel de Riesgo: ${paciente.nivelRiesgo}
       NOTIFICACION DE RIESGO: ${paciente.notificacionRiesgo}
+      CONSULTA: ${paciente.consulta}
       HIPERTENCION ARTERIAL: ${paciente.hipertensionArterial}
       MEDICACION PRESCRIPCION: ${paciente.medicacionPrescripcion}
       MEDICACION DISPENSA: ${paciente.medicacionDispensa}
@@ -568,6 +569,7 @@ function Estadisticas() {
                 { label: "Infarto", value: paciente.infarto },
                 { label: "Hipertensión Arterial", value: paciente.hipertensionArterial !== null ? paciente.hipertensionArterial : 'N/A' },
                 { label: "Notificación de Riesgo", value: paciente.notificacionRiesgo !== null ? paciente.notificacionRiesgo : 'N/A' },
+                { label: "Consulta", value: paciente.consulta !== null ? paciente.consulta : 'N/A' },
                 { label: "Medicaciones Dispensa", value: paciente.medicacionDispensa !== null ? paciente.medicacionDispensa : 'N/A' },
                 { label: "Medicaciones Prescripción", value: paciente.medicacionPrescripcion !== null ? paciente.medicacionPrescripcion : 'N/A' },
                 { label: "Tabaquismo", value: paciente.tabaquismo !== null ? paciente.tabaquismo : 'N/A' },

@@ -55,6 +55,8 @@ public class Paciente {
     private String renal;
     @Column(name = "medicamentos_notificacion_riesgo", columnDefinition = "LONGTEXT")
     private String notificacionRiesgo;
+    @Column(name = "medicamentos_consulta", columnDefinition = "LONGTEXT")
+    private String consulta;
     @Column(name = "medicamentos_hipertension_arterial", columnDefinition = "LONGTEXT")
     private String hipertensionArterial;
     @Column(name = "medicamentos_prescripcion", columnDefinition = "LONGTEXT")
