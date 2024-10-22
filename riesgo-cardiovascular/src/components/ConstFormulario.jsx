@@ -13,7 +13,6 @@ export const DatosPacienteInicial = {
     peso: '',
     talla: '', // Talla en centímetros
     cintura: '',
-    ubicacion: '',
     fechaRegistro: new Date().toISOString().split('T')[0],
     imc: '',
     hipertenso: '',
