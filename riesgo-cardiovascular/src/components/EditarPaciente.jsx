@@ -459,7 +459,6 @@ function EditarPaciente() {
                 value={item}
                 checked={datosPaciente.consulta.includes(item)}
                 onChange={manejarCheckboxChange}
-                className="mr-2"
               />
               {item}
             </div>
@@ -477,7 +476,6 @@ function EditarPaciente() {
                 value={item}
                 checked={datosPaciente.practica.includes(item)}
                 onChange={manejarCheckboxChange}
-                className="mr-2"
               />
               {item}
             </div>
