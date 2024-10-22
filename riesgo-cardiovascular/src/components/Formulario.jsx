@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { calcularRiesgoCardiovascular } from './Calculadora';
-import { Advertencia, DatosPacienteInicial, obtenerColorRiesgo, obtenerTextoRiesgo,listaNotificacionRiesgo, listaHipertensionArterial, listaMedicacionPrescripcion, listaMedicacionDispensa, listaTabaquismo, listaLaboratorio, listaPractica } from './ConstFormulario';
+import { Advertencia, DatosPacienteInicial, obtenerColorRiesgo, obtenerTextoRiesgo,listaNotificacionRiesgo, listaConsulta, listaPractica, listaHipertensionArterial, listaMedicacionPrescripcion, listaMedicacionDispensa, listaTabaquismo, listaLaboratorio, listaPractica } from './ConstFormulario';
 import { getLocations } from '../services/userService';
 import axiosInstance from '../axiosConfig';
 import { useAuth } from '../context/AuthContext'; // Importa el contexto de autenticación
