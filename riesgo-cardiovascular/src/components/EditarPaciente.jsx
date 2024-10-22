@@ -139,11 +139,8 @@ function EditarPaciente() {
   };
 
   const formatList = (list) => {
-    if (Array.isArray(list)) {
-      return list.length > 0 ? list.join('; ') : '';
-    }
-    // Return empty string if not an array
-    return '';
+    // Return a formatted string or an empty string if the list is not an array
+    return Array.isArray(list) ? list.join('; ') : '';
   };
 
   const manejarSubmit = async (e) => {
