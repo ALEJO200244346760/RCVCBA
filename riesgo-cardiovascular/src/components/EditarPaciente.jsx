@@ -463,6 +463,53 @@ function EditarPaciente() {
             className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
+        {/* Tabaquismo */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Tabaquismo</label>
+          {listaTabaquismo.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="tabaquismo"
+                value={item}
+                checked={datosPaciente.tabaquismo.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+        {/* Laboratorio */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Laboratorio</label>
+          {listaLaboratorio.map(item => (
+            <div key={item}>
+              <input
+                type="checkbox"
+                name="laboratorio"
+                value={item}
+                checked={datosPaciente.laboratorio.includes(item)}
+                onChange={manejarCheckboxChange}
+              />
+              {item}
+            </div>
+          ))}
+        </div>
+        {/* Doctor */}
+        <div className="flex flex-col mt-4">
+          <div className="flex justify-end space-x-2">
+            {['doctor1', 'doctor2', 'doctor3'].map(doctor => (
+              <button
+                key={doctor}
+                type="button"
+                className={`p-2 border rounded ${datosPaciente.doctor === doctor ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                onClick={() => setDatosPaciente(prev => ({ ...prev, doctor }))}
+              >
+                {doctor.charAt(0).toUpperCase() + doctor.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
         {/* Botón de envío */}
         <div className="flex justify-end mt-4">
           <button
