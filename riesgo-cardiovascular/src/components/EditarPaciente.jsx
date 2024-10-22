@@ -138,10 +138,16 @@ function EditarPaciente() {
     });
   };
 
+  const formatList = (list) => {
+    if (Array.isArray(list)) {
+      return list.length > 0 ? list.join('; ') : '';
+    }
+    // Return empty string if not an array
+    return '';
+  };
+
   const manejarSubmit = async (e) => {
     e.preventDefault();
-
-    const formatList = (list) => (list.length > 0 ? list.join('; ') : '');
 
     const pacienteFormatted = {
       ...datosPaciente,
