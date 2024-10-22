@@ -217,7 +217,7 @@ function Estadisticas() {
       HIPERTENSO: ${paciente.hipertenso}
       Diabetes: ${paciente.diabetes}
       Fumador: ${paciente.fumador}
-      Presión Arterial: ${paciente.presionArterial}
+      TA Máx.: ${paciente.presionArterial}
       TA Mín.: ${paciente.taMin}
       Colesterol: ${paciente.colesterol}
       IMC: ${paciente.imc}
@@ -318,7 +318,7 @@ function Estadisticas() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">Presión Arterial</label>
+              <label className="block text-sm font-medium text-gray-700">Tensión Máxima</label>
               <select
                 name="presionArterial"
                 value={filtros.presionArterial || ''}
@@ -527,7 +527,7 @@ function Estadisticas() {
             <div className="text-sm text-gray-500">{paciente.cuil}</div>
           </div>
           <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Presión Arterial Sístolica:</div>
+            <div className="text-sm font-medium text-gray-900">TA Máx.:</div>
             <div className="text-sm text-gray-500">{paciente.presionArterial}</div>
           </div>
           <div className="flex justify-between items-start mb-2">

@@ -219,7 +219,7 @@ const Formulario = () => {
             return false;
         }
         if (!presionArterial || presionArterial < 80 || presionArterial > 250) {
-            setError('La presión arterial debe estar entre 80 y 250.');
+            setError('La Tensión arterial máxima debe estar entre 80 y 250.');
             return false;
         }
         if (!taMin || taMin < 70 || taMin > 150) {
@@ -621,7 +621,7 @@ const Formulario = () => {
 
                 {/* Presión Arterial */}
                 <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+                                <label className="text-sm font-medium text-gray-700">TA Máx.:</label>
                                 <input
                                     type="number"
                                     name="presionArterial"
@@ -766,7 +766,7 @@ const Formulario = () => {
                                 <p><strong>Género:</strong> {pacienteEncontrado.genero}</p>
                                 <p><strong>Diabetes:</strong> {pacienteEncontrado.diabetes}</p>
                                 <p><strong>Fumador:</strong> {pacienteEncontrado.fumador}</p>
-                                <p><strong>Presión Arterial sistólica:</strong> {pacienteEncontrado.presionArterial}</p>
+                                <p><strong>Tensión Arterial Máxima:</strong> {pacienteEncontrado.presionArterial}</p>
                                 <p><strong>Tensión Arterial Mínima:</strong> {pacienteEncontrado.taMin}</p>
                                 <p><strong>Colesterol:</strong> {pacienteEncontrado.colesterol}</p>
                                 <p><strong>Peso:</strong> {pacienteEncontrado.peso}</p>
@@ -997,7 +997,7 @@ const Formulario = () => {
 
                             {/* Presión Arterial */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+                                <label className="text-sm font-medium text-gray-700">TA Máx.:</label>
                                 <input
                                     type="number"
                                     name="presionArterial"
@@ -1143,7 +1143,7 @@ const Formulario = () => {
                 <p><strong>Género:</strong> {datosPaciente.genero}</p>
                 <p><strong>Diabetes:</strong> {datosPaciente.diabetes}</p>
                 <p><strong>Fumador:</strong> {datosPaciente.fumador}</p>
-                <p><strong>Presión Arterial sistólica:</strong> {datosPaciente.presionArterial}</p>
+                <p><strong>Tensión Arterial Máxima:</strong> {datosPaciente.presionArterial}</p>
                 <p><strong>Tensión Arterial Mínima:</strong> {datosPaciente.taMin}</p>
                 <p><strong>Colesterol:</strong> {datosPaciente.colesterol || 'No especificado'}</p>
                 <p><strong>Peso:</strong> {datosPaciente.peso || 'No especificado'}</p>

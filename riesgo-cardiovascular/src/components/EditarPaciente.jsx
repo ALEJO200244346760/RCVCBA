@@ -357,7 +357,7 @@ function EditarPaciente() {
 
         {/* Presión Arterial */}
         <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700">Presión Arterial sistólica:</label>
+          <label className="text-sm font-medium text-gray-700">TA Máx.:</label>
           <input
             type="number"
             name="presionArterial"
