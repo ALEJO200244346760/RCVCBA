@@ -33,6 +33,7 @@ const DatosPacienteInicial = {
   acv: '',
   renal: '',
   hipertenso: '',
+  ubicacion: '',
   notificacionRiesgo: [],
   hipertensionArterial: [],
   medicacionPrescripcion: [],
