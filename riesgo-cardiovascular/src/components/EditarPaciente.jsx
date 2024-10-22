@@ -3,13 +3,11 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   listaNotificacionRiesgo,
-  listaConsulta,
   listaHipertensionArterial,
   listaMedicacionPrescripcion,
   listaMedicacionDispensa,
   listaTabaquismo,
-  listaLaboratorio,
-  listaPractica
+  listaLaboratorio
 } from './ConstFormulario'; // Asegúrate de que estos se importen correctamente
 import { calcularRiesgoCardiovascular } from './Calculadora'; // Ensure this is correctly imported
 
@@ -36,8 +34,6 @@ const DatosPacienteInicial = {
   renal: '',
   hipertenso: '',
   notificacionRiesgo: [],
-  consulta: [],
-  practica: [],
   hipertensionArterial: [],
   medicacionPrescripcion: [],
   medicacionDispensa: [],
@@ -58,21 +54,10 @@ function EditarPaciente() {
     setLoading(true);
     axios.get(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`)
       .then(response => {
-        const { data } = response;
-        setDatosPaciente({
-          ...data,
-          notificacionRiesgo: data.notificacionRiesgo || [],
-          consulta: data.consulta || [],
-          practica: data.practica || [],
-          hipertensionArterial: data.hipertensionArterial || [],
-          medicacionPrescripcion: data.medicacionPrescripcion || [],
-          medicacionDispensa: data.medicacionDispensa || [],
-          tabaquismo: data.tabaquismo || [],
-          laboratorio: data.laboratorio || [],
-        });
-        setNivelColesterolConocido(data.colesterol !== 'No' && data.colesterol !== '');
-        calcularIMC(data);
-        calcularRiesgo(data);
+        setDatosPaciente(response.data);
+        setNivelColesterolConocido(response.data.colesterol !== 'No' && response.data.colesterol !== '');
+        calcularIMC(response.data);
+        calcularRiesgo(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -80,7 +65,6 @@ function EditarPaciente() {
         setLoading(false);
       });
   }, [id]);
-  
 
   const ajustarEdad = (edad) => {
     if (edad < 50) return 40;
@@ -152,7 +136,6 @@ function EditarPaciente() {
 
   const manejarSubmit = async (e) => {
     e.preventDefault();
-    console.log(datosPaciente); // Añadir este log
     try {
       await axios.put(`https://rcvcba-production.up.railway.app/api/pacientes/${id}`, datosPaciente, {
         headers: {
@@ -455,40 +438,6 @@ function EditarPaciente() {
                 checked={datosPaciente.notificacionRiesgo.includes(item)}
                 onChange={manejarCheckboxChange}
                 className="mr-2"
-              />
-              {item}
-            </div>
-          ))}
-        </div>
-
-        {/* Consulta */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Consulta</label>
-          {listaConsulta.map(item => (
-            <div key={item}>
-              <input
-                type="checkbox"
-                name="consulta"
-                value={item}
-                checked={datosPaciente.consulta.includes(item)}
-                onChange={manejarCheckboxChange}
-              />
-              {item}
-            </div>
-          ))}
-        </div>
-
-        {/* Práctica */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Práctica</label>
-          {listaPractica.map(item => (
-            <div key={item}>
-              <input
-                type="checkbox"
-                name="practica"
-                value={item}
-                checked={datosPaciente.practica.includes(item)}
-                onChange={manejarCheckboxChange}
               />
               {item}
             </div>
