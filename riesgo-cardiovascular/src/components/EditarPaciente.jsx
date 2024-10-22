@@ -129,7 +129,7 @@ function EditarPaciente() {
   const manejarCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
     setDatosPaciente(prev => {
-      const currentList = prev[name];
+      const currentList = prev[name] || []; // Ensure currentList is an array
       if (checked) {
         return { ...prev, [name]: [...currentList, value] };
       } else {
