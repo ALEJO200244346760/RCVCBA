@@ -37,12 +37,16 @@ public class PacienteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Paciente> updatePaciente(@PathVariable Long id, @RequestBody Paciente paciente) {
-        if (!pacienteService.getPacienteById(id).isPresent()) {
-            return ResponseEntity.notFound().build();
+        try {
+            if (!pacienteService.getPacienteById(id).isPresent()) {
+                return ResponseEntity.notFound().build();
+            }
+            paciente.setId(id);
+            Paciente updatedPaciente = pacienteService.savePaciente(paciente);
+            return ResponseEntity.ok(updatedPaciente);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        paciente.setId(id);
-        Paciente updatedPaciente = pacienteService.savePaciente(paciente);
-        return ResponseEntity.ok(updatedPaciente);
     }
 
     @DeleteMapping("/{id}")
