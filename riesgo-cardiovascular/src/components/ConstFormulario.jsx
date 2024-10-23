@@ -33,60 +33,68 @@ export const DatosPacienteInicial = {
 
 export const Advertencia = {
             '<10% Bajo': `-Realizar el cálculo de riesgo cardiovascular cada 12 meses.
--Se recomienda intervenciones como un estilo de vida más saludable.
+-Mantener un estilo de vida más saludable.***-Mejorar la calidad del sueño logrando al menos siete horas continuas.
+-Actividad física y recreativa que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
+-Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
+-Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
+-Evitar hábitos tóxicos.***-Revisión de su salud mental.
+-Si es hipertenso el seguimiento es mensual hasta alcanzar el control y luego semestral o anual.
+            `,
+            '>10% <20% Moderado': `-Realizar el cálculo de riesgo cardiovascular cada 6 meses.
+-Ante síntomas como dolor de pecho, falta de aire súbita, pérdida de fuerzas en manos o piernas, disminución visual, desmayo o desorientación, concurrir a una guardia lo antes posible.
+-Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos  e interconsultas indicados.
+-Realización de estudios complementarios indicados por el profesional de la salud.
+-Mantener un estilo de vida más saludable.
 -Mejorar la calidad del sueño logrando al menos siete horas continuas.
--Actividad física que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios aeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente)
--Estos tipos de ejercicios recomiendan al menos tres veces por semana, o bien 150 minutos semanales.
+- Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
+-Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
+-Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.***-Evitar hábitos tóxicos.
+-Revisión de su salud mental.
+-Revisar el calendario de vacunas en enfermería.
+-Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral.
+-Contemplar el uso de estatinas de baja o moderada intensidad si no tiene contraindicaciones prescriptas por su médico.
+            `,
+            '>20% <30% Alto': `-Realizar el cálculo de riesgo cardiovascular cada 3 meses.
+-Ante síntomas como dolor de pecho, falta de aire súbita, pérdida de fuerzas en manos o piernas, disminución visual, desmayo o desorientación, concurrir a una guardia lo antes posible.
+-Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos e interconsultas indicados.
+-Realización de estudios complementarios e interconsultas adecuadas indicados por el profesional de la salud.
+-Mantener un estilo de vida más saludable.
+-Mejorar la calidad del sueño logrando al menos siete horas continuas.
+-Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
 -Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
 -Evitar hábitos tóxicos.
-            `,
-            '>10% <20% Moderado': `-Realizar el cálculo de riesgo cardiovascular cada 6 meses.
--Se recomienda intervenciones como un estilo de vida más saludable.
--Mayor adherencia y cumplimiento a los tratamientos y medicamentos indicados.
--Realización de estudios complementarios indicados por el profesional de la salud.
--Mejorar la calidad del sueño logrando al menos siete horas continuas.
--Actividad física que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios aeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente)
--Estos tipos de ejercicios recomiendan al menos tres veces por semana, o bien 150 minutos semanales, siempre controlando la presión arterial antes de iniciar la actividad física de mayor intensidad.
--Vigilar el perfil del riesgo con un análisis de laboratorio de colesterol y glucemia.
--Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
--Evitar hábitos tóxicos.
-            `,
-            '>20% <30% Alto': `-Realizar el cálculo de riesgo cardiovascular cada 3 meses.
--Se recomienda intervenciones como un estilo de vida más saludable.
--Mayor adherencia y cumplimiento a los tratamientos y medicamentos indicados.
--Realización de estudios complementarios indicados por el profesional de la salud.
--Mejorar la calidad del sueño logrando al menos siete horas continuas.
--Actividad física controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios aeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente)
--Estos tipos de ejercicios recomiendan al menos tres veces por semana, o bien 150 minutos semanales, siempre controlando la presión arterial antes de iniciar la actividad física de mayor intensidad.
--Vigilar el perfil del riesgo con un análisis de laboratorio de colesterol y glucemia.
--Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
--Evitar hábitos tóxicos.
--Revisar el calendario de vacunas.
+-Revisión de su salud mental.
+-Revisar el calendario de vacunas en enfermería.
+-Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `,
             '>30% <40% Muy Alto': `-Realizar el cálculo de riesgo cardiovascular cada 3 meses.
--Se recomienda intervenciones como un estilo de vida más saludable.
--Mayor adherencia y cumplimiento a los tratamientos y medicamentos indicados.
--Realización de estudios complementarios indicados por el profesional de la salud.
+-Ante síntomas como dolor de pecho, falta de aire súbita, pérdida de fuerzas en manos o piernas, disminución visual, desmayo o desorientación, concurrir a una guardia lo antes posible.
+-Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos e interconsultas indicados.
+-Realización de estudios complementarios e interconsultas adecuadas indicados por el profesional de la salud.
+-Mantener un estilo de vida más saludable.
 -Mejorar la calidad del sueño logrando al menos siete horas continuas.
--Actividad física controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios aeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente)
--Estos tipos de ejercicios recomiendan al menos tres veces por semana, o bien 150 minutos semanales, siempre controlando la presión arterial antes de iniciar la actividad física de mayor intensidad.
--Vigilar el perfil del riesgo con un análisis de laboratorio de colesterol y glucemia.
+-Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
+-Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
 -Evitar hábitos tóxicos.
--Revisar el calendario de vacunas.
+-Revisión de su salud mental.
+-Revisar el calendario de vacunas en enfermería.
+-Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `,
-            '>40% Crítico': `-Realizar el cálculo de riesgo cardiovascular en menos de un mes.
--Se recomienda intervenciones como un estilo de vida más saludable.
--Mayor adherencia y cumplimiento a los tratamientos y medicamentos indicados.
--Realización de estudios complementarios indicados por el profesional de la salud.
+            '>40% Crítico': `-Realizar el cálculo de riesgo cardiovascular cada 3 meses.
+-Ante síntomas como dolor de pecho, falta de aire súbita, pérdida de fuerzas en manos o piernas, disminución visual, desmayo o desorientación, concurrir a una guardia lo antes posible.
+-Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos e interconsultas indicados.
+-Realización de estudios complementarios e interconsultas adecuadas indicados por el profesional de la salud.
+-Mantener un estilo de vida más saludable.
 -Mejorar la calidad del sueño logrando al menos siete horas continuas.
--Actividad física controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios aeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente)
--Estos tipos de ejercicios recomiendan al menos tres veces por semana, o bien 150 minutos semanales, siempre controlando la presión arterial antes de iniciar la actividad física de mayor intensidad.
--Vigilar el perfil del riesgo con un análisis de laboratorio de colesterol y glucemia.
+-Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
+-Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
 -Evitar hábitos tóxicos.
--Revisar el calendario de vacunas.
+-Revisión de su salud mental.
+-Revisar el calendario de vacunas en enfermería.
+-Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `
 };
 
