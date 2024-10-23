@@ -33,11 +33,13 @@ export const DatosPacienteInicial = {
 
 export const Advertencia = {
             '<10% Bajo': `-Realizar el cálculo de riesgo cardiovascular cada 12 meses.
--Mantener un estilo de vida más saludable.***-Mejorar la calidad del sueño logrando al menos siete horas continuas.
+-Mantener un estilo de vida más saludable.
+-Mejorar la calidad del sueño logrando al menos siete horas continuas.
 -Actividad física y recreativa que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
 -Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
--Evitar hábitos tóxicos.***-Revisión de su salud mental.
+-Evitar hábitos tóxicos.
+-Revisión de su salud mental.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control y luego semestral o anual.
             `,
             '>10% <20% Moderado': `-Realizar el cálculo de riesgo cardiovascular cada 6 meses.
