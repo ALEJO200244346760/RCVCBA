@@ -207,26 +207,9 @@ function Estadisticas() {
   };
 
   const copiarDatos = (paciente) => {
-    // Determina el nivel de riesgo
-    let nivelRiesgoTexto;
-    let recomendaciones;
-
-    if (paciente.nivelRiesgo < 10) {
-        nivelRiesgoTexto = '<10% Bajo';
-        recomendaciones = Advertencia[nivelRiesgoTexto];
-    } else if (paciente.nivelRiesgo >= 10 && paciente.nivelRiesgo < 20) {
-        nivelRiesgoTexto = '>10% <20% Moderado';
-        recomendaciones = Advertencia[nivelRiesgoTexto];
-    } else if (paciente.nivelRiesgo >= 20 && paciente.nivelRiesgo < 30) {
-        nivelRiesgoTexto = '>20% <30% Alto';
-        recomendaciones = Advertencia[nivelRiesgoTexto];
-    } else if (paciente.nivelRiesgo >= 30 && paciente.nivelRiesgo < 40) {
-        nivelRiesgoTexto = '>30% <40% Muy Alto';
-        recomendaciones = Advertencia[nivelRiesgoTexto];
-    } else {
-        nivelRiesgoTexto = '>40% Crítico';
-        recomendaciones = Advertencia[nivelRiesgoTexto];
-    }
+    // Obtener el nivel de riesgo como string
+    const nivelRiesgoTexto = paciente.nivelRiesgo;
+    const recomendaciones = Advertencia[nivelRiesgoTexto] || "No hay recomendaciones disponibles.";
 
     const datos = `
       ID: ${paciente.id}
@@ -266,6 +249,7 @@ function Estadisticas() {
       .then(() => alert('Datos copiados al portapapeles'))
       .catch(err => console.error('Error al copiar los datos:', err));
   };
+
 
   if (loading) return <p>Cargando...</p>;
 
@@ -399,7 +383,7 @@ function Estadisticas() {
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
                 <option value="">Todos</option>
-                <option value="<10% Poco">Bajo</option>
+                <option value="<10% Bajo">Bajo</option>
                 <option value=">10% <20% Moderado">Moderado</option>
                 <option value=">20% <30% Alto">Alto</option>
                 <option value=">30% <40% Muy Alto">Muy Alto</option>
