@@ -148,17 +148,23 @@ function EditarPaciente() {
   const manejarSubmit = async (e) => {
     e.preventDefault();
   
+    // Utility function to safely format lists
+    const formatList = (list) => {
+      // Only join if the list is an array, otherwise return as is
+      return Array.isArray(list) ? list.join('; ') : list || '';
+    };
+  
     const pacienteFormatted = {
       ...datosPaciente,
-      // Ensure all lists are formatted as strings or retain their current values
-      notificacionRiesgo: datosPaciente.notificacionRiesgo ? datosPaciente.notificacionRiesgo.join('; ') : datosPaciente.notificacionRiesgo || "",
-      hipertensionArterial: datosPaciente.hipertensionArterial ? datosPaciente.hipertensionArterial.join('; ') : datosPaciente.hipertensionArterial || "",
-      medicacionPrescripcion: datosPaciente.medicacionPrescripcion ? datosPaciente.medicacionPrescripcion.join('; ') : datosPaciente.medicacionPrescripcion || "",
-      medicacionDispensa: datosPaciente.medicacionDispensa ? datosPaciente.medicacionDispensa.join('; ') : datosPaciente.medicacionDispensa || "",
-      tabaquismo: datosPaciente.tabaquismo ? datosPaciente.tabaquismo.join('; ') : datosPaciente.tabaquismo || "",
-      laboratorio: datosPaciente.laboratorio ? datosPaciente.laboratorio.join('; ') : datosPaciente.laboratorio || "",
-      consulta: datosPaciente.consulta ? datosPaciente.consulta : "", // Retain the existing value if not empty
-      practica: datosPaciente.practica ? datosPaciente.practica : "", // Retain the existing value if not empty
+      // Safely format lists or retain current string values
+      notificacionRiesgo: formatList(datosPaciente.notificacionRiesgo),
+      hipertensionArterial: formatList(datosPaciente.hipertensionArterial),
+      medicacionPrescripcion: formatList(datosPaciente.medicacionPrescripcion),
+      medicacionDispensa: formatList(datosPaciente.medicacionDispensa),
+      tabaquismo: formatList(datosPaciente.tabaquismo),
+      laboratorio: formatList(datosPaciente.laboratorio),
+      consulta: formatList(datosPaciente.consulta), // Retain existing value if already a string
+      practica: formatList(datosPaciente.practica), // Retain existing value if already a string
     };
   
     try {
@@ -171,6 +177,7 @@ function EditarPaciente() {
       console.error('Error al actualizar el paciente:', error);
     }
   };
+  
   
 
   if (loading) return <p>Cargando...</p>;
