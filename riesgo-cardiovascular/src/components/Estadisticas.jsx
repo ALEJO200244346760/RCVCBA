@@ -212,7 +212,7 @@ function Estadisticas() {
     let recomendaciones;
 
     if (paciente.nivelRiesgo < 10) {
-        nivelRiesgoTexto = '<10% Poco';
+        nivelRiesgoTexto = '<10% Bajo';
         recomendaciones = Advertencia[nivelRiesgoTexto];
     } else if (paciente.nivelRiesgo >= 10 && paciente.nivelRiesgo < 20) {
         nivelRiesgoTexto = '>10% <20% Moderado';
