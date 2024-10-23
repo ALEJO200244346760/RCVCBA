@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Advertencia } from './ConstFormulario'
 import EstadisticasGraficos from './EstadisticasGraficos'; // Asegúrate de que la ruta sea correcta
 
 function Estadisticas() {
@@ -206,6 +207,27 @@ function Estadisticas() {
   };
 
   const copiarDatos = (paciente) => {
+    // Determina el nivel de riesgo
+    let nivelRiesgoTexto;
+    let recomendaciones;
+
+    if (paciente.nivelRiesgo < 10) {
+        nivelRiesgoTexto = '<10% Poco';
+        recomendaciones = Advertencia[nivelRiesgoTexto];
+    } else if (paciente.nivelRiesgo >= 10 && paciente.nivelRiesgo < 20) {
+        nivelRiesgoTexto = '>10% <20% Moderado';
+        recomendaciones = Advertencia[nivelRiesgoTexto];
+    } else if (paciente.nivelRiesgo >= 20 && paciente.nivelRiesgo < 30) {
+        nivelRiesgoTexto = '>20% <30% Alto';
+        recomendaciones = Advertencia[nivelRiesgoTexto];
+    } else if (paciente.nivelRiesgo >= 30 && paciente.nivelRiesgo < 40) {
+        nivelRiesgoTexto = '>30% <40% Muy Alto';
+        recomendaciones = Advertencia[nivelRiesgoTexto];
+    } else {
+        nivelRiesgoTexto = '>40% Crítico';
+        recomendaciones = Advertencia[nivelRiesgoTexto];
+    }
+
     const datos = `
       ID: ${paciente.id}
       FECHA DE REGISTRO: ${paciente.fechaRegistro}
@@ -226,7 +248,7 @@ function Estadisticas() {
       CINTURA: ${paciente.cintura}
       ACV: ${paciente.acv}
       INFARTO: ${paciente.infarto}
-      Nivel de Riesgo: ${paciente.nivelRiesgo}
+      Nivel de Riesgo: ${nivelRiesgoTexto}
       NOTIFICACION DE RIESGO: ${paciente.notificacionRiesgo}
       CONSULTA: ${paciente.consulta}
       PRÁCTICA: ${paciente.practica}
@@ -235,8 +257,11 @@ function Estadisticas() {
       MEDICACION DISPENSA: ${paciente.medicacionDispensa}
       TABAQUISMO: ${paciente.tabaquismo}
       LABORATORIO: ${paciente.laboratorio}
-      EléctroCardiograma y exámen cardiovascular : Normal
+      EléctroCardiograma y exámen cardiovascular: Normal
+      RECOMENDACIONES:
+      ${recomendaciones}
     `;
+
     navigator.clipboard.writeText(datos)
       .then(() => alert('Datos copiados al portapapeles'))
       .catch(err => console.error('Error al copiar los datos:', err));
