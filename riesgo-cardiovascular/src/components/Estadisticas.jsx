@@ -240,7 +240,9 @@ function Estadisticas() {
       MEDICACION DISPENSA: ${paciente.medicacionDispensa}
       TABAQUISMO: ${paciente.tabaquismo}
       LABORATORIO: ${paciente.laboratorio}
-      EléctroCardiograma y exámen cardiovascular: Normal
+      ELECTROCARDIOGRAMA Ritmo sinusal, frecuencia cardíaca y eje normal, sin trastornos agudos del segmento ST y T sin alteraciones en el sistema de conducción, sin Arritmias, intervalo QT dentro de lo normal
+      EXAMEN CARDIOVASCULAR Dentro de lo normal sin signos de descompensación
+      No refiere angor disnea palpitaciones mareos edemas entre otros
       RECOMENDACIONES:
       ${recomendaciones}
     `;
