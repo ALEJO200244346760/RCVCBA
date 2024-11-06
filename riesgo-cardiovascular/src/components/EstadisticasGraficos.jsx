@@ -87,12 +87,12 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
     }]
   };
 
-  // Datos para Diabetes
-  const hipertensionArterial = pacientesFiltrados.reduce((acc, paciente) => {
-    acc[paciente.hipertensionArterial] = (acc[paciente.hipertensionArterial] || 0) + 1;
+  // Datos para Hipertension
+  const hipertenso = pacientesFiltrados.reduce((acc, paciente) => {
+    acc[paciente.hipertenso] = (acc[paciente.hipertenso] || 0) + 1;
     return acc;
   }, {});
-  const dataHipertensionArterial = {
+  const dataHipertenso = {
     labels: Object.keys(diabetes),
     datasets: [{
       label: 'Cantidad',
@@ -384,7 +384,7 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
 
       <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
         <h3 className="text-xl font-semibold mb-8">Hipertensión Arterial</h3>
-        <Pie data={dataHipertensionArterial} options={{ 
+        <Pie data={dataHipertenso} options={{ 
           responsive: true,
           plugins: { 
             legend: { display: true }, 
