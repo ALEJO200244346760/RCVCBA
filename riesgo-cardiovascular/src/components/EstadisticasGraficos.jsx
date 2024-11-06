@@ -87,6 +87,22 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
     }]
   };
 
+  // Datos para Diabetes
+  const hipertensionArterial = pacientesFiltrados.reduce((acc, paciente) => {
+    acc[paciente.hipertensionArterial] = (acc[paciente.hipertensionArterial] || 0) + 1;
+    return acc;
+  }, {});
+  const dataHipertensionArterial = {
+    labels: Object.keys(diabetes),
+    datasets: [{
+      label: 'Cantidad',
+      data: Object.values(diabetes),
+      backgroundColor: ['#34D399', '#EF4444'],
+      borderColor: ['#34D399', '#EF4444'],
+      borderWidth: 1
+    }]
+  };
+
   // Datos para Obra Social
   const obra = pacientesFiltrados.reduce((acc, paciente) => {
     acc[paciente.obra] = (acc[paciente.obra] || 0) + 1;
@@ -365,6 +381,18 @@ function EstadisticasGraficos({ pacientesFiltrados }) {
           }
         }} />
       </div>
+
+      <div style={{ width: '30%', display: 'inline-block', marginLeft: '5%' }}>
+        <h3 className="text-xl font-semibold mb-8">Hipertensión Arterial</h3>
+        <Pie data={dataHipertensionArterial} options={{ 
+          responsive: true,
+          plugins: { 
+            legend: { display: true }, 
+            tooltip: { callbacks: { label: (tooltipItem) => `${tooltipItem.label}: ${tooltipItem.raw} (${calcularPorcentajes(diabetes)[tooltipItem.label]}%)` } }
+          }
+        }} />
+      </div>
+
       <div style={{ width: '30%', display: 'inline-block' }}>
         <h3 className="text-xl font-semibold mb-8">Fumador</h3>
         <Pie data={dataFumador} options={{ 
