@@ -55,6 +55,8 @@ public class Paciente {
     private String cintura;
     @Column
     private String renal;
+    @Column
+    private String pulmonar;
     @Column(name = "medicamentos_notificacion_riesgo", columnDefinition = "LONGTEXT")
     private String notificacionRiesgo;
     @Column(name = "medicamentos_consulta", columnDefinition = "LONGTEXT")
