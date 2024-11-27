@@ -391,7 +391,9 @@ function Estadisticas() {
                 </select>
               )}
             </div>
+          </div>
 
+          <div className="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Nivel de Riesgo</label>
               <select
@@ -408,9 +410,6 @@ function Estadisticas() {
                 <option value=">40% Crítico">Crítico</option>
               </select>
             </div>
-          </div>
-
-          <div className="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">IMC</label>
               <select
