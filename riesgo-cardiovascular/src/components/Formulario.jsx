@@ -195,7 +195,7 @@ const Formulario = () => {
             cintura
         } = datosPaciente;
 
-        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !exfumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !infarto) {
+        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !exfumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !pulmonar || !infarto) {
             setError('Por favor, complete todos los campos obligatorios.');
             return false;
         }
@@ -249,6 +249,10 @@ const Formulario = () => {
             setError('Por favor, indique si tiene enfermedad renal crónica.');
             return false;
         }
+        if (!pulmonar) {
+            setError('Por favor, indique si tiene enfermedad pulmonar.');
+            return false;
+        }
         if (!infarto) {
             setError('Por favor, indique si ha tenido un infarto.');
             return false;
@@ -283,7 +287,7 @@ const Formulario = () => {
             return;
         }
     
-        const { edad, genero, diabetes, fumador, exfumador, presionArterial, colesterol, infarto, acv, renal } = datosPaciente;
+        const { edad, genero, diabetes, fumador, exfumador, presionArterial, colesterol, infarto, acv, renal, pulmonar } = datosPaciente;
     
         // Verificar si infarto o acv son "Sí"
         if (infarto === "Sí" || acv === "Sí" || renal === "Sí") {
@@ -453,18 +457,6 @@ const Formulario = () => {
                     />
                 </div>
 
-                {/* Edad */}
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Edad:</label>
-                    <input
-                        type="number"
-                        name="edad"
-                        value={datosPaciente.edad}
-                        onChange={manejarCambio}
-                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                    />
-                </div>
-
                 {/* Obra Social */}
                 <div className="flex flex-col">
                     <label className="text-sm font-medium text-gray-700">Obra Social:</label>
@@ -499,6 +491,35 @@ const Formulario = () => {
                     </div>
                 </div>
 
+                {/* Edad */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">Edad:</label>
+                    <input
+                        type="number"
+                        name="edad"
+                        value={datosPaciente.edad}
+                        onChange={manejarCambio}
+                        className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    />
+                </div>
+
+                {/* Hipertenso */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
+                    <div className="flex space-x-2 mb-2">
+                        {['Sí', 'No'].map(option => (
+                            <button
+                                key={option}
+                                type="button"
+                                onClick={() => setDatosPaciente({ ...datosPaciente, hipertenso: option })}
+                                className={`p-2 border rounded-md ${datosPaciente.hipertenso === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                            >
+                                {option}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Diabetes */}
                 <div className="flex flex-col">
                     <label className="text-sm font-medium text-gray-700">Diabetes:</label>
@@ -514,6 +535,33 @@ const Formulario = () => {
                             </button>
                         ))}
                     </div>
+                </div>
+
+                {/* Colesterol */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
+                    <div className="flex space-x-2 mb-2">
+                        {['si', 'no'].map(option => (
+                            <button
+                                key={option}
+                                type="button"
+                                onClick={() => manejarSeleccionColesterol(option)}
+                                className={`p-2 border rounded-md ${nivelColesterolConocido === (option === 'si') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                            >
+                                {option.charAt(0).toUpperCase() + option.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+                    {nivelColesterolConocido === true && (
+                        <input
+                            type="number"
+                            name="colesterol"
+                            value={datosPaciente.colesterol === 'No' ? '' : datosPaciente.colesterol}
+                            onChange={manejarCambio}
+                            className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                            style={{ appearance: 'none' }}
+                        />
+                    )}
                 </div>
 
                 {/* Fumador */}
@@ -545,23 +593,6 @@ const Formulario = () => {
                                 className={`p-2 border rounded-md ${datosPaciente.exfumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
                             >
                                 {option.charAt(0).toUpperCase() + option.slice(1)}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Hipertenso */}
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
-                    <div className="flex space-x-2 mb-2">
-                        {['Sí', 'No'].map(option => (
-                            <button
-                                key={option}
-                                type="button"
-                                onClick={() => setDatosPaciente({ ...datosPaciente, hipertenso: option })}
-                                className={`p-2 border rounded-md ${datosPaciente.hipertenso === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-                            >
-                                {option}
                             </button>
                         ))}
                     </div>
@@ -618,31 +649,21 @@ const Formulario = () => {
                     </div>
                 </div>
 
-                {/* Colesterol */}
+                {/* Enfermedad Pulmonar */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
+                    <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad Pulmonar?</label>
                     <div className="flex space-x-2 mb-2">
-                        {['si', 'no'].map(option => (
-                            <button
-                                key={option}
-                                type="button"
-                                onClick={() => manejarSeleccionColesterol(option)}
-                                className={`p-2 border rounded-md ${nivelColesterolConocido === (option === 'si') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-                            >
-                                {option.charAt(0).toUpperCase() + option.slice(1)}
-                            </button>
+                        {['Sí', 'No'].map(option => (
+                        <button
+                        key={option}
+                        type="button"
+                        onClick={() => setDatosPaciente({ ...datosPaciente, pulmonar : option })}
+                        className={`p-2 border rounded-md ${datosPaciente.pulmonar === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                        >
+                        {option}
+                        </button>
                         ))}
                     </div>
-                    {nivelColesterolConocido === true && (
-                        <input
-                            type="number"
-                            name="colesterol"
-                            value={datosPaciente.colesterol === 'No' ? '' : datosPaciente.colesterol}
-                            onChange={manejarCambio}
-                            className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            style={{ appearance: 'none' }}
-                        />
-                    )}
                 </div>
 
                 {/* Presión Arterial */}
@@ -849,18 +870,6 @@ const Formulario = () => {
                                 />
                             </div>
 
-                            {/* Edad */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Edad:</label>
-                                <input
-                                    type="number"
-                                    name="edad"
-                                    value={datosPaciente.edad}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                            </div>
-
                             {/* Obra Social */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Obra Social:</label>
@@ -895,6 +904,35 @@ const Formulario = () => {
                                 </div>
                             </div>
 
+                            {/* Edad */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Edad:</label>
+                                <input
+                                    type="number"
+                                    name="edad"
+                                    value={datosPaciente.edad}
+                                    onChange={manejarCambio}
+                                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                            </div>
+
+                            {/* Hipertenso */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
+                                <div className="flex space-x-2 mb-2">
+                                    {['Sí', 'No'].map(option => (
+                                        <button
+                                            key={option}
+                                            type="button"
+                                            onClick={() => setDatosPaciente({ ...datosPaciente, hipertenso: option })}
+                                            className={`p-2 border rounded-md ${datosPaciente.hipertenso === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                                        >
+                                            {option}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
                             {/* Diabetes */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Diabetes:</label>
@@ -910,6 +948,33 @@ const Formulario = () => {
                                         </button>
                                     ))}
                                 </div>
+                            </div>
+
+                            {/* Colesterol */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
+                                <div className="flex space-x-2 mb-2">
+                                    {['si', 'no'].map(option => (
+                                        <button
+                                            key={option}
+                                            type="button"
+                                            onClick={() => manejarSeleccionColesterol(option)}
+                                            className={`p-2 border rounded-md ${nivelColesterolConocido === (option === 'si') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                                        >
+                                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
+                                {nivelColesterolConocido === true && (
+                                    <input
+                                        type="number"
+                                        name="colesterol"
+                                        value={datosPaciente.colesterol === 'No' ? '' : datosPaciente.colesterol}
+                                        onChange={manejarCambio}
+                                        className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                        style={{ appearance: 'none' }}
+                                    />
+                                )}
                             </div>
 
                             {/* Fumador */}
@@ -941,23 +1006,6 @@ const Formulario = () => {
                                             className={`p-2 border rounded-md ${datosPaciente.exfumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
                                         >
                                             {option.charAt(0).toUpperCase() + option.slice(1)}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Hipertenso */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
-                                <div className="flex space-x-2 mb-2">
-                                    {['Sí', 'No'].map(option => (
-                                        <button
-                                            key={option}
-                                            type="button"
-                                            onClick={() => setDatosPaciente({ ...datosPaciente, hipertenso: option })}
-                                            className={`p-2 border rounded-md ${datosPaciente.hipertenso === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-                                        >
-                                            {option}
                                         </button>
                                     ))}
                                 </div>
@@ -1014,31 +1062,21 @@ const Formulario = () => {
                                 </div>
                             </div>
 
-                            {/* Colesterol */}
+                            {/* Enfermedad Pulmonar */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Conoce su nivel de colesterol?</label>
+                                <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad Pulmonar?</label>
                                 <div className="flex space-x-2 mb-2">
-                                    {['si', 'no'].map(option => (
-                                        <button
-                                            key={option}
-                                            type="button"
-                                            onClick={() => manejarSeleccionColesterol(option)}
-                                            className={`p-2 border rounded-md ${nivelColesterolConocido === (option === 'si') ? 'bg-green-500 text-white' : 'border-gray-300'}`}
-                                        >
-                                            {option.charAt(0).toUpperCase() + option.slice(1)}
-                                        </button>
+                                    {['Sí', 'No'].map(option => (
+                                    <button
+                                    key={option}
+                                    type="button"
+                                    onClick={() => setDatosPaciente({ ...datosPaciente, pulmonar : option })}
+                                    className={`p-2 border rounded-md ${datosPaciente.pulmonar === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                                    >
+                                    {option}
+                                    </button>
                                     ))}
                                 </div>
-                                {nivelColesterolConocido === true && (
-                                    <input
-                                        type="number"
-                                        name="colesterol"
-                                        value={datosPaciente.colesterol === 'No' ? '' : datosPaciente.colesterol}
-                                        onChange={manejarCambio}
-                                        className="p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                                        style={{ appearance: 'none' }}
-                                    />
-                                )}
                             </div>
 
                             {/* Presión Arterial */}
