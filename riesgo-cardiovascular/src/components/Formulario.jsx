@@ -189,6 +189,7 @@ const Formulario = () => {
             hipertenso,
             acv,
             renal,
+            pulmonar,
             infarto,
             peso,
             talla,
