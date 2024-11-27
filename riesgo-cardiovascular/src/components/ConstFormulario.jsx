@@ -20,6 +20,7 @@ export const DatosPacienteInicial = {
     infarto: '',
     acv: '',
     renal: '',
+    pulmonar: '',
     doctor: '',
     notificacionRiesgo: [],
     consulta: [],
