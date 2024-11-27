@@ -233,6 +233,8 @@ function Estadisticas() {
       TALLA: ${paciente.talla}
       CINTURA: ${paciente.cintura}
       ACV: ${paciente.acv}
+      RENAL: ${paciente.renal}
+      PULMONAR: ${paciente.pulmonar}
       INFARTO: ${paciente.infarto}
       Nivel de Riesgo: ${nivelRiesgoTexto}
       NOTIFICACION DE RIESGO: ${paciente.notificacionRiesgo}
