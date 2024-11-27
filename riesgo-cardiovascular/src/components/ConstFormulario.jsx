@@ -108,6 +108,9 @@ export const listaNotificacionRiesgo = [
     "270*Notificación de riesgo cardiovascular 10% ≤ 20% (a partir de 18 años) NTN008K22",
     "270*Notificación de riesgo cardiovascular 20% ≤ 30% (a partir de 18 años) NTN009K22",
     "270*Notificación de riesgo cardiovascular ≥ 30% (a partir de 18 años) NTN010K22",
+    "Persona con diabetes",
+    "Persona con hipertensión arterial",
+    "Persona con sobrepeso u obesidad",
 ];
 
 export const listaConsulta = [
@@ -117,11 +120,16 @@ export const listaConsulta = [
     "936*Consulta con cardiología en persona con alto RCV CTC044K22",
     "C001 - CONSULTA POR CONTROL DE SALUD",
     "C055 - INTER CONSULTA CON CARDIOLOGIA A98 - MEDICINA PREVEN/PROMOCIÓN SALUD",
+    "Detección y seguimiento de hipertensión arterial",
+    "Consulta de atención de sobrepeso y obesidad",
+    "Exámen periódico de salud del adulto",
+    "Consulta con cardiología",
 ];
 
 export const listaPractica = [
 
     "P004 - ELECTROCARDIOGRAMA",
+    "Uso de herramienta FINDRISC",
 ];
 
 export const listaHipertensionArterial = [
@@ -144,6 +152,12 @@ export const listaMedicacionDispensa = [
     "612*Dispensa de losartán P053 M08",
     "612*Dispensa de hidroclorotiazida P053 M09",
     "612*Dispensa de amlodipina P053 M10",
+    "CARVEDILOL",
+    "FUROSEMIDA",
+    "VALSARTAN",
+    "METFORMINA",
+    "GLIBENCAMIDA",
+    "OTRO",
 ];
 
 export const listaTabaquismo = [
