@@ -14,6 +14,7 @@ function Estadisticas() {
     genero: '',
     diabetes: '',
     fumador: '',
+    exfumador: '',
     presionArterial: '',
     colesterol: '',
     nivelColesterol: '', // Campo para el nivel específico de colesterol
@@ -151,6 +152,7 @@ function Estadisticas() {
           (filtros.doctor === '' || (paciente.doctor && paciente.doctor.toLowerCase() === filtros.doctor.toLowerCase())) &&
           (filtros.diabetes === '' || (paciente.diabetes && paciente.diabetes.toLowerCase() === filtros.diabetes.toLowerCase())) &&
           (filtros.fumador === '' || (paciente.fumador && paciente.fumador.toLowerCase() === filtros.fumador.toLowerCase())) &&
+          (filtros.exfumador === '' || (paciente.exfumador && paciente.exfumador.toLowerCase() === filtros.exfumador.toLowerCase())) &&
           (presionArterialFiltro === null || paciente.presionArterial.toString() === presionArterialFiltro) &&
           (
             nivelColesterolConocido === 'todos' || 
@@ -222,6 +224,7 @@ function Estadisticas() {
       HIPERTENSO: ${paciente.hipertenso}
       Diabetes: ${paciente.diabetes}
       Fumador: ${paciente.fumador}
+      exFumador: ${paciente.exfumador}
       TA Máx.: ${paciente.presionArterial}
       TA Mín.: ${paciente.taMin}
       Colesterol: ${paciente.colesterol}
@@ -323,6 +326,19 @@ function Estadisticas() {
               <select
                 name="fumador"
                 value={filtros.fumador || ''}
+                onChange={manejarCambio}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              >
+                <option value="">Todos</option>
+                <option value="Sí">Sí</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">¿exFumador?</label>
+              <select
+                name="exfumador"
+                value={filtros.exfumador || ''}
                 onChange={manejarCambio}
                 className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               >
@@ -574,6 +590,7 @@ function Estadisticas() {
             <div className="mt-0">
               {[
                 { label: "FUMA", value: paciente.fumador },
+                { label: "EXFUMADOR", value: paciente.exfumador },
                 { label: "COLESTEROL", value: paciente.colesterol },
                 { label: "IMC", value: paciente.imc },
                 { label: "Peso", value: paciente.peso },

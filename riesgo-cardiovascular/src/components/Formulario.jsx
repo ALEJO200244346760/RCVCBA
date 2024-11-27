@@ -182,6 +182,7 @@ const Formulario = () => {
             cuil,
             diabetes,
             fumador,
+            exfumador,
             presionArterial,
             taMin,
             colesterol,
@@ -194,7 +195,7 @@ const Formulario = () => {
             cintura
         } = datosPaciente;
 
-        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !infarto) {
+        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !exfumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !infarto) {
             setError('Por favor, complete todos los campos obligatorios.');
             return false;
         }
@@ -218,6 +219,10 @@ const Formulario = () => {
         }
         if (!fumador) {
             setError('Por favor, indique si es fumador.');
+            return false;
+        }
+        if (!exfumador) {
+            setError('Por favor, indique si es exfumador.');
             return false;
         }
         if (!presionArterial || presionArterial < 80 || presionArterial > 250) {
@@ -278,7 +283,7 @@ const Formulario = () => {
             return;
         }
     
-        const { edad, genero, diabetes, fumador, presionArterial, colesterol, infarto, acv, renal } = datosPaciente;
+        const { edad, genero, diabetes, fumador, exfumador, presionArterial, colesterol, infarto, acv, renal } = datosPaciente;
     
         // Verificar si infarto o acv son "Sí"
         if (infarto === "Sí" || acv === "Sí" || renal === "Sí") {
@@ -528,6 +533,23 @@ const Formulario = () => {
                     </div>
                 </div>
 
+                {/* exFumador */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">¿Es exfumador?</label>
+                    <div className="flex space-x-2 mb-2">
+                        {['sí', 'no'].map(option => (
+                            <button
+                                key={option}
+                                type="button"
+                                onClick={() => setDatosPaciente({ ...datosPaciente, exfumador: option })}
+                                className={`p-2 border rounded-md ${datosPaciente.exfumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                            >
+                                {option.charAt(0).toUpperCase() + option.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Hipertenso */}
                 <div className="flex flex-col">
                     <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
@@ -770,6 +792,7 @@ const Formulario = () => {
                                 <p><strong>Género:</strong> {pacienteEncontrado.genero}</p>
                                 <p><strong>Diabetes:</strong> {pacienteEncontrado.diabetes}</p>
                                 <p><strong>Fumador:</strong> {pacienteEncontrado.fumador}</p>
+                                <p><strong>exFumador:</strong> {pacienteEncontrado.exfumador}</p>
                                 <p><strong>Tensión Arterial Máxima:</strong> {pacienteEncontrado.presionArterial}</p>
                                 <p><strong>Tensión Arterial Mínima:</strong> {pacienteEncontrado.taMin}</p>
                                 <p><strong>Colesterol:</strong> {pacienteEncontrado.colesterol}</p>
@@ -899,6 +922,23 @@ const Formulario = () => {
                                             type="button"
                                             onClick={() => setDatosPaciente({ ...datosPaciente, fumador: option })}
                                             className={`p-2 border rounded-md ${datosPaciente.fumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                                        >
+                                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* exFumador */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">¿Es exfumador?</label>
+                                <div className="flex space-x-2 mb-2">
+                                    {['sí', 'no'].map(option => (
+                                        <button
+                                            key={option}
+                                            type="button"
+                                            onClick={() => setDatosPaciente({ ...datosPaciente, exfumador: option })}
+                                            className={`p-2 border rounded-md ${datosPaciente.exfumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
                                         >
                                             {option.charAt(0).toUpperCase() + option.slice(1)}
                                         </button>
@@ -1149,6 +1189,7 @@ const Formulario = () => {
                 <p><strong>Género:</strong> {datosPaciente.genero}</p>
                 <p><strong>Diabetes:</strong> {datosPaciente.diabetes}</p>
                 <p><strong>Fumador:</strong> {datosPaciente.fumador}</p>
+                <p><strong>exFumador:</strong> {datosPaciente.fumador}</p>
                 <p><strong>Tensión Arterial Máxima:</strong> {datosPaciente.presionArterial}</p>
                 <p><strong>Tensión Arterial Mínima:</strong> {datosPaciente.taMin}</p>
                 <p><strong>Colesterol:</strong> {datosPaciente.colesterol || 'No especificado'}</p>

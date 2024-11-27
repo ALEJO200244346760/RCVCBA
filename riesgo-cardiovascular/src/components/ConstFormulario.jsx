@@ -7,6 +7,7 @@ export const DatosPacienteInicial = {
     genero: '',
     diabetes: '',
     fumador: '',
+    exfumador: '',
     presionArterial: '',
     taMin: '',
     colesterol: '',

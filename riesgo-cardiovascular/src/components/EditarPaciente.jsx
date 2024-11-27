@@ -22,6 +22,7 @@ const DatosPacienteInicial = {
   genero: '',
   diabetes: '',
   fumador: '',
+  exfumador: '',
   presionArterial: '',
   taMin: '',
   colesterol: '',
@@ -120,7 +121,7 @@ function EditarPaciente() {
     const { name, value } = e.target;
     setDatosPaciente(prev => ({ ...prev, [name]: value }));
 
-    if (['peso', 'talla', 'edad', 'genero', 'diabetes', 'fumador', 'presionArterial', 'colesterol', 'infarto', 'acv', 'renal'].includes(name)) {
+    if (['peso', 'talla', 'edad', 'genero', 'diabetes', 'fumador', 'exfumador', 'presionArterial', 'colesterol', 'infarto', 'acv', 'renal'].includes(name)) {
       calcularIMC({ ...datosPaciente, [name]: value });
       calcularRiesgo({ ...datosPaciente, [name]: value });
     }
@@ -283,6 +284,23 @@ function EditarPaciente() {
                 type="button"
                 onClick={() => setDatosPaciente(prev => ({ ...prev, fumador: option }))}
                 className={`p-2 border rounded-md ${datosPaciente.fumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+              >
+                {option.charAt(0).toUpperCase() + option.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* exFumador */}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium text-gray-700">¿Es exfumador?</label>
+          <div className="flex space-x-2 mb-2">
+            {['sí', 'no'].map(option => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setDatosPaciente(prev => ({ ...prev, exfumador: option }))}
+                className={`p-2 border rounded-md ${datosPaciente.exfumador === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
               >
                 {option.charAt(0).toUpperCase() + option.slice(1)}
               </button>
