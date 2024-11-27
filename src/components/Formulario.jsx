@@ -426,7 +426,7 @@ const Formulario = () => {
         
         ) : esPrimeraVisita ? (
             <form className="w-full space-y-6">
-                <h1 className="text-3xl font-bold mb-6">Formulaasrio de Evaluación de Riesgo Cardiovascular</h1>
+                <h1 className="text-3xl font-bold mb-6">Formulario de Evaluación de Riesgo Cardiovascular</h1>
                 
                 {/* Cuil */}
                 <div className="flex flex-col">
