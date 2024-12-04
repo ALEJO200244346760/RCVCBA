@@ -1310,7 +1310,7 @@ const Formulario = () => {
                                 </div>
                             ))}
                             
-                            <h3 className="text-lg font-semibold mt-4 mb-2">MEDICACION PRESCRIPCION</h3>
+                            <h3 className="text-lg font-semibold mt-4 mb-2">Medicacion para la presión arterial</h3>
                             {listaMedicacionPrescripcion.map((medicamento, index) => (
                                 <div key={index}>
                                     <input
@@ -1322,7 +1322,7 @@ const Formulario = () => {
                                 </div>
                             ))}
 
-                            <h3 className="text-lg font-semibold mt-4 mb-2">MEDICACION DISPENSA</h3>
+                            <h3 className="text-lg font-semibold mt-4 mb-2">Otros medicamentos</h3>
                             {listaMedicacionDispensa.map((medicamento, index) => (
                                 <div key={index}>
                                     <input

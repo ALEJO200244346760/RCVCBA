@@ -144,6 +144,14 @@ export const listaMedicacionPrescripcion = [
     "558*Prescripción de losartán P052 M08",
     "558*Prescripción de hidroclorotiazida P052 M09",
     "558*Prescripción de amlodipina P052 M10",
+    "Enalapril 10 mg cada 12 Hs",
+    "Losartan 50 mg cada 12 Hs",
+    "Amlodipina 10 mg cada12 Hs",
+    "Hidroclorotiazida 25 mg cada 12 Hs",
+    "Furosemida 20 mg cada 12 Hs",
+    "Valsartán 160 mg cada 12 Hs",
+    "Carvedilol 25 mg cada 12 Hs",
+    "Otro",
 ];
 
 export const listaMedicacionDispensa = [
@@ -157,6 +165,9 @@ export const listaMedicacionDispensa = [
     "VALSARTAN",
     "METFORMINA",
     "GLIBENCAMIDA",
+    "Metformina 500 mg dos por dia",
+    "Atorvastatina 10 mg uno por día",
+    "Aspirina 100 mg una por día",
     "OTRO",
 ];
 
