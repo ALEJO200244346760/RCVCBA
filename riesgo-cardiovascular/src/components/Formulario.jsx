@@ -1232,15 +1232,11 @@ const Formulario = () => {
                 <p><strong>Tensión Arterial Máxima:</strong> {datosPaciente.presionArterial}</p>
                 <p><strong>Tensión Arterial Mínima:</strong> {datosPaciente.taMin}</p>
                 <p><strong>Colesterol:</strong> {datosPaciente.colesterol || 'No especificado'}</p>
-                <p><strong>Peso:</strong> {datosPaciente.peso || 'No especificado'}</p>
+                <p><strong>Peso:</strong> {datosPaciente.peso || 'No especificado'} kg</p>
                 <p><strong>Talla:</strong> {datosPaciente.talla || 'No especificada'} cm</p>
                 <p><strong>Cintura:</strong> {datosPaciente.cintura || 'No especificada'} cm</p>
                 <p><strong>IMC:</strong> {datosPaciente.imc || 'No calculado'}</p>
-                <p><strong>Ubicación:</strong> {datosPaciente.ubicacion}</p>
                 <p><strong>Fecha de Registro:</strong> {datosPaciente.fechaRegistro}</p>
-                <p><strong>Hipertenso:</strong> {datosPaciente.hipertenso}</p>
-                <p><strong>Infarto:</strong> {datosPaciente.infarto}</p>
-                <p><strong>ACV:</strong> {datosPaciente.acv}</p>
                 <p><strong>Nivel de Riesgo:</strong></p>
                 <div className="mb-4">
                     {renderRiesgoGrid(nivelRiesgo)}
@@ -1259,9 +1255,9 @@ const Formulario = () => {
             {/* Modal para agregar medicamentos */}
             {mostrarModalMedicamentos && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-md shadow-lg w-10/12 max-w-2xl">
+                    <div className="bg-white p-6 rounded-md shadow-lg w-10/12 max-w-2xl max-h-[80vh]">
                         <h2 className="text-lg font-semibold mb-4">SIGIPSA</h2>
-                        <div className="mb-4 max-h-96 overflow-y-auto">
+                        <div className="mb-4 overflow-y-auto h-full">
                             <h3 className="text-lg font-semibold mt-4 mb-2">NOTIFICACION DE RIESGO</h3>
                             {listaNotificacionRiesgo.map((medicamento, index) => (
                                 <div key={index}>
