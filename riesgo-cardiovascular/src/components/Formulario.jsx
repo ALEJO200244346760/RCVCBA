@@ -1255,9 +1255,9 @@ const Formulario = () => {
             {/* Modal para agregar medicamentos */}
             {mostrarModalMedicamentos && (
                 <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-md shadow-lg w-10/12 max-w-2xl max-h-[80vh]">
+                    <div className="bg-white p-6 rounded-md shadow-lg w-10/12 max-w-2xl">
                         <h2 className="text-lg font-semibold mb-4">SIGIPSA</h2>
-                        <div className="mb-4 overflow-y-auto h-full">
+                        <div className="mb-4 max-h-96 overflow-y-auto">
                             <h3 className="text-lg font-semibold mt-4 mb-2">NOTIFICACION DE RIESGO</h3>
                             {listaNotificacionRiesgo.map((medicamento, index) => (
                                 <div key={index}>
