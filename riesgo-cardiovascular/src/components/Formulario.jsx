@@ -1358,18 +1358,21 @@ const Formulario = () => {
                                 </div>
                             ))}
                         </div>
-                        <button
-                            onClick={guardarMedicamentos}
-                            className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                        >
-                            Guardar
-                        </button>
-                        <button
-                            onClick={cerrarModal}
-                            className="mt-4 py-2 px-4 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-                        >
-                            Cerrar
-                        </button>
+                        <div className="flex justify-between mt-2">
+                            <button
+                                onClick={guardarMedicamentos}
+                                className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                            >
+                                Guardar
+                            </button>
+                            <button
+                                onClick={cerrarModal}
+                                className="py-2 px-4 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+                            >
+                                Cerrar
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             )}
