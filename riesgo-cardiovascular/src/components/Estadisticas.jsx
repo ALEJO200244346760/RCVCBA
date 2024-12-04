@@ -214,7 +214,7 @@ function Estadisticas() {
     const recomendaciones = Advertencia[nivelRiesgoTexto] || "No hay recomendaciones disponibles.";
 
     const datos = `
-      ID: ${paciente.id}    FECHA DE REGISTRO: ${paciente.fechaRegistro}      DNI: ${paciente.cuil}     TELEFONO: ${paciente.telefono}      Edad: ${paciente.edad}      Obra Social: ${paciente.obra}     Género: ${paciente.genero}
+      ID: ${paciente.id}      FECHA DE REGISTRO: ${paciente.fechaRegistro}      DNI: ${paciente.cuil}     TELEFONO: ${paciente.telefono}      Edad: ${paciente.edad}      Obra Social: ${paciente.obra}     Género: ${paciente.genero}
       HIPERTENSO: ${paciente.hipertenso}      Diabetes: ${paciente.diabetes}      Fumador: ${paciente.fumador}      exFumador: ${paciente.exfumador}
       TA Máx.: ${paciente.presionArterial}      TA Mín.: ${paciente.taMin}      Colesterol: ${paciente.colesterol}
       IMC: ${paciente.imc}      PESO: ${paciente.peso}      TALLA: ${paciente.talla}      CINTURA: ${paciente.cintura}      
