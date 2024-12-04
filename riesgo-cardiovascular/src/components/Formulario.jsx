@@ -506,7 +506,7 @@ const Formulario = () => {
 
                 {/* Hipertenso */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
+                    <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para la hipertensión arterial?</label>
                     <div className="flex space-x-2 mb-2">
                         {['Sí', 'No'].map(option => (
                             <button
@@ -523,7 +523,7 @@ const Formulario = () => {
 
                 {/* Diabetes */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Diabetes:</label>
+                    <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para Diabetes?:</label>
                     <div className="flex space-x-2">
                         {['Sí', 'No'].map(option => (
                             <button
@@ -919,7 +919,7 @@ const Formulario = () => {
 
                             {/* Hipertenso */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
+                                <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para la hipertensión arterial?</label>
                                 <div className="flex space-x-2 mb-2">
                                     {['Sí', 'No'].map(option => (
                                         <button
@@ -936,7 +936,7 @@ const Formulario = () => {
 
                             {/* Diabetes */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Diabetes:</label>
+                                <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para Diabetes?:</label>
                                 <div className="flex space-x-2">
                                     {['Sí', 'No'].map(option => (
                                         <button
