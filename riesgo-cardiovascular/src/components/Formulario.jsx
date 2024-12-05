@@ -528,7 +528,7 @@ const Formulario = () => {
 
                 {/* Diabetes */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para Diabetes?:</label>
+                    <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para Diabetes?</label>
                     <div className="flex space-x-2">
                         {['Sí', 'No'].map(option => (
                             <button
@@ -545,7 +545,7 @@ const Formulario = () => {
 
                 {/* Medicaión colesterol */}
                 <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para el colesterol?:</label>
+                    <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para el colesterol?</label>
                     <div className="flex space-x-2">
                         {['Sí', 'No'].map(option => (
                             <button
@@ -958,7 +958,7 @@ const Formulario = () => {
 
                             {/* Diabetes */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para Diabetes?:</label>
+                                <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para Diabetes?</label>
                                 <div className="flex space-x-2">
                                     {['Sí', 'No'].map(option => (
                                         <button
@@ -975,7 +975,7 @@ const Formulario = () => {
 
                             {/* Medicación colesterol */}
                             <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para el colesterol?:</label>
+                                <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para el colesterol?</label>
                                 <div className="flex space-x-2">
                                     {['Sí', 'No'].map(option => (
                                         <button
