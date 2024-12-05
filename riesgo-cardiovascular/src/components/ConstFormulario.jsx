@@ -6,6 +6,7 @@ export const DatosPacienteInicial = {
     obra: '',
     genero: '',
     diabetes: '',
+    medicolesterol: '',
     fumador: '',
     exfumador: '',
     presionArterial: '',
@@ -140,10 +141,6 @@ export const listaHipertensionArterial = [
 
 export const listaMedicacionPrescripcion = [
 
-    "558**Prescripción de enalapril P052 M07",
-    "558*Prescripción de losartán P052 M08",
-    "558*Prescripción de hidroclorotiazida P052 M09",
-    "558*Prescripción de amlodipina P052 M10",
     "Enalapril 10 mg cada 12 Hs",
     "Losartan 50 mg cada 12 Hs",
     "Amlodipina 10 mg cada12 Hs",
@@ -156,15 +153,6 @@ export const listaMedicacionPrescripcion = [
 
 export const listaMedicacionDispensa = [
 
-    "612*Dispensa de enalapril P053 M07",
-    "612*Dispensa de losartán P053 M08",
-    "612*Dispensa de hidroclorotiazida P053 M09",
-    "612*Dispensa de amlodipina P053 M10",
-    "CARVEDILOL",
-    "FUROSEMIDA",
-    "VALSARTAN",
-    "METFORMINA",
-    "GLIBENCAMIDA",
     "Metformina 500 mg dos por dia",
     "Atorvastatina 10 mg uno por día",
     "Aspirina 100 mg una por día",

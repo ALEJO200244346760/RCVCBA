@@ -181,6 +181,7 @@ const Formulario = () => {
             genero,
             cuil,
             diabetes,
+            medicolesterol,
             fumador,
             exfumador,
             presionArterial,
@@ -196,7 +197,7 @@ const Formulario = () => {
             cintura
         } = datosPaciente;
 
-        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !fumador || !exfumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !pulmonar || !infarto) {
+        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !medicolesterol || !fumador || !exfumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !pulmonar || !infarto) {
             setError('Por favor, complete todos los campos obligatorios.');
             return false;
         }
@@ -216,6 +217,10 @@ const Formulario = () => {
         }
         if (!diabetes) {
             setError('Por favor, indique si tiene diabetes.');
+            return false;
+        }
+        if (!medicolesterol) {
+            setError('Por favor, indique si toma medicamentos para el colesterol.');
             return false;
         }
         if (!fumador) {
@@ -531,6 +536,23 @@ const Formulario = () => {
                                 type="button"
                                 onClick={() => setDatosPaciente({ ...datosPaciente, diabetes: option })}
                                 className={`p-2 border rounded-md ${datosPaciente.diabetes === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                            >
+                                {option.charAt(0).toUpperCase() + option.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Medicaión colesterol */}
+                <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para el colesterol?:</label>
+                    <div className="flex space-x-2">
+                        {['Sí', 'No'].map(option => (
+                            <button
+                                key={option}
+                                type="button"
+                                onClick={() => setDatosPaciente({ ...datosPaciente, medicolesterol: option })}
+                                className={`p-2 border rounded-md ${datosPaciente.medicolesterol === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
                             >
                                 {option.charAt(0).toUpperCase() + option.slice(1)}
                             </button>
@@ -944,6 +966,23 @@ const Formulario = () => {
                                             type="button"
                                             onClick={() => setDatosPaciente({ ...datosPaciente, diabetes: option })}
                                             className={`p-2 border rounded-md ${datosPaciente.diabetes === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
+                                        >
+                                            {option.charAt(0).toUpperCase() + option.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Medicación colesterol */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">¿Toma medicamentos para el colesterol?:</label>
+                                <div className="flex space-x-2">
+                                    {['Sí', 'No'].map(option => (
+                                        <button
+                                            key={option}
+                                            type="button"
+                                            onClick={() => setDatosPaciente({ ...datosPaciente, medicolesterol: option })}
+                                            className={`p-2 border rounded-md ${datosPaciente.medicolesterol === option ? 'bg-green-500 text-white' : 'border-gray-300'}`}
                                         >
                                             {option.charAt(0).toUpperCase() + option.slice(1)}
                                         </button>
