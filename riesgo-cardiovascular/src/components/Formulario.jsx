@@ -1381,17 +1381,6 @@ const Formulario = () => {
                                 </div>
                             ))}
 
-                            <h3 className="text-lg font-semibold mt-4 mb-2">LABORATORIO</h3>
-                            {listaLaboratorio.map((medicamento, index) => (
-                                <div key={index}>
-                                    <input
-                                        type="checkbox"
-                                        value={medicamento}
-                                        onChange={(e) => handleMedicamentoChange('laboratorio', e)}
-                                    />
-                                    <label className="ml-2">{medicamento}</label>
-                                </div>
-                            ))}
                         </div>
                         <div className="flex justify-between mt-2">
                             <button
