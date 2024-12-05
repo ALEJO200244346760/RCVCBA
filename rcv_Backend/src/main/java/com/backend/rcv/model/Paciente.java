@@ -28,6 +28,8 @@ public class Paciente {
     @Column
     private String diabetes;
     @Column
+    private String medicolesterol;
+    @Column
     private String fumador;
     @Column
     private String exfumador;
