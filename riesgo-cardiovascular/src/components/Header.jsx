@@ -53,7 +53,7 @@ const Header = () => {
         
         {/* Aquí agregamos el enlace para FormularioPaciente */}
         <Link to="/formulario-paciente" className="block lg:inline-block hover:text-gray-300">
-          Formulario Paciente
+          CUS
         </Link>
 
         {hasCardiologoRole && (
