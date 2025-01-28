@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Header from './components/Header';
 import Estadisticas from './components/Estadisticas';
 import Formulario from './components/Formulario';
+import FormularioPaciente from './components/FormularioPaciente'; // Aquí importamos el nuevo componente
 import EditarPaciente from './components/EditarPaciente';
 import TomarPresion from './components/TomarPresion';
 import Login from './components/Login';
@@ -24,6 +25,9 @@ function App() {
       <Routes>
         {/* Página principal es Formulario para todos */}
         <Route path="/" element={<Formulario />} />
+
+        {/* Ruta para FormularioPaciente */}
+        <Route path="/formulario-paciente" element={<FormularioPaciente />} /> {/* Esta es la nueva ruta */}
 
         <Route path="/tomarPresion" element={<TomarPresion />} />
 
