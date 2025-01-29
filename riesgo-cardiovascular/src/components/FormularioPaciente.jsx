@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from './axiosConfig'; // Importa la configuración de Axios
 
 const FormularioPaciente = () => {
     const [dni, setDni] = useState('');
@@ -6,29 +7,22 @@ const FormularioPaciente = () => {
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
 
-    // Función para consultar el paciente por DNI
+    // Función para consultar el paciente por DNI usando Axios
     const consultarPaciente = async (dni) => {
         try {
-            const respuesta = await fetch(`/api/pacientemenor/${dni}`);
+            const respuesta = await axios.get(`/api/pacientemenor/${dni}`);
 
-            // Verificamos si la respuesta es correcta (código de estado 200-299)
-            if (!respuesta.ok) {
-                // Si la respuesta no es 2xx, lanzamos un error
-                throw new Error(`Error: ${respuesta.status} - ${respuesta.statusText}`);
-            }
-
-            const data = await respuesta.json();
-
-            // Verificamos si la respuesta contiene datos
-            if (data) {
-                setDatosPaciente(data);
+            // Si la respuesta tiene datos, actualizamos el estado
+            if (respuesta.data) {
+                setDatosPaciente(respuesta.data);
                 setEsPacienteNuevo(false);
             } else {
                 setEsPacienteNuevo(true);
             }
         } catch (err) {
-            setError(err.message); // Capturamos y mostramos el error si algo sale mal
-            setEsPacienteNuevo(true); // Si hay un error, consideramos que es un paciente nuevo
+            // Manejamos errores (por ejemplo, no se encuentra el paciente)
+            setError(err.response ? err.response.data.message : err.message); // Si el error viene de la respuesta, mostramos el mensaje específico
+            setEsPacienteNuevo(true); // Si hay error, lo tratamos como un paciente nuevo
         }
     };
 
@@ -37,7 +31,7 @@ const FormularioPaciente = () => {
         if (dni) {
             consultarPaciente(dni);
         }
-    }, [dni]);
+    }, [dni]);s
 
     const manejarCambio = (e) => {
         const { name, value } = e.target;
