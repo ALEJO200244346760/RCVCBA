@@ -31,7 +31,7 @@ const FormularioPaciente = () => {
         if (dni) {
             consultarPaciente(dni);
         }
-    }, [dni]);s
+    }, [dni]);
 
     const manejarCambio = (e) => {
         const { name, value } = e.target;
