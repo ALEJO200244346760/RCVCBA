@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from './axiosConfig'; // Importa la configuración de Axios
+import axios from '../axiosConfig'; // Importa la configuración de Axios
 
 const FormularioPaciente = () => {
     const [dni, setDni] = useState('');
