@@ -1,5 +1,6 @@
 package com.backend.rcv.controller;
 
+import com.backend.rcv.exception.PacienteNoEncontradoException;
 import com.backend.rcv.model.Pacientemenor;
 import com.backend.rcv.repository.PacientemenorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +24,23 @@ public class PacientemenorController {
         if (paciente.isPresent()) {
             return ResponseEntity.ok(paciente.get());
         } else {
-            return ResponseEntity.status(404).body(null); // Paciente no encontrado
+            throw new PacienteNoEncontradoException(dni); // Lanzar excepción personalizada
         }
     }
 
     // Crear o actualizar un paciente
     @PostMapping
     public ResponseEntity<Pacientemenor> crearOActualizarPaciente(@RequestBody Pacientemenor pacienteData) {
-        // Primero verifica si el paciente existe por DNI
         Optional<Pacientemenor> pacienteExistente = pacientemenorRepository.findByDni(pacienteData.getDni());
 
         if (pacienteExistente.isPresent()) {
-            // Si ya existe, lo actualizamos
-            Pacientemenor paciente = pacienteExistente.get();  // Obtenemos el paciente ya existente
-
-            // Actualizamos los campos con los nuevos datos
+            Pacientemenor paciente = pacienteExistente.get();
             paciente.setPeso(pacienteData.getPeso());
             paciente.setTalla(pacienteData.getTalla());
             paciente.setTensionArterial(pacienteData.getTensionArterial());
             paciente.setTelefono(pacienteData.getTelefono());
             paciente.setFechaNacimiento(pacienteData.getFechaNacimiento());
             paciente.setDireccion(pacienteData.getDireccion());
-
-            // Campos de Cardiología
             paciente.setHipertenso(pacienteData.getHipertenso());
             paciente.setDiabetes(pacienteData.getDiabetes());
             paciente.setAsma(pacienteData.getAsma());
@@ -57,19 +52,13 @@ public class PacientemenorController {
             paciente.setAlergias(pacienteData.getAlergias());
             paciente.setAntecedentesFamiliaresMarcapaso(pacienteData.getAntecedentesFamiliaresMarcapaso());
             paciente.setDesfibriladores(pacienteData.getDesfibriladores());
-
-            // Campos de Tensión Arterial (máxima y mínima)
             paciente.setTensionArterialMaxima(pacienteData.getTensionArterialMaxima());
             paciente.setTensionArterialMinima(pacienteData.getTensionArterialMinima());
-
-            // Estado del Electrocardiograma
             paciente.setElectrocardiograma(pacienteData.getElectrocardiograma());
 
-            // Guardamos el paciente actualizado
             Pacientemenor actualizado = pacientemenorRepository.save(paciente);
-            return ResponseEntity.ok(actualizado);  // Retornamos el paciente actualizado
+            return ResponseEntity.ok(actualizado);
         } else {
-            // Si no existe, creamos un nuevo paciente
             Pacientemenor nuevoPaciente = new Pacientemenor(
                     pacienteData.getDni(),
                     pacienteData.getPeso(),
@@ -93,10 +82,8 @@ public class PacientemenorController {
                     pacienteData.getTensionArterialMinima(),
                     pacienteData.getElectrocardiograma()
             );
-
-            // Guardamos el nuevo paciente
             Pacientemenor guardado = pacientemenorRepository.save(nuevoPaciente);
-            return ResponseEntity.status(201).body(guardado);  // Retorna el paciente creado
+            return ResponseEntity.status(201).body(guardado);
         }
     }
 }

@@ -5,6 +5,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
 
 @Entity
 public class Pacientemenor {
@@ -14,16 +18,23 @@ public class Pacientemenor {
     private Long id; // ID único para cada paciente (si es necesario)
 
     @Column(nullable = false, unique = true)
+    @NotNull(message = "El DNI no puede ser nulo")
+    @Size(min = 8, max = 8, message = "El DNI debe tener 8 caracteres")
     private String dni; // DNI único del paciente
 
+    @NotNull(message = "El peso no puede ser nulo")
+    @Min(value = 1, message = "El peso debe ser mayor que 0")
     private Double peso; // Peso del paciente
 
+    @NotNull(message = "La talla no puede ser nula")
+    @Min(value = 1, message = "La talla debe ser mayor que 0")
     private Double talla; // Talla del paciente
 
     private String tensionArterial; // Tensión arterial (opcional)
 
     private String telefono; // Teléfono del paciente
 
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La fecha de nacimiento debe ser en formato yyyy-MM-dd")
     private String fechaNacimiento; // Fecha de nacimiento del paciente
 
     private String direccion; // Dirección del paciente
@@ -85,7 +96,7 @@ public class Pacientemenor {
         this.electrocardiograma = electrocardiograma;
     }
 
-    // Getters y setters para todos los campos
+    // Getters y setters para todos los campos...
 
     public Long getId() {
         return id;
