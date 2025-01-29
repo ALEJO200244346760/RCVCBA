@@ -3,226 +3,243 @@ import axios from '../axiosConfig'; // Asegúrate de que Axios esté configurado
 
 const FormularioPaciente = () => {
     const [dni, setDni] = useState('');
-    const [datosPaciente, setDatosPaciente] = useState({});
+    const [datosEnfermeria, setDatosEnfermeria] = useState(null);
+    const [datosCardiologia, setDatosCardiologia] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
 
-    const consultarPaciente = async (dni) => {
-        console.log('Consultando paciente con DNI:', dni); // Verifica que el DNI es el correcto
+    // Consultar datos de Enfermería por DNI
+    const consultarEnfermeria = async (dni) => {
         try {
-            const respuesta = await axios.get(`/api/pacientemenor/${dni}`);
+            const respuesta = await axios.get(`/api/datos-enfermeria/${dni}`);
             if (respuesta.data) {
-                setDatosPaciente(respuesta.data);
-                setEsPacienteNuevo(false);
+                setDatosEnfermeria(respuesta.data);
+                setEsPacienteNuevo(false); // El paciente ya tiene datos de enfermería
             } else {
-                setEsPacienteNuevo(true);
+                setEsPacienteNuevo(true); // Paciente nuevo, aún no tiene datos de enfermería
             }
         } catch (err) {
             setError(err.response ? err.response.data.message : err.message);
-            setEsPacienteNuevo(true);
         }
     };
 
-    const guardarPaciente = async () => {
-        console.log('Guardando paciente con datos:', datosPaciente); // Verifica los datos que se envían
+    // Guardar los datos de Enfermería
+    const guardarDatosEnfermeria = async () => {
         try {
-            const respuesta = await axios.post('/api/pacientemenor', datosPaciente);
-            alert('Paciente guardado exitosamente');
+            const datos = {
+                peso: datosCardiologia.peso,
+                talla: datosCardiologia.talla,
+                tensionArterial: datosCardiologia.tensionArterial || '',
+            };
+
+            const url = esPacienteNuevo ? "/api/datos-enfermeria" : `/api/datos-enfermeria/${dni}`;
+            const metodo = esPacienteNuevo ? "POST" : "PUT";
+
+            await axios({
+                method: metodo,
+                url,
+                data: datos,
+            });
+
+            alert("Datos de enfermería guardados con éxito");
         } catch (err) {
-            console.error('Error al guardar el paciente:', err);
             setError(err.response ? err.response.data.message : err.message);
         }
     };
-    
 
+    // Guardar todos los datos en Pacientemenor (Final)
+    const guardarPaciente = async () => {
+        try {
+            const paciente = {
+                dni: dni,
+                peso: datosEnfermeria.peso,
+                talla: datosEnfermeria.talla,
+                tensionArterial: datosEnfermeria.tensionArterial,
+                hipertenso: datosCardiologia.hipertenso,
+                diabetes: datosCardiologia.diabetes,
+            };
+
+            const response = await axios.post('/api/pacientemenor', paciente);
+            alert('Paciente guardado exitosamente');
+        } catch (err) {
+            setError(err.response ? err.response.data.message : err.message);
+        }
+    };
+
+    // Consultar al cambiar el DNI
     useEffect(() => {
         if (dni.length === 8) {
-            consultarPaciente(dni);
+            consultarEnfermeria(dni);
         }
     }, [dni]);
 
-    const manejarCambio = (e) => {
+    // Manejo de cambios en los campos de los formularios
+    const manejarCambioEnfermeria = (e) => {
         const { name, value } = e.target;
-        setDatosPaciente({
-            ...datosPaciente,
-            [name]: value
+        setDatosCardiologia({
+            ...datosCardiologia,
+            [name]: value,
         });
     };
 
-    const manejarSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const endpoint = esPacienteNuevo ? '/api/pacientemenor' : `/api/pacientemenor/${dni}`;
-            const response = await fetch(endpoint, {
-                method: esPacienteNuevo ? 'POST' : 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(datosPaciente),
-            });
-
-            if (response.ok) {
-                alert('Datos guardados correctamente');
-            } else {
-                alert('Hubo un error al guardar los datos');
-            }
-        } catch (error) {
-            console.error('Error al enviar datos:', error);
-            alert('Hubo un error al enviar los datos');
-        }
+    const manejarCambioCardiologia = (e) => {
+        const { name, value } = e.target;
+        setDatosCardiologia({
+            ...datosCardiologia,
+            [name]: value,
+        });
     };
 
-    const handleDniChange = (e) => {
-        setDni(e.target.value);
+    // Manejo del submit de los formularios
+    const manejarSubmitEnfermeria = (e) => {
+        e.preventDefault();
+        guardarDatosEnfermeria();
+    };
+
+    const manejarSubmitCardiologia = (e) => {
+        e.preventDefault();
+        guardarPaciente();
     };
 
     return (
         <div className="flex flex-col items-center p-6 max-w-2xl mx-auto">
             <h1 className="text-3xl font-bold mb-6">Formulario de Evaluación</h1>
 
-                    {/* DNI */}
-                    <div className="flex flex-col mb-4">
-                        <label className="text-sm font-medium text-gray-700">DNI:</label>
+            {/* DNI */}
+            <div className="flex flex-col mb-4">
+                <label className="text-sm font-medium text-gray-700">DNI:</label>
+                <input
+                    type="text"
+                    name="dni"
+                    value={dni}
+                    onChange={(e) => setDni(e.target.value)}
+                    className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    maxLength="8"
+                />
+            </div>
+
+            {/* Si es un paciente nuevo, mostramos el formulario de enfermería */}
+            {esPacienteNuevo === true && (
+                <form onSubmit={manejarSubmitEnfermeria} className="w-full space-y-6">
+                    <h2 className="text-xl font-bold mb-4">Datos de Enfermería</h2>
+
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Peso:</label>
                         <input
-                            type="text"
-                            name="dni"
-                            value={dni}
-                            onChange={handleDniChange}
-                            className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            maxLength="8"
+                            type="number"
+                            name="peso"
+                            value={datosCardiologia.peso || ''}
+                            onChange={manejarCambioEnfermeria}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
                         />
                     </div>
 
-                    {/* Si es un paciente nuevo, mostramos los datos de enfermería */}
-                    {esPacienteNuevo !== null && esPacienteNuevo ? (
-                        <form onSubmit={manejarSubmit} className="w-full space-y-6">
-                            <h2 className="text-xl font-bold mb-4">Datos de Enfermería</h2>
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Talla:</label>
+                        <input
+                            type="number"
+                            name="talla"
+                            value={datosCardiologia.talla || ''}
+                            onChange={manejarCambioEnfermeria}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
 
-                            {/* Peso */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Peso:</label>
-                                <input
-                                    type="number"
-                                    name="peso"
-                                    value={datosPaciente.peso || ''}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Tensión Arterial (Opcional):</label>
+                        <input
+                            type="text"
+                            name="tensionArterial"
+                            value={datosCardiologia.tensionArterial || ''}
+                            onChange={manejarCambioEnfermeria}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
 
-                            {/* Talla */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Talla:</label>
-                                <input
-                                    type="number"
-                                    name="talla"
-                                    value={datosPaciente.talla || ''}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
+                    <button
+                        type="submit"
+                        className="btn bg-blue-500 text-white hover:bg-blue-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
+                    >
+                        Guardar Datos de Enfermería
+                    </button>
+                </form>
+            )}
 
-                            {/* Tensión Arterial (opcional) */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Tensión Arterial (Opcional):</label>
-                                <input
-                                    type="text"
-                                    name="tensionArterial"
-                                    value={datosPaciente.tensionArterial || ''}
-                                    onChange={manejarCambio}
-                                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
+            {/* Si el paciente tiene datos de enfermería, mostramos el formulario de cardiología */}
+            {esPacienteNuevo === false && datosEnfermeria && (
+                <form onSubmit={manejarSubmitCardiologia} className="w-full space-y-6">
+                    <h2 className="text-xl font-bold mb-4">Datos de Cardiología</h2>
 
-                            {/* Enviar formulario de enfermería */}
+                    {/* Mostrar datos de Enfermería */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Peso:</label>
+                        <input
+                            type="number"
+                            name="peso"
+                            value={datosEnfermeria.peso || ''}
+                            readOnly
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Talla:</label>
+                        <input
+                            type="number"
+                            name="talla"
+                            value={datosEnfermeria.talla || ''}
+                            readOnly
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
+                        <input
+                            type="text"
+                            name="tensionArterial"
+                            value={datosEnfermeria.tensionArterial || ''}
+                            readOnly
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
+
+                    {/* Preguntas de Cardiología */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
+                        <div className="flex space-x-4">
                             <button
-                                type="submit"
-                                className="btn bg-blue-500 text-white hover:bg-blue-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
+                                onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'Sí' })}
+                                className={`btn ${datosCardiologia.hipertenso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
                             >
-                                Siguiente
+                                Sí
                             </button>
-                        </form>
-                    ) : (
-                        esPacienteNuevo === false && (
-                            <form onSubmit={manejarSubmit} className="w-full space-y-6">
-                            <h2 className="text-xl font-bold mb-4">Datos de Enfermería</h2>
+                            <button
+                                onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'No' })}
+                                className={`btn ${datosCardiologia.hipertenso === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Rellenar con los datos ya existentes */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Peso:</label>
-                                <input
-                                type="number"
-                                name="peso"
-                                value={datosPaciente.peso || ''}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
-
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Talla:</label>
-                                <input
-                                type="number"
-                                name="talla"
-                                value={datosPaciente.talla || ''}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
-
-                            {/* Tensión Arterial */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
-                                <input
-                                type="text"
-                                name="tensionArterial"
-                                value={datosPaciente.tensionArterial || ''}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
-
-                            {/* Formulario de Cardiología */}
-                            <h2 className="text-xl font-bold mt-6 mb-4">Datos de Cardiología</h2>
-
-                            {/* Hipertenso */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, hipertenso: 'Sí' })}
-                                    className={`btn ${datosPaciente.hipertenso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, hipertenso: 'No' })}
-                                    className={`btn ${datosPaciente.hipertenso === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
-
-                            {/* Diabetes */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Tiene diabetes?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, diabetes: 'Sí' })}
-                                    className={`btn ${datosPaciente.diabetes === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, diabetes: 'No' })}
-                                    className={`btn ${datosPaciente.diabetes === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene diabetes?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'Sí' })}
+                                className={`btn ${datosCardiologia.diabetes === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'No' })}
+                                className={`btn ${datosCardiologia.diabetes === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
                             {/* Asma */}
                             <div className="flex flex-col">
@@ -414,38 +431,34 @@ const FormularioPaciente = () => {
 
                             {/* Electrocardiograma */}
                             <div className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-700">Electrocardiograma:</label>
-                        <select
-                        name="electrocardiograma"
-                        value={datosPaciente.electrocardiograma || ''}
-                        onChange={manejarCambio}
-                        className="mt-1 p-2 border border-gray-300 rounded-md"
-                        >
-                        <option value="">Selecciona...</option>
-                        <option value="Normal">Normal</option>
-                        <option value="Anormal">Anormal</option>
-                        </select>
-                    </div>
-
-                            <div className="flex justify-end">
-                                <button
-                                    type="submit"
-                                    className="btn bg-blue-500 text-white hover:bg-blue-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
+                                <label className="text-sm font-medium text-gray-700">Electrocardiograma:</label>
+                                <select
+                                name="electrocardiograma"
+                                value={datosPaciente.electrocardiograma || ''}
+                                onChange={manejarCambio}
+                                className="mt-1 p-2 border border-gray-300 rounded-md"
                                 >
-                                    Guardar
-                                </button>
+                                <option value="">Selecciona...</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Anormal">Anormal</option>
+                                </select>
                             </div>
-                            </form>
-                        )
-                    )}
 
-                    {/* Error Handling */}
-                    {error && (
-                        <div className="text-red-500 mt-4">
-                            <p>{error}</p>
-                        </div>
-                    )}
+                    <button
+                        type="submit"
+                        className="btn bg-blue-500 text-white hover:bg-blue-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
+                    >
+                        Guardar Datos Completos
+                    </button>
+                </form>
+            )}
 
+            {/* Error Handling */}
+            {error && (
+                <div className="text-red-500 mt-4">
+                    <p>{error}</p>
+                </div>
+            )}
         </div>
     );
 };

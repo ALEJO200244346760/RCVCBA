@@ -58,6 +58,9 @@ public class Pacientemenor {
 
     // Constructores, getters y setters
 
+    public Pacientemenor() {
+    }
+
     public Pacientemenor(String dni, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String direccion, Boolean hipertenso, Boolean diabetes, Boolean asma, Boolean fuma, Boolean antecedentesSoplo, Boolean arritmias, Boolean enfermedadCronica, Boolean cirugiaPrevia, String alergias, Boolean antecedentesFamiliaresMarcapaso, Boolean desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
         this.dni = dni;
         this.peso = peso;
