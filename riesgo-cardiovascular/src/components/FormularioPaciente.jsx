@@ -12,7 +12,7 @@ const FormularioPaciente = () => {
     // Consultar datos de Enfermería por DNI
     const consultarEnfermeria = async (dni) => {
         try {
-            const respuesta = await axios.get(`/api/datos-enfermeria/${dni}`);
+            const respuesta = await axios.get(`/api/enfermeria/${dni}`);
             if (respuesta.data) {
                 setDatosEnfermeria(respuesta.data);
                 setEsPacienteNuevo(false); // El paciente ya tiene datos de enfermería
