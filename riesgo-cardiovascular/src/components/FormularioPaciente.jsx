@@ -214,6 +214,7 @@ const FormularioPaciente = () => {
                     </div>
 
                     {/* Preguntas de Cardiología */}
+                    {/* Hipertensión */}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
                         <div className="flex space-x-4">
@@ -232,6 +233,7 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
+                    {/* Diabetes */}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">¿Tiene diabetes?</label>
                         <div className="flex space-x-4">
@@ -250,208 +252,209 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
-                            {/* Asma */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Tiene asma?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, asma: 'Sí' })}
-                                    className={`btn ${datosPaciente.asma === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, asma: 'No' })}
-                                    className={`btn ${datosPaciente.asma === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Asma */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene asma?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, asma: 'Sí' })}
+                                className={`btn ${datosPaciente.asma === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, asma: 'No' })}
+                                className={`btn ${datosPaciente.asma === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Fuma */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Es fumador?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, fuma: 'Sí' })}
-                                    className={`btn ${datosPaciente.fuma === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, fuma: 'No' })}
-                                    className={`btn ${datosPaciente.fuma === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Fuma */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Es fumador?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, fuma: 'Sí' })}
+                                className={`btn ${datosPaciente.fuma === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, fuma: 'No' })}
+                                className={`btn ${datosPaciente.fuma === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Antecedentes de soplo */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Tiene antecedentes de soplo?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesSoplo: 'Sí' })}
-                                    className={`btn ${datosPaciente.antecedentesSoplo === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesSoplo: 'No' })}
-                                    className={`btn ${datosPaciente.antecedentesSoplo === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Antecedentes de soplo */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene antecedentes de soplo?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesSoplo: 'Sí' })}
+                                className={`btn ${datosPaciente.antecedentesSoplo === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesSoplo: 'No' })}
+                                className={`btn ${datosPaciente.antecedentesSoplo === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Arritmias */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Tiene arritmias?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, arritmias: 'Sí' })}
-                                    className={`btn ${datosPaciente.arritmias === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, arritmias: 'No' })}
-                                    className={`btn ${datosPaciente.arritmias === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Arritmias */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene arritmias?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, arritmias: 'Sí' })}
+                                className={`btn ${datosPaciente.arritmias === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, arritmias: 'No' })}
+                                className={`btn ${datosPaciente.arritmias === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Enfermedad Crónica */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad crónica?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, enfermedadCronica: 'Sí' })}
-                                    className={`btn ${datosPaciente.enfermedadCronica === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, enfermedadCronica: 'No' })}
-                                    className={`btn ${datosPaciente.enfermedadCronica === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Enfermedad Crónica */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad crónica?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, enfermedadCronica: 'Sí' })}
+                                className={`btn ${datosPaciente.enfermedadCronica === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, enfermedadCronica: 'No' })}
+                                className={`btn ${datosPaciente.enfermedadCronica === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Cirugía Previa */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Ha tenido cirugía previa?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, cirugiaPrevia: 'Sí' })}
-                                    className={`btn ${datosPaciente.cirugiaPrevia === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, cirugiaPrevia: 'No' })}
-                                    className={`btn ${datosPaciente.cirugiaPrevia === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Cirugía Previa */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Ha tenido cirugía previa?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, cirugiaPrevia: 'Sí' })}
+                                className={`btn ${datosPaciente.cirugiaPrevia === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, cirugiaPrevia: 'No' })}
+                                className={`btn ${datosPaciente.cirugiaPrevia === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Alergias */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Alergias:</label>
-                                <input
-                                type="text"
-                                name="alergias"
-                                value={datosPaciente.alergias || ''}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
+                    {/* Alergias */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Alergias:</label>
+                        <input
+                            type="text"
+                            name="alergias"
+                            value={datosPaciente.alergias || ''}
+                            onChange={manejarCambio}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
 
-                            {/* Antecedentes familiares de marcapaso */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Tiene antecedentes familiares de marcapaso?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesFamiliaresMarcapaso: 'Sí' })}
-                                    className={`btn ${datosPaciente.antecedentesFamiliaresMarcapaso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesFamiliaresMarcapaso: 'No' })}
-                                    className={`btn ${datosPaciente.antecedentesFamiliaresMarcapaso === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Antecedentes familiares de marcapaso */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene antecedentes familiares de marcapaso?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesFamiliaresMarcapaso: 'Sí' })}
+                                className={`btn ${datosPaciente.antecedentesFamiliaresMarcapaso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, antecedentesFamiliaresMarcapaso: 'No' })}
+                                className={`btn ${datosPaciente.antecedentesFamiliaresMarcapaso === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Desfibriladores */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Tiene desfibriladores?</label>
-                                <div className="flex space-x-4">
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, desfibriladores: 'Sí' })}
-                                    className={`btn ${datosPaciente.desfibriladores === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    Sí
-                                </button>
-                                <button
-                                    onClick={() => setDatosPaciente({ ...datosPaciente, desfibriladores: 'No' })}
-                                    className={`btn ${datosPaciente.desfibriladores === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                >
-                                    No
-                                </button>
-                                </div>
-                            </div>
+                    {/* Desfibriladores */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene desfibriladores?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, desfibriladores: 'Sí' })}
+                                className={`btn ${datosPaciente.desfibriladores === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, desfibriladores: 'No' })}
+                                className={`btn ${datosPaciente.desfibriladores === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
 
-                            {/* Tensión Arterial Máxima */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Tensión Arterial Máxima:</label>
-                                <input
-                                type="number"
-                                name="tensionArterialMaxima"
-                                value={datosPaciente.tensionArterialMaxima || ''}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
+                    {/* Tensión Arterial Máxima */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Tensión Arterial Máxima:</label>
+                        <input
+                            type="number"
+                            name="tensionArterialMaxima"
+                            value={datosPaciente.tensionArterialMaxima || ''}
+                            onChange={manejarCambio}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
 
-                            {/* Tensión Arterial Mínima */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Tensión Arterial Mínima:</label>
-                                <input
-                                type="number"
-                                name="tensionArterialMinima"
-                                value={datosPaciente.tensionArterialMinima || ''}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
+                    {/* Tensión Arterial Mínima */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Tensión Arterial Mínima:</label>
+                        <input
+                            type="number"
+                            name="tensionArterialMinima"
+                            value={datosPaciente.tensionArterialMinima || ''}
+                            onChange={manejarCambio}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
 
-                            {/* Electrocardiograma */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Electrocardiograma:</label>
-                                <select
-                                name="electrocardiograma"
-                                value={datosPaciente.electrocardiograma || ''}
-                                onChange={manejarCambio}
-                                className="mt-1 p-2 border border-gray-300 rounded-md"
-                                >
-                                <option value="">Selecciona...</option>
-                                <option value="Normal">Normal</option>
-                                <option value="Anormal">Anormal</option>
-                                </select>
-                            </div>
+                    {/* Electrocardiograma */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Electrocardiograma:</label>
+                        <select
+                            name="electrocardiograma"
+                            value={datosPaciente.electrocardiograma || ''}
+                            onChange={manejarCambio}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        >
+                            <option value="">Selecciona...</option>
+                            <option value="Normal">Normal</option>
+                            <option value="Anormal">Anormal</option>
+                        </select>
+                    </div>
+
 
                     <button
                         type="submit"
