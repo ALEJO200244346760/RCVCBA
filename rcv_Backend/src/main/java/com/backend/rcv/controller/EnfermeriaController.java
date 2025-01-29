@@ -39,4 +39,5 @@ public class EnfermeriaController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // Si hay un error
         }
     }
+
 }
