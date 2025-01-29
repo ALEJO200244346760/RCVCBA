@@ -5,6 +5,7 @@ const FormularioPaciente = () => {
     const [dni, setDni] = useState('');
     const [datosEnfermeria, setDatosEnfermeria] = useState(null);
     const [datosCardiologia, setDatosCardiologia] = useState({});
+    const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
 
