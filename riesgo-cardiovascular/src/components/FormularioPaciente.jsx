@@ -58,6 +58,18 @@ const FormularioPaciente = () => {
                 tensionArterial: datosEnfermeria.tensionArterial,
                 hipertenso: datosCardiologia.hipertenso,
                 diabetes: datosCardiologia.diabetes,
+                asma: datosPaciente.asma,
+                fuma: datosPaciente.fuma,
+                antecedentesSoplo: datosPaciente.antecedentesSoplo,
+                arritmias: datosPaciente.arritmias,
+                enfermedadCronica: datosPaciente.enfermedadCronica,
+                cirugiaPrevia: datosPaciente.cirugiaPrevia,
+                alergias: datosPaciente.alergias,
+                antecedentesFamiliaresMarcapaso: datosPaciente.antecedentesFamiliaresMarcapaso,
+                desfibriladores: datosPaciente.desfibriladores,
+                tensionArterialMaxima: datosPaciente.tensionArterialMaxima,
+                tensionArterialMinima: datosPaciente.tensionArterialMinima,
+                electrocardiograma: datosPaciente.electrocardiograma
             };
 
             const response = await axios.post('/api/pacientemenor', paciente);
@@ -101,14 +113,14 @@ const FormularioPaciente = () => {
         e.preventDefault();
         guardarPaciente();
     };
+
     const manejarCambio = (evento) => {
         const { name, value } = evento.target;
         setDatosPaciente((prevState) => ({
-          ...prevState,
-          [name]: value,
+            ...prevState,
+            [name]: value,
         }));
-      };
-      
+    };
 
     return (
         <div className="flex flex-col items-center p-6 max-w-2xl mx-auto">
