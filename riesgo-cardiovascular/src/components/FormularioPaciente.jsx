@@ -101,6 +101,14 @@ const FormularioPaciente = () => {
         e.preventDefault();
         guardarPaciente();
     };
+    const manejarCambio = (evento) => {
+        const { name, value } = evento.target;
+        setDatosPaciente((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+      };
+      
 
     return (
         <div className="flex flex-col items-center p-6 max-w-2xl mx-auto">
