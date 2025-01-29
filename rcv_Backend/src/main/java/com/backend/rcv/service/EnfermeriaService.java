@@ -11,6 +11,7 @@ public class EnfermeriaService {
     @Autowired
     private EnfermeriaRepository enfermeriaRepository;
 
+    // Método para crear o actualizar los datos de enfermería
     public Enfermeria crearOActualizarEnfermeria(String dni, Enfermeria datosEnfermeria) {
         // Verifica si ya existen datos de enfermería para el paciente usando el DNI
         Enfermeria enfermeriaExistente = enfermeriaRepository.findByDni(dni);
@@ -26,5 +27,10 @@ public class EnfermeriaService {
             datosEnfermeria.setDni(dni);
             return enfermeriaRepository.save(datosEnfermeria);
         }
+    }
+
+    // Método para obtener los datos de enfermería por DNI
+    public Enfermeria obtenerDatosEnfermeriaPorDni(String dni) {
+        return enfermeriaRepository.findByDni(dni);
     }
 }
