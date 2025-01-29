@@ -4,19 +4,40 @@ const FormularioPaciente = () => {
     const [dni, setDni] = useState('');
     const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
+    const [error, setError] = useState(null);
 
-    // Simular consulta a la base de datos
+    // Función para consultar el paciente por DNI
     const consultarPaciente = async (dni) => {
-        const respuesta = await fetch(`/api/pacientemenor/${dni}`);
-        const data = await respuesta.json();
+        try {
+            const respuesta = await fetch(`/api/pacientemenor/${dni}`);
 
-        if (data) {
-            setDatosPaciente(data);
-            setEsPacienteNuevo(false);
-        } else {
-            setEsPacienteNuevo(true);
+            // Verificamos si la respuesta es correcta (código de estado 200-299)
+            if (!respuesta.ok) {
+                // Si la respuesta no es 2xx, lanzamos un error
+                throw new Error(`Error: ${respuesta.status} - ${respuesta.statusText}`);
+            }
+
+            const data = await respuesta.json();
+
+            // Verificamos si la respuesta contiene datos
+            if (data) {
+                setDatosPaciente(data);
+                setEsPacienteNuevo(false);
+            } else {
+                setEsPacienteNuevo(true);
+            }
+        } catch (err) {
+            setError(err.message); // Capturamos y mostramos el error si algo sale mal
+            setEsPacienteNuevo(true); // Si hay un error, consideramos que es un paciente nuevo
         }
     };
+
+    // Usamos useEffect para hacer la consulta cuando el DNI cambie
+    useEffect(() => {
+        if (dni) {
+            consultarPaciente(dni);
+        }
+    }, [dni]);
 
     const manejarCambio = (e) => {
         const { name, value } = e.target;
