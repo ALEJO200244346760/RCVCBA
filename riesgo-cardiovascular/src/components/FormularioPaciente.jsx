@@ -33,7 +33,7 @@ const FormularioPaciente = () => {
                 tensionArterial: datosCardiologia.tensionArterial || '',
             };
 
-            const url = esPacienteNuevo ? "/api/datos-enfermeria" : `/api/datos-enfermeria/${dni}`;
+            const url = esPacienteNuevo ? "/api/enfermeria" : `/api/enfermeria/${dni}`;
             const metodo = esPacienteNuevo ? "POST" : "PUT";
 
             await axios({
