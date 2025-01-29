@@ -8,6 +8,7 @@ const FormularioPaciente = () => {
     const [error, setError] = useState(null);
 
     const consultarPaciente = async (dni) => {
+        console.log('Consultando paciente con DNI:', dni); // Verifica que el DNI es el correcto
         try {
             const respuesta = await axios.get(`/api/pacientemenor/${dni}`);
             if (respuesta.data) {
@@ -23,13 +24,16 @@ const FormularioPaciente = () => {
     };
 
     const guardarPaciente = async () => {
+        console.log('Guardando paciente con datos:', datosPaciente); // Verifica los datos que se envían
         try {
             const respuesta = await axios.post('/api/pacientemenor', datosPaciente);
             alert('Paciente guardado exitosamente');
         } catch (err) {
+            console.error('Error al guardar el paciente:', err);
             setError(err.response ? err.response.data.message : err.message);
         }
     };
+    
 
     useEffect(() => {
         if (dni.length === 8) {
