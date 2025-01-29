@@ -226,42 +226,26 @@ const FormularioPaciente = () => {
                     </div>
 
                     {/* Preguntas de Cardiología */}
-                    {/* Hipertensión */}
                     <div className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-700">¿Es hipertenso?</label>
-                        <div className="flex space-x-4">
-                            <button
-                                onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'Sí' })}
-                                className={`btn ${datosCardiologia.hipertenso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                            >
-                                Sí
-                            </button>
-                            <button
-                                onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'No' })}
-                                className={`btn ${datosCardiologia.hipertenso === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                            >
-                                No
-                            </button>
-                        </div>
+                        <label className="text-sm font-medium text-gray-700">¿Hipertenso?</label>
+                        <input
+                            type="text"
+                            name="hipertenso"
+                            value={datosCardiologia.hipertenso || ''}
+                            onChange={manejarCambioCardiologia}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
                     </div>
 
-                    {/* Diabetes */}
                     <div className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-700">¿Tiene diabetes?</label>
-                        <div className="flex space-x-4">
-                            <button
-                                onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'Sí' })}
-                                className={`btn ${datosCardiologia.diabetes === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                            >
-                                Sí
-                            </button>
-                            <button
-                                onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'No' })}
-                                className={`btn ${datosCardiologia.diabetes === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                            >
-                                No
-                            </button>
-                        </div>
+                        <label className="text-sm font-medium text-gray-700">¿Diabetes?</label>
+                        <input
+                            type="text"
+                            name="diabetes"
+                            value={datosCardiologia.diabetes || ''}
+                            onChange={manejarCambioCardiologia}
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
                     </div>
 
                     {/* Asma */}
@@ -470,19 +454,14 @@ const FormularioPaciente = () => {
 
                     <button
                         type="submit"
-                        className="btn bg-blue-500 text-white hover:bg-blue-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
+                        className="btn bg-green-500 text-white hover:bg-green-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
                     >
-                        Guardar Datos Completos
+                        Guardar Datos de Cardiología
                     </button>
                 </form>
             )}
 
-            {/* Error Handling */}
-            {error && (
-                <div className="text-red-500 mt-4">
-                    <p>{error}</p>
-                </div>
-            )}
+            {error && <p className="text-red-500 mt-4">{error}</p>}
         </div>
     );
 };
