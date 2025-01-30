@@ -29,7 +29,7 @@ const FormularioPaciente = () => {
     const guardarDatosEnfermeria = async () => {
         try {
             const datos = {
-                dni: datosCardiologia.dni,
+                dni: dni,
                 peso: datosCardiologia.peso,
                 talla: datosCardiologia.talla,
                 tensionArterial: datosCardiologia.tensionArterial || '',
