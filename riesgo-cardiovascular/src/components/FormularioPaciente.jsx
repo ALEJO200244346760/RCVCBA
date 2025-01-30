@@ -55,8 +55,13 @@ const FormularioPaciente = () => {
     // Guardar todos los datos en Pacientemenor (Final)
     const guardarPaciente = async () => {
         try {
+            // Asegúrate de que todos los campos requeridos estén presentes
+            if (!dni || !peso || !talla) {
+                throw new Error('Campos obligatorios faltantes');
+            }
+    
             const paciente = {
-                dni: dni,
+                dni,
                 peso: datosEnfermeria.peso,
                 talla: datosEnfermeria.talla,
                 tensionArterial: datosEnfermeria.tensionArterial,
@@ -75,13 +80,15 @@ const FormularioPaciente = () => {
                 tensionArterialMinima: datosPaciente.tensionArterialMinima,
                 electrocardiograma: datosPaciente.electrocardiograma
             };
-
+    
             const response = await axios.post('/api/pacientemenor', paciente);
             alert('Paciente guardado exitosamente');
         } catch (err) {
+            console.error(err);
             setError(err.response ? err.response.data.message : err.message);
         }
     };
+    
 
     // Consultar al cambiar el DNI
     useEffect(() => {

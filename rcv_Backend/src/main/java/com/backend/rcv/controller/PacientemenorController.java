@@ -6,6 +6,7 @@ import com.backend.rcv.service.PacientemenorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
 
@@ -27,10 +28,15 @@ public class PacientemenorController {
     // Crear o actualizar un paciente
     @PostMapping
     public ResponseEntity<Pacientemenor> crearOActualizarPaciente(@Valid @RequestBody Pacientemenor pacienteData) {
-        Pacientemenor pacienteGuardado = pacientemenorService.crearOActualizarPaciente(pacienteData);
-        if (pacienteGuardado == null) {
-            return ResponseEntity.status(500).body(null); // Error interno si no se pudo guardar
+        try {
+            Pacientemenor pacienteGuardado = pacientemenorService.crearOActualizarPaciente(pacienteData);
+            if (pacienteGuardado == null) {
+                return ResponseEntity.status(500).body(null); // Error interno si no se pudo guardar
+            }
+            return ResponseEntity.status(pacienteData.getDni() != null ? 200 : 201).body(pacienteGuardado);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null); // Error interno si algo falló
         }
-        return ResponseEntity.status(pacienteData.getDni() != null ? 200 : 201).body(pacienteGuardado);
     }
 }
