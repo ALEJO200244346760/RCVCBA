@@ -33,7 +33,7 @@ const FormularioPaciente = () => {
                 talla: datosCardiologia.talla,
                 tensionArterial: datosCardiologia.tensionArterial || '',
             };
-
+    
             const url = esPacienteNuevo ? "/api/enfermeria" : `/api/enfermeria/${dni}`;
             const metodo = esPacienteNuevo ? "POST" : "PUT";
 
@@ -42,12 +42,14 @@ const FormularioPaciente = () => {
                 url,
                 data: datos,
             });
-
+    
             alert("Datos de enfermería guardados con éxito");
         } catch (err) {
+            console.error("Error en la solicitud:", err);
             setError(err.response ? err.response.data.message : err.message);
         }
     };
+    
 
     // Guardar todos los datos en Pacientemenor (Final)
     const guardarPaciente = async () => {
@@ -102,7 +104,7 @@ const FormularioPaciente = () => {
             ...datosCardiologia,
             [name]: value,
         });
-    };
+    };   
 
     // Manejo del submit de los formularios
     const manejarSubmitEnfermeria = (e) => {
