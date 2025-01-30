@@ -28,16 +28,12 @@ public class EnfermeriaController {
     // Consultar los datos de enfermería por DNI
     @GetMapping("/{dni}")
     public ResponseEntity<Enfermeria> obtenerDatosEnfermeria(@PathVariable String dni) {
-        try {
-            Enfermeria enfermeria = enfermeriaService.obtenerDatosEnfermeriaPorDni(dni);
-            if (enfermeria != null) {
-                return new ResponseEntity<>(enfermeria, HttpStatus.OK);  // Si encuentra los datos
-            } else {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // Si no hay datos
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // Si hay un error
+        Enfermeria enfermeria = enfermeriaService.obtenerDatosEnfermeriaPorDni(dni);
+        if (enfermeria != null) {
+            return new ResponseEntity<>(enfermeria, HttpStatus.OK);  // Si encuentra datos, responde con los datos
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);  // Si no hay datos, responde sin contenido (sin error 404)}
         }
-    }
+}
 
 }

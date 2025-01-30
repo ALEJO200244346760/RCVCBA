@@ -13,16 +13,17 @@ const FormularioPaciente = () => {
     const consultarEnfermeria = async (dni) => {
         try {
             const respuesta = await axios.get(`/api/enfermeria/${dni}`);
-            if (respuesta.data) {
-                setDatosEnfermeria(respuesta.data);
-                setEsPacienteNuevo(false); // El paciente ya tiene datos de enfermería
+            if (respuesta.status === 204) {  // Verificamos si la respuesta está vacía
+                setEsPacienteNuevo(true);  // Paciente nuevo, no tiene datos de enfermería
             } else {
-                setEsPacienteNuevo(true); // Paciente nuevo, aún no tiene datos de enfermería
+                setDatosEnfermeria(respuesta.data);  // Se encontró el paciente, cargamos los datos
+                setEsPacienteNuevo(false);  // El paciente ya tiene datos de enfermería
             }
         } catch (err) {
             setError(err.response ? err.response.data.message : err.message);
         }
     };
+    
 
     // Guardar los datos de Enfermería
     const guardarDatosEnfermeria = async () => {
