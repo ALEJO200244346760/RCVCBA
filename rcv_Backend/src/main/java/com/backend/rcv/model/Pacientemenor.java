@@ -14,7 +14,7 @@ import jakarta.validation.constraints.Min;
 public class Pacientemenor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Si estás usando una base de datos relacional, puedes generar el ID automáticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // ID único para cada paciente (si es necesario)
 
     @Column(nullable = false, unique = true)
@@ -39,27 +39,27 @@ public class Pacientemenor {
 
     private String direccion; // Dirección del paciente
 
-    private Boolean hipertenso; // Hipertenso (Sí/No)
+    private String hipertenso; // Hipertenso (Sí/No)
 
-    private Boolean diabetes; // Diabetes (Sí/No)
+    private String diabetes; // Diabetes (Sí/No)
 
-    private Boolean asma; // Asma (Sí/No)
+    private String asma; // Asma (Sí/No)
 
-    private Boolean fuma; // Fuma (Sí/No)
+    private String fuma; // Fuma (Sí/No)
 
-    private Boolean antecedentesSoplo; // Antecedentes de soplo (Sí/No)
+    private String antecedentesSoplo; // Antecedentes de soplo (Sí/No)
 
-    private Boolean arritmias; // Arritmias (Sí/No)
+    private String arritmias; // Arritmias (Sí/No)
 
-    private Boolean enfermedadCronica; // Enfermedad crónica (Sí/No)
+    private String enfermedadCronica; // Enfermedad crónica (Sí/No)
 
-    private Boolean cirugiaPrevia; // Cirugía previa (Sí/No)
+    private String cirugiaPrevia; // Cirugía previa (Sí/No)
 
     private String alergias; // Alergias del paciente
 
-    private Boolean antecedentesFamiliaresMarcapaso; // Antecedentes familiares de marcapaso (Sí/No)
+    private String antecedentesFamiliaresMarcapaso; // Antecedentes familiares de marcapaso (Sí/No)
 
-    private Boolean desfibriladores; // Desfibriladores (Sí/No)
+    private String desfibriladores; // Desfibriladores (Sí/No)
 
     private Double tensionArterialMaxima; // Tensión arterial máxima
 
@@ -72,7 +72,7 @@ public class Pacientemenor {
     public Pacientemenor() {
     }
 
-    public Pacientemenor(String dni, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String direccion, Boolean hipertenso, Boolean diabetes, Boolean asma, Boolean fuma, Boolean antecedentesSoplo, Boolean arritmias, Boolean enfermedadCronica, Boolean cirugiaPrevia, String alergias, Boolean antecedentesFamiliaresMarcapaso, Boolean desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
+    public Pacientemenor(String dni, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String direccion, String hipertenso, String diabetes, String asma, String fuma, String antecedentesSoplo, String arritmias, String enfermedadCronica, String cirugiaPrevia, String alergias, String antecedentesFamiliaresMarcapaso, String desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
         this.dni = dni;
         this.peso = peso;
         this.talla = talla;
@@ -162,67 +162,67 @@ public class Pacientemenor {
         this.direccion = direccion;
     }
 
-    public Boolean getHipertenso() {
+    public String getHipertenso() {
         return hipertenso;
     }
 
-    public void setHipertenso(Boolean hipertenso) {
+    public void setHipertenso(String hipertenso) {
         this.hipertenso = hipertenso;
     }
 
-    public Boolean getDiabetes() {
+    public String getDiabetes() {
         return diabetes;
     }
 
-    public void setDiabetes(Boolean diabetes) {
+    public void setDiabetes(String diabetes) {
         this.diabetes = diabetes;
     }
 
-    public Boolean getAsma() {
+    public String getAsma() {
         return asma;
     }
 
-    public void setAsma(Boolean asma) {
+    public void setAsma(String asma) {
         this.asma = asma;
     }
 
-    public Boolean getFuma() {
+    public String getFuma() {
         return fuma;
     }
 
-    public void setFuma(Boolean fuma) {
+    public void setFuma(String fuma) {
         this.fuma = fuma;
     }
 
-    public Boolean getAntecedentesSoplo() {
+    public String getAntecedentesSoplo() {
         return antecedentesSoplo;
     }
 
-    public void setAntecedentesSoplo(Boolean antecedentesSoplo) {
+    public void setAntecedentesSoplo(String antecedentesSoplo) {
         this.antecedentesSoplo = antecedentesSoplo;
     }
 
-    public Boolean getArritmias() {
+    public String getArritmias() {
         return arritmias;
     }
 
-    public void setArritmias(Boolean arritmias) {
+    public void setArritmias(String arritmias) {
         this.arritmias = arritmias;
     }
 
-    public Boolean getEnfermedadCronica() {
+    public String getEnfermedadCronica() {
         return enfermedadCronica;
     }
 
-    public void setEnfermedadCronica(Boolean enfermedadCronica) {
+    public void setEnfermedadCronica(String enfermedadCronica) {
         this.enfermedadCronica = enfermedadCronica;
     }
 
-    public Boolean getCirugiaPrevia() {
+    public String getCirugiaPrevia() {
         return cirugiaPrevia;
     }
 
-    public void setCirugiaPrevia(Boolean cirugiaPrevia) {
+    public void setCirugiaPrevia(String cirugiaPrevia) {
         this.cirugiaPrevia = cirugiaPrevia;
     }
 
@@ -234,19 +234,19 @@ public class Pacientemenor {
         this.alergias = alergias;
     }
 
-    public Boolean getAntecedentesFamiliaresMarcapaso() {
+    public String getAntecedentesFamiliaresMarcapaso() {
         return antecedentesFamiliaresMarcapaso;
     }
 
-    public void setAntecedentesFamiliaresMarcapaso(Boolean antecedentesFamiliaresMarcapaso) {
+    public void setAntecedentesFamiliaresMarcapaso(String antecedentesFamiliaresMarcapaso) {
         this.antecedentesFamiliaresMarcapaso = antecedentesFamiliaresMarcapaso;
     }
 
-    public Boolean getDesfibriladores() {
+    public String getDesfibriladores() {
         return desfibriladores;
     }
 
-    public void setDesfibriladores(Boolean desfibriladores) {
+    public void setDesfibriladores(String desfibriladores) {
         this.desfibriladores = desfibriladores;
     }
 
