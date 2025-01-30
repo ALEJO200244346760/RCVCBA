@@ -24,7 +24,6 @@ public class PacientemenorService {
 
     // Crear o actualizar paciente
     public Pacientemenor crearOActualizarPaciente(Pacientemenor pacienteData) {
-        // Verifica si el paciente ya existe
         Optional<Pacientemenor> pacienteExistente = pacientemenorRepository.findByDni(pacienteData.getDni());
 
         if (pacienteExistente.isPresent()) {
@@ -36,7 +35,20 @@ public class PacientemenorService {
             paciente.setTelefono(pacienteData.getTelefono());
             paciente.setFechaNacimiento(pacienteData.getFechaNacimiento());
             paciente.setDireccion(pacienteData.getDireccion());
-            // Actualiza los demás campos según sea necesario
+            paciente.setHipertenso(pacienteData.getHipertenso());
+            paciente.setDiabetes(pacienteData.getDiabetes());
+            paciente.setAsma(pacienteData.getAsma());
+            paciente.setFuma(pacienteData.getFuma());
+            paciente.setAntecedentesSoplo(pacienteData.getAntecedentesSoplo());
+            paciente.setArritmias(pacienteData.getArritmias());
+            paciente.setEnfermedadCronica(pacienteData.getEnfermedadCronica());
+            paciente.setCirugiaPrevia(pacienteData.getCirugiaPrevia());
+            paciente.setAlergias(pacienteData.getAlergias());
+            paciente.setAntecedentesFamiliaresMarcapaso(pacienteData.getAntecedentesFamiliaresMarcapaso());
+            paciente.setDesfibriladores(pacienteData.getDesfibriladores());
+            paciente.setTensionArterialMaxima(pacienteData.getTensionArterialMaxima());
+            paciente.setTensionArterialMinima(pacienteData.getTensionArterialMinima());
+            paciente.setElectrocardiograma(pacienteData.getElectrocardiograma());
 
             return pacientemenorRepository.save(paciente);
         } else {
