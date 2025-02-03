@@ -8,6 +8,8 @@ const FormularioPaciente = () => {
     const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
+    const isCardiologo = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
+    const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
 
     // Consultar datos de Enfermería por DNI
     const consultarEnfermeria = async (dni) => {
