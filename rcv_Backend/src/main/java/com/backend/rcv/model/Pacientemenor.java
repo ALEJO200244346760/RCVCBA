@@ -22,6 +22,11 @@ public class Pacientemenor {
     @Size(min = 8, max = 8, message = "El DNI debe tener 8 caracteres")
     private String dni; // DNI único del paciente
 
+    @NotNull(message = "El género no puede ser nulo")
+    @Size(min = 4, max = 10, message = "El género debe ser 'Masculino' o 'Femenino'")
+    @Column(nullable = false)
+    private String genero; // Género del paciente (Masculino/Femenino)
+
     @NotNull(message = "El peso no puede ser nulo")
     @Min(value = 1, message = "El peso debe ser mayor que 0")
     private Double peso; // Peso del paciente
@@ -72,8 +77,9 @@ public class Pacientemenor {
     public Pacientemenor() {
     }
 
-    public Pacientemenor(String dni, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String direccion, String hipertenso, String diabetes, String asma, String fuma, String antecedentesSoplo, String arritmias, String enfermedadCronica, String cirugiaPrevia, String alergias, String antecedentesFamiliaresMarcapaso, String desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
+    public Pacientemenor(String dni,String genero, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String direccion, String hipertenso, String diabetes, String asma, String fuma, String antecedentesSoplo, String arritmias, String enfermedadCronica, String cirugiaPrevia, String alergias, String antecedentesFamiliaresMarcapaso, String desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
         this.dni = dni;
+        this.genero = genero;
         this.peso = peso;
         this.talla = talla;
         this.tensionArterial = tensionArterial;
@@ -112,6 +118,14 @@ public class Pacientemenor {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public Double getPeso() {

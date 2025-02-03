@@ -1,9 +1,8 @@
 package com.backend.rcv.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "enfermeria")
@@ -12,6 +11,11 @@ public class Enfermeria {
     @Id
     @Column(name = "dni", unique = true, nullable = false)
     private String dni;  // DNI del paciente
+
+    @NotNull(message = "El género no puede ser nulo")
+    @Size(min = 4, max = 10, message = "El género debe ser 'Masculino' o 'Femenino'")
+    @Column(name = "genero", nullable = false)
+    private String genero;  // Género del paciente (Masculino/Femenino)
 
     @Column(name = "peso", nullable = false)
     private double peso;  // Peso del paciente
@@ -27,8 +31,9 @@ public class Enfermeria {
     }
 
     // Constructor con parámetros
-    public Enfermeria(String dni, double peso, double talla, String tensionArterial) {
+    public Enfermeria(String dni,String genero, double peso, double talla, String tensionArterial) {
         this.dni = dni;
+        this.genero = genero;
         this.peso = peso;
         this.talla = talla;
         this.tensionArterial = tensionArterial;
@@ -41,6 +46,14 @@ public class Enfermeria {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public @NotNull(message = "El género no puede ser nulo") @Size(min = 4, max = 10, message = "El género debe ser 'Masculino' o 'Femenino'") String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(@NotNull(message = "El género no puede ser nulo") @Size(min = 4, max = 10, message = "El género debe ser 'Masculino' o 'Femenino'") String genero) {
+        this.genero = genero;
     }
 
     public double getPeso() {

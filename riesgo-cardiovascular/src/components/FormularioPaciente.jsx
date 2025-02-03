@@ -34,6 +34,7 @@ const FormularioPaciente = ({ roles }) => {
         try {
             const datos = {
                 dni: dni,
+                genero: datosCardiologia.genero,
                 peso: datosCardiologia.peso,
                 talla: datosCardiologia.talla,
                 tensionArterial: datosCardiologia.tensionArterial || '',
@@ -62,6 +63,7 @@ const FormularioPaciente = ({ roles }) => {
     
             const paciente = {
                 dni,
+                genero: datosEnfermeria.genero,
                 peso: datosEnfermeria.peso,
                 talla: datosEnfermeria.talla,
                 tensionArterial: datosEnfermeria.tensionArterial,
