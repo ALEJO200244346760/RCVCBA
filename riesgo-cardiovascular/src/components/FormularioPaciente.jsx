@@ -55,10 +55,6 @@ const FormularioPaciente = () => {
     // Guardar todos los datos en Pacientemenor (Final)
     const guardarPaciente = async () => {
         try {
-            // Asegúrate de que todos los campos requeridos estén presentes
-            if (!dni || !peso || !talla) {
-                throw new Error('Campos obligatorios faltantes');
-            }
     
             const paciente = {
                 dni,
