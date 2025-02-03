@@ -135,6 +135,7 @@ const FormularioPaciente = () => {
 
     return (
         <div className="flex flex-col items-center p-6 max-w-2xl mx-auto">
+            {/* Género */}
             {/* DNI */}
             <div className="flex flex-col mb-4">
                 <label className="text-sm font-medium text-gray-700">DNI:</label>
@@ -296,7 +297,28 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
-                    {/* Fuma */}
+                    {/* Alergias */}
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">¿Tiene Alergias?</label>
+                        <div className="flex space-x-4">
+                            <button
+                                type="button" // Cambié de submit a button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, alergias: 'Sí' })}
+                                className={`btn ${datosPaciente.alergias === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Sí
+                            </button>
+                            <button
+                                type="button" // Cambié de submit a button
+                                onClick={() => setDatosPaciente({ ...datosPaciente, alergias: 'No' })}
+                                className={`btn ${datosPaciente.alergias === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Fuma BORRAR poner toxicos*/}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">¿Es fumador?</label>
                         <div className="flex space-x-4">
@@ -317,7 +339,7 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
-                    {/* Antecedentes de soplo */}
+                    {/* Antecedentes de soplo BORRAR*/}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">¿Tiene antecedentes de soplo?</label>
                         <div className="flex space-x-4">
@@ -338,7 +360,7 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
-                    {/* Arritmias */}
+                    {/* Arritmias BORRAR */}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">¿Tiene arritmias?</label>
                         <div className="flex space-x-4">
@@ -359,7 +381,7 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
-                    {/* Enfermedad Crónica */}
+                    {/* Enfermedad Crónica BORRAR */}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">¿Tiene enfermedad crónica?</label>
                         <div className="flex space-x-4">
@@ -401,30 +423,9 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
-                    {/* Alergias */}
-                    <div className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-700">¿Tiene Alergias?</label>
-                        <div className="flex space-x-4">
-                            <button
-                                type="button" // Cambié de submit a button
-                                onClick={() => setDatosPaciente({ ...datosPaciente, alergias: 'Sí' })}
-                                className={`btn ${datosPaciente.alergias === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                            >
-                                Sí
-                            </button>
-                            <button
-                                type="button" // Cambié de submit a button
-                                onClick={() => setDatosPaciente({ ...datosPaciente, alergias: 'No' })}
-                                className={`btn ${datosPaciente.alergias === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                            >
-                                No
-                            </button>
-                        </div>
-                    </div>
-
                     {/* Antecedentes familiares de marcapaso */}
                     <div className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-700">¿Tiene antecedentes familiares de marcapaso?</label>
+                        <label className="text-sm font-medium text-gray-700">¿Tiene antecedentes familiares con marcapaso o cardiodesfibrilador?</label>
                         <div className="flex space-x-4">
                             <button
                                 type="button" // Cambié de submit a button
@@ -443,7 +444,7 @@ const FormularioPaciente = () => {
                         </div>
                     </div>
 
-                    {/* Desfibriladores */}
+                    {/* Desfibriladores BORRAR */}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">¿Tiene desfibriladores?</label>
                         <div className="flex space-x-4">
@@ -507,7 +508,7 @@ const FormularioPaciente = () => {
                         type="submit"
                         className="btn bg-green-500 text-white hover:bg-green-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
                     >
-                        Guardar Datos de Cardiología
+                        Guardar Datos
                     </button>
                 </form>
             )}
