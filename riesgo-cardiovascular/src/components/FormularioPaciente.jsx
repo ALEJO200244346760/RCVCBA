@@ -320,7 +320,7 @@ const FormularioPaciente = () => {
 
                     {/* Fuma BORRAR poner toxicos*/}
                     <div className="flex flex-col">
-                        <label className="text-sm font-medium text-gray-700">¿Es fumador?</label>
+                        <label className="text-sm font-medium text-gray-700">¿Tóxicos?</label>
                         <div className="flex space-x-4">
                             <button
                                 type="button" // Cambié de submit a button
@@ -492,17 +492,24 @@ const FormularioPaciente = () => {
                     {/* Electrocardiograma */}
                     <div className="flex flex-col">
                         <label className="text-sm font-medium text-gray-700">Electrocardiograma:</label>
-                        <select
-                            name="electrocardiograma"
-                            value={datosPaciente.electrocardiograma || ''}
-                            onChange={manejarCambio}
-                            className="mt-1 p-2 border border-gray-300 rounded-md"
-                        >
-                            <option value="">Selecciona...</option>
-                            <option value="Normal">Normal</option>
-                            <option value="Anormal">Anormal</option>
-                        </select>
+                        <div className="mt-2 flex space-x-4">
+                            <button
+                                type="button"
+                                className={`p-2 border rounded-md ${datosPaciente.electrocardiograma === 'Normal' ? 'bg-blue-500 text-white' : 'bg-white'}`}
+                                onClick={() => manejarCambio({ target: { name: 'electrocardiograma', value: 'Normal' } })}
+                            >
+                                Normal
+                            </button>
+                            <button
+                                type="button"
+                                className={`p-2 border rounded-md ${datosPaciente.electrocardiograma === 'Anormal' ? 'bg-red-500 text-white' : 'bg-white'}`}
+                                onClick={() => manejarCambio({ target: { name: 'electrocardiograma', value: 'Anormal' } })}
+                            >
+                                Anormal
+                            </button>
+                        </div>
                     </div>
+
 
                     <button
                         type="submit"
