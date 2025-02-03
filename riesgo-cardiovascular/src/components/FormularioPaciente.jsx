@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../axiosConfig'; // Asegúrate de que Axios esté configurado correctamente
 
-const FormularioPaciente = () => {
+const FormularioPaciente = ({ roles }) => {
+    const isCardiologo = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
+    const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
+    const isNurse = Array.isArray(roles) && roles.includes('ENFERMERO');
+
     const [dni, setDni] = useState('');
     const [datosEnfermeria, setDatosEnfermeria] = useState(null);
     const [datosCardiologia, setDatosCardiologia] = useState({});
     const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
-    const isCardiologo = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
-    const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
 
     // Consultar datos de Enfermería por DNI
     const consultarEnfermeria = async (dni) => {
@@ -153,7 +155,29 @@ const FormularioPaciente = () => {
                     {esPacienteNuevo && (
                         <form onSubmit={manejarSubmitEnfermeria} className="w-full space-y-6">
                             <h2 className="text-xl font-bold mb-4">Datos de Enfermería</h2>
-    
+                            
+                            {/* Género */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Género:</label>
+                                <div className="flex space-x-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => setDatosCardiologia({ ...datosCardiologia, genero: 'Masculino' })}
+                                        className={`btn ${datosCardiologia.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                                    >
+                                        Masculino
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setDatosCardiologia({ ...datosCardiologia, genero: 'Femenino' })}
+                                        className={`btn ${datosCardiologia.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'}`}
+                                    >
+                                        Femenino
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Peso */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Peso:</label>
                                 <input
@@ -164,7 +188,8 @@ const FormularioPaciente = () => {
                                     className="mt-1 p-2 border border-gray-300 rounded-md"
                                 />
                             </div>
-    
+
+                            {/* Talla */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Talla:</label>
                                 <input
@@ -175,7 +200,8 @@ const FormularioPaciente = () => {
                                     className="mt-1 p-2 border border-gray-300 rounded-md"
                                 />
                             </div>
-    
+
+                            {/* Tensión Arterial (Opcional) */}
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Tensión Arterial (Opcional):</label>
                                 <input
@@ -186,7 +212,7 @@ const FormularioPaciente = () => {
                                     className="mt-1 p-2 border border-gray-300 rounded-md"
                                 />
                             </div>
-    
+
                             <button
                                 type="submit"
                                 className="btn bg-blue-500 text-white hover:bg-blue-600 rounded-lg px-4 py-2 transition duration-200 mt-4"
@@ -202,6 +228,27 @@ const FormularioPaciente = () => {
                             <h2 className="text-xl font-bold mb-4">Datos de Cardiología</h2>
     
                             {/* Mostrar datos de Enfermería */}
+                            {/* Género */}
+                            <div className="flex flex-col">
+                                <label className="text-sm font-medium text-gray-700">Género:</label>
+                                <div className="flex space-x-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Masculino' })}
+                                        className={`btn ${datosEnfermeria.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                                    >
+                                        Masculino
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Femenino' })}
+                                        className={`btn ${datosEnfermeria.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'}`}
+                                    >
+                                        Femenino
+                                    </button>
+                                </div>
+                            </div>
+                            
                             <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">Peso:</label>
                                 <input
