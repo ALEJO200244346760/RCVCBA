@@ -4,7 +4,11 @@ import axios from '../axiosConfig'; // Asegúrate de que Axios esté configurado
 const FormularioPaciente = () => {
     const [dni, setDni] = useState('');
     const [datosEnfermeria, setDatosEnfermeria] = useState(null);
-    const [datosCardiologia, setDatosCardiologia] = useState({});
+    const [datosCardiologia, setDatosCardiologia] = useState({
+        peso: '',
+        talla: '',
+        tensionArterial: '',
+    });    
     const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
