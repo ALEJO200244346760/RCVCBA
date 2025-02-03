@@ -135,8 +135,6 @@ const FormularioPaciente = () => {
 
     return (
         <div className="flex flex-col items-center p-6 max-w-2xl mx-auto">
-            <h1 className="text-3xl font-bold mb-6">Formulario de Evaluación</h1>
-
             {/* DNI */}
             <div className="flex flex-col mb-4">
                 <label className="text-sm font-medium text-gray-700">DNI:</label>
