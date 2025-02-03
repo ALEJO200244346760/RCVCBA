@@ -4,11 +4,7 @@ import axios from '../axiosConfig'; // Asegúrate de que Axios esté configurado
 const FormularioPaciente = () => {
     const [dni, setDni] = useState('');
     const [datosEnfermeria, setDatosEnfermeria] = useState(null);
-    const [datosCardiologia, setDatosCardiologia] = useState({
-        peso: '',
-        talla: '',
-        tensionArterial: '',
-    });    
+    const [datosCardiologia, setDatosCardiologia] = useState({});
     const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
@@ -139,7 +135,7 @@ const FormularioPaciente = () => {
 
     return (
         <div className="flex flex-col items-center p-6 max-w-2xl mx-auto">
-            {/* Género */}
+            {/* GENERO */}
             {/* DNI */}
             <div className="flex flex-col mb-4">
                 <label className="text-sm font-medium text-gray-700">DNI:</label>
