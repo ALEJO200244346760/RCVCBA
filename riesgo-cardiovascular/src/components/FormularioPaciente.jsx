@@ -222,7 +222,7 @@ const FormularioPaciente = ({ roles }) => {
             )}
     
             {/* Si el paciente tiene datos de enfermería, mostramos el formulario de cardiología */}
-            {(isCardiologo || isCardiologia) && esPacienteNuevo === false && datosEnfermeria && (
+            {esPacienteNuevo === false && (isCardiologo || isCardiologia) && datosEnfermeria && (
                         <form onSubmit={manejarSubmitCardiologia} className="w-full space-y-6">
                             <h2 className="text-xl font-bold mb-4">Datos de Cardiología</h2>
     
