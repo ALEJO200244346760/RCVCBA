@@ -151,7 +151,7 @@ const FormularioPaciente = ({ roles }) => {
             </div>
     
             {/* Si es un paciente nuevo, mostramos el formulario de enfermería */}
-            {esPacienteNuevo === true && isNurse && (
+            {esPacienteNuevo === true && (
                         <form onSubmit={manejarSubmitEnfermeria} className="w-full space-y-6">
                             <h2 className="text-xl font-bold mb-4">Datos de Enfermería</h2>
                             
@@ -222,7 +222,7 @@ const FormularioPaciente = ({ roles }) => {
             )}
     
             {/* Si el paciente tiene datos de enfermería, mostramos el formulario de cardiología */}
-            {(esPacienteNuevo === false || isCardiologo || isCardiologia) && datosEnfermeria && (
+            {(esPacienteNuevo === false) && datosEnfermeria && (
                         <form onSubmit={manejarSubmitCardiologia} className="w-full space-y-6">
                             <h2 className="text-xl font-bold mb-4">Datos de Cardiología</h2>
     
