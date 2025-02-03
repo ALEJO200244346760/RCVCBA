@@ -150,11 +150,8 @@ const FormularioPaciente = ({ roles }) => {
                 />
             </div>
     
-            {/* Si el usuario tiene el rol de cardiólogo o cardiología, mostramos todas las preguntas */}
-            {(isCardiologo || isCardiologia) && (
-                <>
-                    {/* Si es un paciente nuevo, mostramos el formulario de enfermería */}
-                    {esPacienteNuevo && (
+            {/* Si es un paciente nuevo, mostramos el formulario de enfermería */}
+            {esPacienteNuevo === true && (
                         <form onSubmit={manejarSubmitEnfermeria} className="w-full space-y-6">
                             <h2 className="text-xl font-bold mb-4">Datos de Enfermería</h2>
                             
@@ -222,10 +219,10 @@ const FormularioPaciente = ({ roles }) => {
                                 Guardar Datos de Enfermería
                             </button>
                         </form>
-                    )}
+            )}
     
-                    {/* Si el paciente tiene datos de enfermería, mostramos el formulario de cardiología */}
-                    {!esPacienteNuevo && datosEnfermeria && (
+            {/* Si el paciente tiene datos de enfermería, mostramos el formulario de cardiología */}
+            {esPacienteNuevo === false && datosEnfermeria && (
                         <form onSubmit={manejarSubmitCardiologia} className="w-full space-y-6">
                             <h2 className="text-xl font-bold mb-4">Datos de Cardiología</h2>
     
@@ -567,8 +564,6 @@ const FormularioPaciente = ({ roles }) => {
                             </button>
                         </form>
                     )}
-                </>
-            )}
             
             {error && <p className="text-red-500 mt-4">{error}</p>}
         </div>
