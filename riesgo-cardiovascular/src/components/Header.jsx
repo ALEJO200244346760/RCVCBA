@@ -31,7 +31,11 @@ const Header = () => {
     }
   };
 
-  const hasCardiologoRole = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
+  const isCardiologo = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
+  const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
+
+  // Determina el enlace correcto para "CUS"
+  const formularioPacienteLink = isCardiologo || isCardiologia ? "/formulario-paciente-menor" : "/formulario-paciente";
 
   return (
     <header className="bg-red-600 text-white py-4 px-6 flex justify-between items-center relative">
@@ -51,14 +55,14 @@ const Header = () => {
         <Link to="/tomarPresion" className="block lg:inline-block hover:text-gray-300">Diagnóstico</Link>
         <Link to="/formulario" className="block lg:inline-block hover:text-gray-300">RCV</Link>
         
-        <Link to="/formulario-paciente" className="block lg:inline-block hover:text-gray-300">
+        <Link to={formularioPacienteLink} className="block lg:inline-block hover:text-gray-300">
           CUS
         </Link>
 
-        {hasCardiologoRole && (
+        {isCardiologo && (
           <Link to="/estadisticas" className="block lg:inline-block hover:text-gray-300">Estadísticas</Link>
         )}
-        {hasCardiologoRole && (
+        {isCardiologo && (
           <Link to="/admin-panel" className="block lg:inline-block hover:text-gray-300">Panel de Admin</Link>
         )}
         {token ? (

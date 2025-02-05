@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Header from './components/Header';
 import Estadisticas from './components/Estadisticas';
 import Formulario from './components/Formulario';
-import FormularioPaciente from './components/FormularioPaciente'; // Aquí importamos el nuevo componente
+import FormularioPaciente from './components/FormularioPaciente'; // Aquí importamos el componente FormularioPaciente
+import FormularioPacienteMenor from './components/FormularioPacienteMenor'; // Importamos el nuevo formulario para pacientes menores
 import EditarPaciente from './components/EditarPaciente';
 import TomarPresion from './components/TomarPresion';
 import Login from './components/Login';
@@ -19,6 +20,9 @@ function App() {
   const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
   const isNurse = Array.isArray(roles) && roles.includes('ENFERMERO');
 
+  // Lógica para determinar a qué formulario ir
+  const formularioRedirect = isCardiologo || isCardiologia ? "/formulario-paciente-menor" : "/formulario-paciente";
+
   return (
     <Router>
       <Header />
@@ -26,8 +30,9 @@ function App() {
         {/* Página principal es Formulario para todos */}
         <Route path="/" element={<Formulario />} />
 
-        {/* Ruta para FormularioPaciente */}
-        <Route path="/formulario-paciente" element={<FormularioPaciente />} /> {/* Esta es la nueva ruta */}
+        {/* Redirigir a FormularioPacienteMenor si el usuario tiene el rol adecuado */}
+        <Route path="/formulario-paciente-menor" element={<FormularioPacienteMenor />} />
+        <Route path="/formulario-paciente" element={<FormularioPaciente />} />
 
         <Route path="/tomarPresion" element={<TomarPresion />} />
 
@@ -62,7 +67,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to={formularioRedirect} />} />
       </Routes>
     </Router>
   );
