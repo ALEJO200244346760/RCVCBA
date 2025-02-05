@@ -55,6 +55,10 @@ const Header = () => {
           CUS
         </Link>
 
+        <Link to="/formulario-paciente-menor" className="block lg:inline-block hover:text-gray-300">
+          CUS2
+        </Link>
+
         {hasCardiologoRole && (
           <Link to="/estadisticas" className="block lg:inline-block hover:text-gray-300">Estadísticas</Link>
         )}

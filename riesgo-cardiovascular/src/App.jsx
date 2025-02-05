@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Header from './components/Header';
 import Estadisticas from './components/Estadisticas';
 import Formulario from './components/Formulario';
-import FormularioPaciente from './components/FormularioPaciente'; // Aquí importamos el nuevo componente
-import EditarPaciente from './components/EditarPaciente';
+import FormularioPaciente from './components/FormularioPaciente';
+import FormularioPacienteMenor from './components/FormularioPacienteMenor';
 import TomarPresion from './components/TomarPresion';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -28,6 +28,9 @@ function App() {
 
         {/* Ruta para FormularioPaciente */}
         <Route path="/formulario-paciente" element={<FormularioPaciente />} /> {/* Esta es la nueva ruta */}
+
+        {/* Ruta para FormularioPacienteMenor */}
+        <Route path="/formulario-paciente-menor" element={<FormularioPacienteMenor />} /> {/* Esta es la nueva ruta */}
 
         <Route path="/tomarPresion" element={<TomarPresion />} />
 
