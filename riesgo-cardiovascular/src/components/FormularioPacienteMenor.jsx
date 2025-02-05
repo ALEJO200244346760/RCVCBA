@@ -15,6 +15,7 @@ const FormularioPacienteMenor = () => {
             const respuesta = await axios.get(`/api/enfermeria/${dni}`);
             if (respuesta.status === 204) {  // Verificamos si la respuesta está vacía
                 setEsPacienteNuevo(true);  // Paciente nuevo, no tiene datos de enfermería
+                setDatosEnfermeria(null);  // Limpiamos los datos de enfermería
             } else {
                 setDatosEnfermeria(respuesta.data);  // Se encontró el paciente, cargamos los datos
                 setEsPacienteNuevo(false);  // El paciente ya tiene datos de enfermería
@@ -57,7 +58,7 @@ const FormularioPacienteMenor = () => {
         }
     };
 
-    // Consultar al cambiar el DNI
+    // Consultar al cambiar el DNI o al presionar "Enter"
     useEffect(() => {
         if (dni.length === 8) {
             consultarEnfermeria(dni);
@@ -79,7 +80,6 @@ const FormularioPacienteMenor = () => {
     // Manejo del submit de los formularios de Enfermería
     const manejarSubmitEnfermeria = (e) => {
         e.preventDefault();
-        // Aquí puedes manejar la lógica de guardar los datos de enfermería si es necesario
     };
 
     // Manejo del submit de los formularios de Cardiología
@@ -109,163 +109,115 @@ const FormularioPacienteMenor = () => {
                     name="dni"
                     value={dni}
                     onChange={(e) => setDni(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') consultarEnfermeria(dni);
+                    }}
                     className="mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                     maxLength="8"
                 />
             </div>
 
             {/* Mostrar datos de Enfermería */}
+            {datosEnfermeria && (
+                <>
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Género:</label>
+                        <div className="flex space-x-4">
+                            <button
+                                type="button"
+                                onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Masculino' })}
+                                className={`btn ${datosEnfermeria?.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                            >
+                                Masculino
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Femenino' })}
+                                className={`btn ${datosEnfermeria?.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'}`}
+                            >
+                                Femenino
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Peso:</label>
+                        <input
+                            type="number"
+                            name="peso"
+                            value={datosEnfermeria?.peso || ''}
+                            readOnly
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Talla:</label>
+                        <input
+                            type="number"
+                            name="talla"
+                            value={datosEnfermeria?.talla || ''}
+                            readOnly
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
+
+                    <div className="flex flex-col">
+                        <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
+                        <input
+                            type="text"
+                            name="tensionArterial"
+                            value={datosEnfermeria?.tensionArterial || ''}
+                            readOnly
+                            className="mt-1 p-2 border border-gray-300 rounded-md"
+                        />
+                    </div>
+                </>
+            )}
+
+            {/* Preguntas de Cardiología */}
             <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700">Género:</label>
+                <label className="text-sm font-medium text-gray-700">¿Hipertenso?</label>
                 <div className="flex space-x-4">
                     <button
                         type="button"
-                        onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Masculino' })}
-                        className={`btn ${datosEnfermeria?.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                        onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'Sí' })}
+                        className={`btn ${datosCardiologia.hipertenso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
                     >
-                        Masculino
+                        Sí
                     </button>
                     <button
                         type="button"
-                        onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Femenino' })}
-                        className={`btn ${datosEnfermeria?.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'}`}
+                        onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'No' })}
+                        className={`btn ${datosCardiologia.hipertenso === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
                     >
-                        Femenino
+                        No
                     </button>
                 </div>
             </div>
 
             <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700">Peso:</label>
-                <input
-                    type="number"
-                    name="peso"
-                    value={datosEnfermeria?.peso || ''}
-                    readOnly
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                />
+                <label className="text-sm font-medium text-gray-700">¿Diabetes?</label>
+                <div className="flex space-x-4">
+                    <button
+                        type="button"
+                        onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'Sí' })}
+                        className={`btn ${datosCardiologia.diabetes === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                    >
+                        Sí
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'No' })}
+                        className={`btn ${datosCardiologia.diabetes === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
+                    >
+                        No
+                    </button>
+                </div>
             </div>
 
+            {/* Asma */}
             <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700">Talla:</label>
-                <input
-                    type="number"
-                    name="talla"
-                    value={datosEnfermeria?.talla || ''}
-                    readOnly
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                />
-            </div>
-
-            <div className="flex flex-col">
-                <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
-                <input
-                    type="text"
-                    name="tensionArterial"
-                    value={datosEnfermeria?.tensionArterial || ''}
-                    readOnly
-                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                />
-            </div>
-
-            {/* Preguntas de Cardiología */}
-            {/* Género */}
-            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Género:</label>
-                                <div className="flex space-x-4">
-                                    <button
-                                        type="button"
-                                        onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Masculino' })}
-                                        className={`btn ${datosEnfermeria.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                    >
-                                        Masculino
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Femenino' })}
-                                        className={`btn ${datosEnfermeria.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'}`}
-                                    >
-                                        Femenino
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Peso:</label>
-                                <input
-                                    type="number"
-                                    name="peso"
-                                    value={datosEnfermeria.peso || ''}
-                                    readOnly
-                                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
-    
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Talla:</label>
-                                <input
-                                    type="number"
-                                    name="talla"
-                                    value={datosEnfermeria.talla || ''}
-                                    readOnly
-                                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
-    
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
-                                <input
-                                    type="text"
-                                    name="tensionArterial"
-                                    value={datosEnfermeria.tensionArterial || ''}
-                                    readOnly
-                                    className="mt-1 p-2 border border-gray-300 rounded-md"
-                                />
-                            </div>
-    
-                            {/* Preguntas de Cardiología */}
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Hipertenso?</label>
-                                <div className="flex space-x-4">
-                                    <button
-                                        type="button"
-                                        onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'Sí' })}
-                                        className={`btn ${datosCardiologia.hipertenso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                    >
-                                        Sí
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'No' })}
-                                        className={`btn ${datosCardiologia.hipertenso === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                    >
-                                        No
-                                    </button>
-                                </div>
-                            </div>
-    
-                            <div className="flex flex-col">
-                                <label className="text-sm font-medium text-gray-700">¿Diabetes?</label>
-                                <div className="flex space-x-4">
-                                    <button
-                                        type="button"
-                                        onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'Sí' })}
-                                        className={`btn ${datosCardiologia.diabetes === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                    >
-                                        Sí
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'No' })}
-                                        className={`btn ${datosCardiologia.diabetes === 'No' ? 'bg-blue-500' : 'bg-gray-200'}`}
-                                    >
-                                        No
-                                    </button>
-                                </div>
-                            </div>
-    
-                            {/* Asma */}
-                            <div className="flex flex-col">
                                 <label className="text-sm font-medium text-gray-700">¿Tiene asma?</label>
                                 <div className="flex space-x-4">
                                     <button
