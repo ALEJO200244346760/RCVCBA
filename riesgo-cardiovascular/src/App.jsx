@@ -33,7 +33,13 @@ function App() {
         {/* Si tiene rol de CARDIOLOGO o CARDIOLOGIA, redirige a FormularioPacienteMenor, de lo contrario FormularioPaciente */}
         <Route 
           path="/formulario-paciente" 
-          element={shouldRedirectToFormularioPacienteMenor ? <FormularioPacienteMenor /> : <FormularioPaciente />} 
+          element={
+            shouldRedirectToFormularioPacienteMenor ? (
+              <Navigate to="/formulario-paciente-menor" /> // Redirigir directamente
+            ) : (
+              <FormularioPaciente />
+            )
+          } 
         />
 
         <Route path="/tomarPresion" element={<TomarPresion />} />
