@@ -35,7 +35,7 @@ const Header = () => {
   const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
   
   // Decidir la ruta correcta para FormularioPaciente
-  const formularioPacienteRoute = isCardiologo || isCardiologia ? '/formulario-paciente-menor' : '/formulario-paciente';
+  const formularioPacienteRoute = isCardiologo || isCardiologia ? '/formulariopacientemenor' : '/formulario-paciente';
 
   return (
     <header className="bg-red-600 text-white py-4 px-6 flex justify-between items-center relative">
