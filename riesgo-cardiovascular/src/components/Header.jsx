@@ -31,7 +31,11 @@ const Header = () => {
     }
   };
 
-  const hasCardiologoRole = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
+  const isCardiologo = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
+  const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
+  
+  // Decidir la ruta correcta para FormularioPaciente
+  const formularioPacienteRoute = isCardiologo || isCardiologia ? '/formulario-paciente-menor' : '/formulario-paciente';
 
   return (
     <header className="bg-red-600 text-white py-4 px-6 flex justify-between items-center relative">
@@ -50,16 +54,16 @@ const Header = () => {
       <nav className={`lg:flex lg:space-x-4 ${isMenuOpen ? 'block' : 'hidden'} lg:block`}>
         <Link to="/tomarPresion" className="block lg:inline-block hover:text-gray-300">Diagnóstico</Link>
         <Link to="/formulario" className="block lg:inline-block hover:text-gray-300">RCV</Link>
-        
-        {/* Aquí agregamos el enlace para FormularioPaciente */}
-        <Link to="/formulario-paciente" className="block lg:inline-block hover:text-gray-300">
+
+        {/* Aquí redirigimos a FormularioPacienteMenor si tiene los roles, sino a FormularioPaciente */}
+        <Link to={formularioPacienteRoute} className="block lg:inline-block hover:text-gray-300">
           CUS
         </Link>
 
-        {hasCardiologoRole && (
+        {isCardiologo && (
           <Link to="/estadisticas" className="block lg:inline-block hover:text-gray-300">Estadísticas</Link>
         )}
-        {hasCardiologoRole && (
+        {isCardiologo && (
           <Link to="/admin-panel" className="block lg:inline-block hover:text-gray-300">Panel de Admin</Link>
         )}
         {token ? (

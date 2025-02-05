@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Header from './components/Header';
 import Estadisticas from './components/Estadisticas';
 import Formulario from './components/Formulario';
-import FormularioPaciente from './components/FormularioPaciente'; // Aquí importamos el nuevo componente
+import FormularioPaciente from './components/FormularioPaciente'; // Aquí importamos el componente FormularioPaciente
+import FormularioPacienteMenor from './components/FormularioPacienteMenor'; // Aquí importamos el componente FormularioPacienteMenor
 import EditarPaciente from './components/EditarPaciente';
 import TomarPresion from './components/TomarPresion';
 import Login from './components/Login';
@@ -19,6 +20,9 @@ function App() {
   const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
   const isNurse = Array.isArray(roles) && roles.includes('ENFERMERO');
 
+  // Condición para redirigir a FormularioPacienteMenor si tiene rol de CARDIOLOGO o CARDIOLOGIA
+  const shouldRedirectToFormularioPacienteMenor = isCardiologo || isCardiologia;
+
   return (
     <Router>
       <Header />
@@ -26,8 +30,11 @@ function App() {
         {/* Página principal es Formulario para todos */}
         <Route path="/" element={<Formulario />} />
 
-        {/* Ruta para FormularioPaciente */}
-        <Route path="/formulario-paciente" element={<FormularioPaciente />} /> {/* Esta es la nueva ruta */}
+        {/* Si tiene rol de CARDIOLOGO o CARDIOLOGIA, redirige a FormularioPacienteMenor, de lo contrario FormularioPaciente */}
+        <Route 
+          path="/formulario-paciente" 
+          element={shouldRedirectToFormularioPacienteMenor ? <FormularioPacienteMenor /> : <FormularioPaciente />} 
+        />
 
         <Route path="/tomarPresion" element={<TomarPresion />} />
 
