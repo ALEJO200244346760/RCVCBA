@@ -385,7 +385,7 @@ const FormularioPacienteMenor = () => {
                             </div>
     
                             {/* Desfibriladores */}
-                            <div className="flex flex-col">
+                            <div className="flex flex-col space-y-6">
                                 <label className="text-sm font-medium text-gray-700">¿Tiene desfibriladores?</label>
                                 <div className="flex space-x-4">
                                     <button
