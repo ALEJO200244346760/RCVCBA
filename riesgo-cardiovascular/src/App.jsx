@@ -5,6 +5,7 @@ import Estadisticas from './components/Estadisticas';
 import Formulario from './components/Formulario';
 import FormularioPaciente from './components/FormularioPaciente';
 import FormularioPacienteMenor from './components/FormularioPacienteMenor';
+import EditarPaciente from './components/EditarPaciente';
 import TomarPresion from './components/TomarPresion';
 import Login from './components/Login';
 import Register from './components/Register';
