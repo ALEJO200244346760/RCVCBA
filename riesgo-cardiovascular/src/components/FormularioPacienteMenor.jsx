@@ -8,6 +8,7 @@ const FormularioPacienteMenor = () => {
     const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
+    const [formularioVisible, setFormularioVisible] = useState(false); // Controla la visibilidad del formulario
 
     const consultarEnfermeria = async (dni) => {
         try {
@@ -58,9 +59,11 @@ const FormularioPacienteMenor = () => {
     useEffect(() => {
         if (dni.length === 8) {
             consultarEnfermeria(dni);
+            setFormularioVisible(true); // Muestra el formulario al ingresar el DNI
         } else {
-            setDatosEnfermeria(null);  
+            setDatosEnfermeria(null);
             setEsPacienteNuevo(null);
+            setFormularioVisible(false); // Oculta el formulario si el DNI no es válido
         }
     }, [dni]);
 
@@ -88,117 +91,125 @@ const FormularioPacienteMenor = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100 py-8">
             <form onSubmit={manejarSubmitCardiologia} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl space-y-6">
+                {/* Paso 1: Campo de DNI */}
                 <h2 className="text-2xl font-bold text-center text-gray-800">Formulario Paciente Menor</h2>
 
-                {/* DNI */}
-                <div className="flex flex-col mb-4">
-                    <label className="text-sm font-medium text-gray-700">DNI:</label>
-                    <input
-                        type="text"
-                        name="dni"
-                        value={dni}
-                        onChange={(e) => setDni(e.target.value)}
-                        className="mt-1 p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                        maxLength="8"
-                        placeholder="Ingrese el DNI"
-                    />
-                </div>
-
-                {/* Mostrar datos de Enfermería */}
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Género:</label>
-                    <div className="flex space-x-4">
-                        <button
-                            type="button"
-                            onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Masculino' })}
-                            className={`btn ${datosEnfermeria?.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                        >
-                            Masculino
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Femenino' })}
-                            className={`btn ${datosEnfermeria?.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                        >
-                            Femenino
-                        </button>
+                {!formularioVisible && (
+                    <div className="flex flex-col mb-4">
+                        <label className="text-sm font-medium text-gray-700">DNI:</label>
+                        <input
+                            type="text"
+                            name="dni"
+                            value={dni}
+                            onChange={(e) => setDni(e.target.value)}
+                            className="mt-1 p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                            maxLength="8"
+                            placeholder="Ingrese el DNI"
+                            onKeyDown={(e) => e.key === 'Enter' && dni.length === 8 && setFormularioVisible(true)}  // Muestra formulario al presionar Enter
+                        />
                     </div>
-                </div>
+                )}
 
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Peso:</label>
-                    <input
-                        type="number"
-                        name="peso"
-                        value={datosEnfermeria?.peso || ''}
-                        readOnly
-                        className="mt-1 p-3 border border-gray-300 rounded-md"
-                    />
-                </div>
+                {/* Paso 2: Mostrar el resto del formulario cuando el DNI es válido */}
+                {formularioVisible && (
+                    <>
+                        {/* Datos de Enfermería */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium text-gray-700">Género:</label>
+                            <div className="flex space-x-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Masculino' })}
+                                    className={`btn ${datosEnfermeria?.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
+                                >
+                                    Masculino
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Femenino' })}
+                                    className={`btn ${datosEnfermeria?.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
+                                >
+                                    Femenino
+                                </button>
+                            </div>
+                        </div>
 
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Talla:</label>
-                    <input
-                        type="number"
-                        name="talla"
-                        value={datosEnfermeria?.talla || ''}
-                        readOnly
-                        className="mt-1 p-3 border border-gray-300 rounded-md"
-                    />
-                </div>
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium text-gray-700">Peso:</label>
+                            <input
+                                type="number"
+                                name="peso"
+                                value={datosEnfermeria?.peso || ''}
+                                onChange={manejarCambioEnfermeria}
+                                className="mt-1 p-3 border border-gray-300 rounded-md"
+                                placeholder="Peso"
+                            />
+                        </div>
 
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
-                    <input
-                        type="text"
-                        name="tensionArterial"
-                        value={datosEnfermeria?.tensionArterial || ''}
-                        readOnly
-                        className="mt-1 p-3 border border-gray-300 rounded-md"
-                    />
-                </div>
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium text-gray-700">Talla:</label>
+                            <input
+                                type="number"
+                                name="talla"
+                                value={datosEnfermeria?.talla || ''}
+                                onChange={manejarCambioEnfermeria}
+                                className="mt-1 p-3 border border-gray-300 rounded-md"
+                                placeholder="Talla"
+                            />
+                        </div>
 
-                {/* Preguntas de Cardiología */}
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">¿Hipertenso?</label>
-                    <div className="flex space-x-4">
-                        <button
-                            type="button"
-                            onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'Sí' })}
-                            className={`btn ${datosCardiologia.hipertenso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                        >
-                            Sí
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'No' })}
-                            className={`btn ${datosCardiologia.hipertenso === 'No' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                        >
-                            No
-                        </button>
-                    </div>
-                </div>
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
+                            <input
+                                type="text"
+                                name="tensionArterial"
+                                value={datosEnfermeria?.tensionArterial || ''}
+                                onChange={manejarCambioEnfermeria}
+                                className="mt-1 p-3 border border-gray-300 rounded-md"
+                                placeholder="Tensión Arterial"
+                            />
+                        </div>
 
-                <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-700">¿Diabetes?</label>
-                    <div className="flex space-x-4">
-                        <button
-                            type="button"
-                            onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'Sí' })}
-                            className={`btn ${datosCardiologia.diabetes === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                        >
-                            Sí
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'No' })}
-                            className={`btn ${datosCardiologia.diabetes === 'No' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                        >
-                            No
-                        </button>
-                    </div>
-                </div>
+                        {/* Preguntas de Cardiología */}
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium text-gray-700">¿Hipertenso?</label>
+                            <div className="flex space-x-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'Sí' })}
+                                    className={`btn ${datosCardiologia.hipertenso === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
+                                >
+                                    Sí
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setDatosCardiologia({ ...datosCardiologia, hipertenso: 'No' })}
+                                    className={`btn ${datosCardiologia.hipertenso === 'No' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
+                                >
+                                    No
+                                </button>
+                            </div>
+                        </div>
 
+                        <div className="flex flex-col">
+                            <label className="text-sm font-medium text-gray-700">¿Diabetes?</label>
+                            <div className="flex space-x-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'Sí' })}
+                                    className={`btn ${datosCardiologia.diabetes === 'Sí' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
+                                >
+                                    Sí
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setDatosCardiologia({ ...datosCardiologia, diabetes: 'No' })}
+                                    className={`btn ${datosCardiologia.diabetes === 'No' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
+                                >
+                                    No
+                                </button>
+                            </div>
+                        </div>
 
             {/* Asma */}
             <div className="flex flex-col">
@@ -436,11 +447,13 @@ const FormularioPacienteMenor = () => {
 
             {/* Botón de Submit */}
             <button
-                    type="submit"
-                    className="w-full bg-green-500 text-white hover:bg-green-600 rounded-lg py-3 transition duration-200"
-                >
-                    Guardar Datos
-                </button>
+                            type="submit"
+                            className="w-full bg-green-500 text-white hover:bg-green-600 rounded-lg py-3 transition duration-200"
+                        >
+                            Guardar Datos
+                        </button>
+                    </>
+                )}
             </form>
         </div>
     );
