@@ -41,9 +41,7 @@ public class Pacientemenor {
 
     @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La fecha de nacimiento debe ser en formato yyyy-MM-dd")
     private String fechaNacimiento; // Fecha de nacimiento del paciente
-
-    private String direccion; // Dirección del paciente
-
+    
     private String hipertenso; // Hipertenso (Sí/No)
 
     private String diabetes; // Diabetes (Sí/No)
