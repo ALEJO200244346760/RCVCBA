@@ -56,7 +56,7 @@ const EstadisticaMenor = () => {
     };
 
     // Realizar la solicitud a la API
-    axios.get('/api/pacientemenor/todos', config)
+    axios.get('/api/pacientemenor', config)
       .then(response => {
         console.log('Respuesta de la API:', response); // Verifica toda la respuesta (encabezados, datos)
 
@@ -75,13 +75,16 @@ const EstadisticaMenor = () => {
           setError('La respuesta de la API no es un arreglo');
           console.error('La respuesta de la API no es un arreglo:', response.data);
         }
-        setLoading(false);
       })
       .catch(err => {
         console.error('Error al obtener pacientes:', err);
-        setError('Error al obtener pacientes');
-        setLoading(false);
-      });
+        if (err.response) {
+          setError(`Error: ${err.response.status} - ${err.response.data.message || 'Error desconocido'}`);
+        } else {
+          setError('Error al obtener pacientes');
+        }
+      })
+      .finally(() => setLoading(false));
   }, [navigate]);
 
   // Si está cargando, muestra el mensaje de carga
