@@ -17,15 +17,9 @@ import { useAuth } from './context/AuthContext';
 function App() {
   const { token, roles } = useAuth();
 
-  // Verificamos si el usuario tiene ciertos roles
   const isCardiologo = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
   const isCardiologia = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGIA');
   const isNurse = Array.isArray(roles) && roles.includes('ENFERMERO');
-
-  // Si no hay token, redirige a la página de login
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
 
   return (
     <Router>
@@ -34,16 +28,18 @@ function App() {
         {/* Página principal es Formulario para todos */}
         <Route path="/" element={<Formulario />} />
 
-        {/* Rutas para Formularios de Pacientes */}
-        <Route path="/formulario-paciente" element={<FormularioPaciente />} />
-        <Route path="/formulario-paciente-menor" element={<FormularioPacienteMenor />} />
+        {/* Ruta para FormularioPaciente */}
+        <Route path="/formulario-paciente" element={<FormularioPaciente />} /> {/* Esta es la nueva ruta */}
 
+        {/* Ruta para FormularioPacienteMenor */}
+        <Route path="/formulario-paciente-menor" element={<FormularioPacienteMenor />} /> {/* Esta es la nueva ruta */}
+        
         {/* Ruta para EstadisticaMenor */}
-        <Route path="/estadistica-menor" element={<EstadisticaMenor />} />
+        <Route path="/estadistica-menor" element={<EstadisticaMenor />} /> {/* Esta es la nueva ruta */}
 
         <Route path="/tomarPresion" element={<TomarPresion />} />
 
-        {/* Ruta protegida para Estadísticas solo para CARDIOLOGO */}
+        {/* Permitir acceso solo a CARDIOLOGO para Estadisticas */}
         <Route 
           path="/estadisticas" 
           element={
@@ -54,7 +50,6 @@ function App() {
           } 
         />
 
-        {/* Ruta protegida para editar pacientes */}
         <Route
           path="/editar-paciente/:id"
           element={
@@ -64,8 +59,6 @@ function App() {
             />
           }
         />
-
-        {/* Ruta protegida para el panel de administrador */}
         <Route
           path="/admin-panel"
           element={
@@ -75,12 +68,8 @@ function App() {
             />
           }
         />
-
-        {/* Rutas para Login y Registro */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        {/* Redirección en caso de ruta no encontrada */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
