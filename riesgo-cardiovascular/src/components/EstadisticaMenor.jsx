@@ -11,7 +11,14 @@ const EstadisticaMenor = () => {
     const fetchPacientes = async () => {
       try {
         const response = await axios.get('/api/pacientemenor'); // Suponiendo que el endpoint para obtener los pacientes está en esta ruta
-        setPacientes(response.data); // Asumiendo que la respuesta tiene una lista de pacientes
+        const data = response.data;
+
+        // Verificar si la respuesta es un array
+        if (Array.isArray(data)) {
+          setPacientes(data); // Asignar solo si es un array
+        } else {
+          throw new Error('La respuesta no es un array');
+        }
       } catch (err) {
         setError(err.response ? err.response.data.message : err.message);
       } finally {
@@ -37,6 +44,12 @@ const EstadisticaMenor = () => {
             key={paciente.dni}
             className="bg-white shadow-md rounded-lg p-4 flex flex-col items-center"
           >
+            {/* Foto de avatar usando el nombre */}
+            <img
+              src={`https://ui-avatars.com/api/?name=${paciente.dni}&background=random`}
+              alt={paciente.dni}
+              className="w-24 h-24 rounded-full mb-4"
+            />
             <h3 className="text-xl font-semibold text-center">{paciente.dni}</h3>
             <p className="text-sm text-gray-600">Género: {paciente.genero}</p>
             <p className="text-sm text-gray-600">Peso: {paciente.peso} kg</p>
