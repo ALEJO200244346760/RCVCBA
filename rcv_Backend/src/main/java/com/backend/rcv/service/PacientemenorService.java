@@ -2,9 +2,11 @@ package com.backend.rcv.service;
 
 import com.backend.rcv.model.Pacientemenor;
 import com.backend.rcv.repository.PacientemenorRepository;
+import com.backend.rcv.exception.PacienteNoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,18 +19,26 @@ public class PacientemenorService {
         this.pacientemenorRepository = pacientemenorRepository;
     }
 
+    // Obtener todos los pacientes
+    public List<Pacientemenor> obtenerTodosLosPacientes() {
+        return pacientemenorRepository.findAll(); // Devuelve la lista de todos los pacientes
+    }
+
     // Obtener paciente por DNI
-    public Optional<Pacientemenor> obtenerPacientePorDni(String dni) {
-        return pacientemenorRepository.findByDni(dni);
+    public Pacientemenor obtenerPacientePorDni(String dni) {
+        // Usamos orElseThrow para lanzar una excepción si no se encuentra el paciente
+        return pacientemenorRepository.findByDni(dni)
+                .orElseThrow(() -> new PacienteNoEncontradoException(dni)); // Lanzamos una excepción personalizada si no se encuentra
     }
 
     // Crear o actualizar paciente
     public Pacientemenor crearOActualizarPaciente(Pacientemenor pacienteData) {
+        // Buscar el paciente por DNI
         Optional<Pacientemenor> pacienteExistente = pacientemenorRepository.findByDni(pacienteData.getDni());
 
         if (pacienteExistente.isPresent()) {
             // Actualizar paciente existente
-            Pacientemenor paciente = pacienteExistente.get();
+            Pacientemenor paciente = pacienteExistente.get(); // Aquí se obtiene el paciente si existe
             paciente.setPeso(pacienteData.getPeso());
             paciente.setTalla(pacienteData.getTalla());
             paciente.setTensionArterial(pacienteData.getTensionArterial());
@@ -50,9 +60,9 @@ public class PacientemenorService {
             paciente.setTensionArterialMinima(pacienteData.getTensionArterialMinima());
             paciente.setElectrocardiograma(pacienteData.getElectrocardiograma());
 
-            return pacientemenorRepository.save(paciente);
+            return pacientemenorRepository.save(paciente); // Guardamos el paciente actualizado
         } else {
-            // Crear nuevo paciente
+            // Si no existe, lo creamos como nuevo
             return pacientemenorRepository.save(pacienteData);
         }
     }

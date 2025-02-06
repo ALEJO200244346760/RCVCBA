@@ -10,7 +10,7 @@ const EstadisticaMenor = () => {
   useEffect(() => {
     const fetchPacientes = async () => {
       try {
-        const response = await axios.get('/api/pacientemenor'); // Asegúrate de que esta ruta esté correcta
+        const response = await axios.get('/api/pacientemenor'); // Verifica la URL de la API
         const data = response.data;
         
         // Verificamos que la respuesta sea un array
