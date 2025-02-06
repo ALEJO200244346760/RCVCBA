@@ -37,7 +37,6 @@ const EstadisticaMenor = () => {
 
   // Traer el token de autenticación
   const getToken = () => {
-    // Aquí puedes tomar el token de tu localStorage, contexto, o donde lo guardes
     return localStorage.getItem('token'); // Asegúrate de que el token esté guardado
   };
 
@@ -59,7 +58,12 @@ const EstadisticaMenor = () => {
     // Obtener pacientes desde la API
     axios.get('/api/pacientemenor', config)
       .then(response => {
-        setPacientes(response.data); // Asumimos que la respuesta es un array de pacientes
+        // Verificar que la respuesta es un arreglo
+        if (Array.isArray(response.data)) {
+          setPacientes(response.data); // Asumimos que la respuesta es un array de pacientes
+        } else {
+          setError('La respuesta de la API no es un arreglo');
+        }
         setLoading(false);
       })
       .catch(err => {
