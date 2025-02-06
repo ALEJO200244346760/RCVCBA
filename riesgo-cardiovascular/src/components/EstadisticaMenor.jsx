@@ -1,3 +1,4 @@
+// src/components/EstadisticaMenor.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAuthToken from '../hooks/useAuthToken'; // Asegúrate de importar el hook para acceder al token
@@ -12,31 +13,31 @@ const EstadisticaMenor = () => {
   const token = useAuthToken();
 
   useEffect(() => {
+    const fetchPacientes = async () => {
+      try {
+        const response = await axios.get('/api/pacientemenor', {
+          headers: {
+            Authorization: `Bearer ${token}`,  // Aquí estamos añadiendo el token correctamente
+          }
+        });
+        const data = response.data;
 
-const fetchPacientes = async () => {
-  try {
-    const response = await axios.get('/api/pacientemenor', {
-      headers: {
-        Authorization: `Bearer ${token}`,  // Aquí estamos añadiendo el token correctamente
+        // Verificamos que la respuesta sea un array
+        if (Array.isArray(data)) {
+          setPacientes(data);
+        } else {
+          throw new Error('La respuesta no contiene un array válido de pacientes');
+        }
+      } catch (err) {
+        setError(err.response ? err.response.data.message : err.message);
+      } finally {
+        setLoading(false);
       }
-    });
-    const data = response.data;
-    
-    // Verificamos que la respuesta sea un array
-    if (Array.isArray(data)) {
-      setPacientes(data);
-    } else {
-      throw new Error('La respuesta no contiene un array válido de pacientes');
+    };
+
+    if (token) {
+      fetchPacientes();
     }
-  } catch (err) {
-    setError(err.response ? err.response.data.message : err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
-    fetchPacientes();
   }, [token]); // El efecto se ejecuta cada vez que el token cambia
 
   const toggleDetalles = (id) => {
