@@ -37,7 +37,6 @@ const EstadisticaMenor = () => {
 
   // Traer el token de autenticación
   const getToken = () => {
-    // Aquí puedes tomar el token de tu localStorage, contexto, o donde lo guardes
     return localStorage.getItem('token'); // Asegúrate de que el token esté guardado
   };
 
@@ -60,7 +59,7 @@ const EstadisticaMenor = () => {
     axios.get('/api/pacientemenor', config)
       .then(response => {
         console.log('Respuesta de la API:', response); // Verifica toda la respuesta (encabezados, datos)
-        
+
         // Verificar si el tipo de contenido es JSON
         const contentType = response.headers['content-type'];
         if (!contentType || !contentType.includes('application/json')) {
