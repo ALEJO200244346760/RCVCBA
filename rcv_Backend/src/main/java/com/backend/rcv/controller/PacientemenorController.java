@@ -16,30 +16,46 @@ public class PacientemenorController {
     @Autowired
     private PacientemenorService pacientemenorService;
 
+    // Obtener todos los pacientes
     @GetMapping("/todos")
     public ResponseEntity<List<Pacientemenor>> obtenerTodosLosPacientes() {
-        List<Pacientemenor> pacientes = pacientemenorService.obtenerTodosLosPacientes();
-        if (pacientes.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        try {
+            List<Pacientemenor> pacientes = pacientemenorService.obtenerTodosLosPacientes();
+            if (pacientes.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Devuelve 204 si no hay pacientes
+            }
+            return ResponseEntity.ok(pacientes);  // Respuesta 200 con los datos en JSON
+        } catch (Exception e) {
+            // Manejo de errores, devuelve un error interno en caso de fallo
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-        return ResponseEntity.ok(pacientes);  // Asegúrate de que se esté devolviendo un JSON
     }
-
 
     // Obtener paciente por DNI
     @GetMapping("/{dni}")
     public ResponseEntity<Pacientemenor> obtenerPacientePorDni(@PathVariable String dni) {
-        Pacientemenor paciente = pacientemenorService.obtenerPacientePorDni(dni);
-        if (paciente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Devuelve 404 si el paciente no se encuentra
+        try {
+            Pacientemenor paciente = pacientemenorService.obtenerPacientePorDni(dni);
+            if (paciente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Devuelve 404 si no se encuentra el paciente
+            }
+            return ResponseEntity.ok(paciente); // Devuelve 200 con los datos del paciente en JSON
+        } catch (Exception e) {
+            // Si ocurre algún error, devuelve un error 500
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return ResponseEntity.ok(paciente);
     }
 
     // Crear o actualizar un paciente
     @PostMapping
     public ResponseEntity<Pacientemenor> crearOActualizarPaciente(@RequestBody Pacientemenor pacienteData) {
-        Pacientemenor pacienteGuardado = pacientemenorService.crearOActualizarPaciente(pacienteData);
-        return ResponseEntity.status(pacienteData.getDni() != null ? HttpStatus.OK : HttpStatus.CREATED).body(pacienteGuardado);
+        try {
+            Pacientemenor pacienteGuardado = pacientemenorService.crearOActualizarPaciente(pacienteData);
+            // Devuelve un 200 si ya existe el DNI o un 201 si se crea un nuevo paciente
+            return ResponseEntity.status(pacienteData.getDni() != null ? HttpStatus.OK : HttpStatus.CREATED).body(pacienteGuardado);
+        } catch (Exception e) {
+            // Si ocurre un error durante la creación o actualización, devuelve 500
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
