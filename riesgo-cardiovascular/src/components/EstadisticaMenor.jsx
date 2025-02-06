@@ -14,7 +14,7 @@ const EstadisticaMenor = () => {
   useEffect(() => {
     const fetchPacientes = async () => {
       try {
-        const response = await axios.get('/api/pacientemenor', {
+        const response = await axios.get('https://rcvcba.vercel.app/api/pacientemenor', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
