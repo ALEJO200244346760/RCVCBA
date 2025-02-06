@@ -42,7 +42,6 @@ public class PacientemenorService {
             paciente.setPeso(pacienteData.getPeso());
             paciente.setTalla(pacienteData.getTalla());
             paciente.setTensionArterial(pacienteData.getTensionArterial());
-            paciente.setTelefono(pacienteData.getTelefono());
             paciente.setFechaNacimiento(pacienteData.getFechaNacimiento());
             paciente.setHipertenso(pacienteData.getHipertenso());
             paciente.setDiabetes(pacienteData.getDiabetes());

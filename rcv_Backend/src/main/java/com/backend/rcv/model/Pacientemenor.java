@@ -37,8 +37,6 @@ public class Pacientemenor {
 
     private String tensionArterial; // Tensión arterial (opcional)
 
-    private String telefono; // Teléfono del paciente
-
     @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La fecha de nacimiento debe ser en formato yyyy-MM-dd")
     private String fechaNacimiento; // Fecha de nacimiento del paciente
 
@@ -75,13 +73,12 @@ public class Pacientemenor {
     public Pacientemenor() {
     }
 
-    public Pacientemenor(String dni,String genero, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String hipertenso, String diabetes, String asma, String fuma, String antecedentesSoplo, String arritmias, String enfermedadCronica, String cirugiaPrevia, String alergias, String antecedentesFamiliaresMarcapaso, String desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
+    public Pacientemenor(String dni,String genero, Double peso, Double talla, String tensionArterial, String fechaNacimiento, String hipertenso, String diabetes, String asma, String fuma, String antecedentesSoplo, String arritmias, String enfermedadCronica, String cirugiaPrevia, String alergias, String antecedentesFamiliaresMarcapaso, String desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
         this.dni = dni;
         this.genero = genero;
         this.peso = peso;
         this.talla = talla;
         this.tensionArterial = tensionArterial;
-        this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.hipertenso = hipertenso;
         this.diabetes = diabetes;
@@ -147,14 +144,6 @@ public class Pacientemenor {
 
     public void setTensionArterial(String tensionArterial) {
         this.tensionArterial = tensionArterial;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public String getFechaNacimiento() {
