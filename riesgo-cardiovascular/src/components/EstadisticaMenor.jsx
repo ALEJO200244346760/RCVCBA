@@ -12,31 +12,29 @@ const EstadisticaMenor = () => {
   const token = useAuthToken();
 
   useEffect(() => {
-    const fetchPacientes = async () => {
-      try {
-        // Configuración de las cabeceras para enviar el token
-        const config = {
-          headers: {
-            'Authorization': `Bearer ${token}`, // Agregar el token con el prefijo Bearer
-          }
-        };
-        
-        // Llamada a la API de los pacientes
-        const response = await axios.get('/api/pacientemenor', config); // Asegúrate de que esta URL esté correcta
-        const data = response.data;
 
-        // Verificamos que la respuesta sea un array de pacientes
-        if (Array.isArray(data)) {
-          setPacientes(data);
-        } else {
-          throw new Error('La respuesta no contiene un array válido de pacientes');
-        }
-      } catch (err) {
-        setError(err.response ? err.response.data.message : err.message);
-      } finally {
-        setLoading(false);
+const fetchPacientes = async () => {
+  try {
+    const response = await axios.get('/api/pacientemenor', {
+      headers: {
+        Authorization: `Bearer ${token}`,  // Aquí estamos añadiendo el token correctamente
       }
-    };
+    });
+    const data = response.data;
+    
+    // Verificamos que la respuesta sea un array
+    if (Array.isArray(data)) {
+      setPacientes(data);
+    } else {
+      throw new Error('La respuesta no contiene un array válido de pacientes');
+    }
+  } catch (err) {
+    setError(err.response ? err.response.data.message : err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
     fetchPacientes();
   }, [token]); // El efecto se ejecuta cada vez que el token cambia
