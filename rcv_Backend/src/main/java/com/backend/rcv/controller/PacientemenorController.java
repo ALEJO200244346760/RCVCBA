@@ -16,19 +16,10 @@ public class PacientemenorController {
     @Autowired
     private PacientemenorService pacientemenorService;
 
-    // Obtener todos los pacientes
-    @GetMapping("/todos")
-    public ResponseEntity<List<Pacientemenor>> obtenerTodosLosPacientes() {
-        try {
-            List<Pacientemenor> pacientes = pacientemenorService.obtenerTodosLosPacientes();
-            if (pacientes.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Devuelve 204 si no hay pacientes
-            }
-            return ResponseEntity.ok(pacientes);  // Respuesta 200 con los datos en JSON
-        } catch (Exception e) {
-            // Manejo de errores, devuelve un error interno en caso de fallo
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    // Obtener todos los pacientes menores
+    @GetMapping
+    public List<Pacientemenor> getAllPacientemenores() {
+        return pacientemenorService.obtenerTodosLosPacientes(); // Retorna todos los pacientes menores
     }
 
     // Obtener paciente por DNI
