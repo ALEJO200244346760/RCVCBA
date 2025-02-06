@@ -41,7 +41,7 @@ public class Pacientemenor {
 
     @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La fecha de nacimiento debe ser en formato yyyy-MM-dd")
     private String fechaNacimiento; // Fecha de nacimiento del paciente
-    
+
     private String hipertenso; // Hipertenso (Sí/No)
 
     private String diabetes; // Diabetes (Sí/No)
@@ -75,7 +75,7 @@ public class Pacientemenor {
     public Pacientemenor() {
     }
 
-    public Pacientemenor(String dni,String genero, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String direccion, String hipertenso, String diabetes, String asma, String fuma, String antecedentesSoplo, String arritmias, String enfermedadCronica, String cirugiaPrevia, String alergias, String antecedentesFamiliaresMarcapaso, String desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
+    public Pacientemenor(String dni,String genero, Double peso, Double talla, String tensionArterial, String telefono, String fechaNacimiento, String hipertenso, String diabetes, String asma, String fuma, String antecedentesSoplo, String arritmias, String enfermedadCronica, String cirugiaPrevia, String alergias, String antecedentesFamiliaresMarcapaso, String desfibriladores, Double tensionArterialMaxima, Double tensionArterialMinima, String electrocardiograma) {
         this.dni = dni;
         this.genero = genero;
         this.peso = peso;
@@ -83,7 +83,6 @@ public class Pacientemenor {
         this.tensionArterial = tensionArterial;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
-        this.direccion = direccion;
         this.hipertenso = hipertenso;
         this.diabetes = diabetes;
         this.asma = asma;
@@ -164,14 +163,6 @@ public class Pacientemenor {
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public String getHipertenso() {
