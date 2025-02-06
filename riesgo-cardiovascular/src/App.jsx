@@ -5,6 +5,7 @@ import Estadisticas from './components/Estadisticas';
 import Formulario from './components/Formulario';
 import FormularioPaciente from './components/FormularioPaciente';
 import FormularioPacienteMenor from './components/FormularioPacienteMenor';
+import EstadisticaMenor from './components/EstadisticaMenor';
 import EditarPaciente from './components/EditarPaciente';
 import TomarPresion from './components/TomarPresion';
 import Login from './components/Login';
@@ -32,6 +33,9 @@ function App() {
 
         {/* Ruta para FormularioPacienteMenor */}
         <Route path="/formulario-paciente-menor" element={<FormularioPacienteMenor />} /> {/* Esta es la nueva ruta */}
+        
+        {/* Ruta para EstadisticaMenor */}
+        <Route path="/estadistica-menor" element={<EstadisticaMenor />} /> {/* Esta es la nueva ruta */}
 
         <Route path="/tomarPresion" element={<TomarPresion />} />
 

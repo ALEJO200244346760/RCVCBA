@@ -59,6 +59,10 @@ const Header = () => {
           CUS2
         </Link>
 
+        <Link to="/estadistica-menor" className="block lg:inline-block hover:text-gray-300">
+          Estadistica CUS2
+        </Link>
+
         {hasCardiologoRole && (
           <Link to="/estadisticas" className="block lg:inline-block hover:text-gray-300">Estadísticas</Link>
         )}
