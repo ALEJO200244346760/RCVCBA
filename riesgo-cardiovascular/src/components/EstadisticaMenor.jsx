@@ -13,11 +13,13 @@ const EstadisticaMenor = () => {
         const response = await axios.get('/api/pacientemenor'); // Suponiendo que el endpoint para obtener los pacientes está en esta ruta
         const data = response.data;
 
-        // Verificar si la respuesta es un array
-        if (Array.isArray(data)) {
-          setPacientes(data); // Asignar solo si es un array
+        // Si la respuesta tiene una propiedad 'pacientes' que contiene el array
+        if (Array.isArray(data.pacientes)) {
+          setPacientes(data.pacientes); // Usamos 'data.pacientes' si la respuesta es un objeto con 'pacientes'
+        } else if (Array.isArray(data)) {
+          setPacientes(data); // Si la respuesta es directamente un array
         } else {
-          throw new Error('La respuesta no es un array');
+          throw new Error('La respuesta no contiene un array válido de pacientes');
         }
       } catch (err) {
         setError(err.response ? err.response.data.message : err.message);
