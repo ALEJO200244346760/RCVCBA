@@ -7,29 +7,27 @@ const EstadisticaMenor = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [mostrarDetalles, setMostrarDetalles] = useState({});
+  const [filtros, setFiltros] = useState({});
 
   // Usamos el hook useAuthToken para obtener el token de autenticación
   const token = useAuthToken();
 
+  // Obtener pacientes menores
   useEffect(() => {
-    const fetchPacientes = async () => {
+    const fetchPacientesMenores = async () => {
       try {
         const response = await axios.get('https://rcvcba.vercel.app/api/pacientemenor', {
           headers: {
             Authorization: `Bearer ${token}`,
-            'Cache-Control': 'no-cache', // Esto evita que los datos se obtengan de la caché
+            'Cache-Control': 'no-cache',
           },
         });
 
-        console.log('Respuesta de la API:', response.data); // Para inspeccionar la respuesta
-
-        const data = response.data;
-
-        // Verificamos si la respuesta es un array válido y contiene elementos
-        if (Array.isArray(data) && data.length > 0) {
-          setPacientes(data);
+        // Verificar que la respuesta sea válida y contenga los datos
+        if (response.data && Array.isArray(response.data)) {
+          setPacientes(response.data);
         } else {
-          throw new Error('La respuesta no contiene un array válido de pacientes o está vacío');
+          throw new Error('La respuesta de la API no contiene pacientes');
         }
       } catch (err) {
         setError(err.response ? err.response.data.message : err.message);
@@ -38,8 +36,17 @@ const EstadisticaMenor = () => {
       }
     };
 
-    fetchPacientes();
+    fetchPacientesMenores();
   }, [token]);
+
+  // Función para manejar los cambios en los filtros
+  const manejarCambio = (e) => {
+    const { name, value } = e.target;
+    setFiltros(prev => ({
+      ...prev,
+      [name]: value || '', // Maneja el valor vacío como cadena vacía
+    }));
+  };
 
   const toggleDetalles = (id) => {
     setMostrarDetalles((prevState) => ({
@@ -56,9 +63,17 @@ const EstadisticaMenor = () => {
     return <div>Error: {error}</div>;
   }
 
+  // Filtrar pacientes si es necesario (por ejemplo, por edad o nombre)
+  const pacientesFiltrados = pacientes.filter(paciente => {
+    // Aplica los filtros si están definidos
+    return Object.keys(filtros).every(key => 
+      paciente[key]?.toString().toLowerCase().includes(filtros[key]?.toString().toLowerCase())
+    );
+  });
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {pacientes.slice().reverse().map((paciente) => (
+      {pacientesFiltrados.slice().reverse().map((paciente) => (
         <div key={paciente.dni} className="bg-white shadow-md rounded-lg p-4">
           {/* Datos siempre visibles */}
           <div className="flex justify-between items-start mb-2">
@@ -81,18 +96,6 @@ const EstadisticaMenor = () => {
             <div className="text-sm font-medium text-gray-900">Tensión Arterial:</div>
             <div className="text-sm text-gray-500">{paciente.tensionArterial || 'No disponible'}</div>
           </div>
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Hipertenso:</div>
-            <div className="text-sm text-gray-500">
-              {paciente.hipertenso !== undefined ? (paciente.hipertenso ? 'Sí' : 'No') : 'No disponible'}
-            </div>
-          </div>
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Diabetes:</div>
-            <div className="text-sm text-gray-500">
-              {paciente.diabetes !== undefined ? (paciente.diabetes ? 'Sí' : 'No') : 'No disponible'}
-            </div>
-          </div>
 
           {/* Mostrar detalles adicionales solo si están activados */}
           {mostrarDetalles[paciente.dni] && (
@@ -101,22 +104,7 @@ const EstadisticaMenor = () => {
                 <div className="text-sm font-medium text-gray-900">Asma:</div>
                 <div className="text-sm text-gray-500">{paciente.asma || 'No disponible'}</div>
               </div>
-              <div className="flex justify-between items-start mb-2">
-                <div className="text-sm font-medium text-gray-900">Fuma:</div>
-                <div className="text-sm text-gray-500">{paciente.fuma || 'No disponible'}</div>
-              </div>
-              <div className="flex justify-between items-start mb-2">
-                <div className="text-sm font-medium text-gray-900">Arritmias:</div>
-                <div className="text-sm text-gray-500">{paciente.arritmias || 'No disponible'}</div>
-              </div>
-              <div className="flex justify-between items-start mb-2">
-                <div className="text-sm font-medium text-gray-900">Cirugía Previa:</div>
-                <div className="text-sm text-gray-500">{paciente.cirugiaPrevia || 'No disponible'}</div>
-              </div>
-              <div className="flex justify-between items-start mb-2">
-                <div className="text-sm font-medium text-gray-900">Alergias:</div>
-                <div className="text-sm text-gray-500">{paciente.alergias || 'No disponible'}</div>
-              </div>
+              {/* Agregar otros detalles si es necesario */}
             </div>
           )}
 
