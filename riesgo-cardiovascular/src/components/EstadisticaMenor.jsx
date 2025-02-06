@@ -1,119 +1,93 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useAuthToken from '../hooks/useAuthToken'; // Asegúrate de importar el hook para acceder al token
+import { useNavigate } from 'react-router-dom';
+
+// Componente de tarjeta para mostrar los detalles de cada paciente
+const TarjetaPaciente = ({ paciente }) => {
+  return (
+    <div className="tarjeta-paciente">
+      <h3>Paciente: {paciente.dni}</h3>
+      <p><strong>Género:</strong> {paciente.genero}</p>
+      <p><strong>Peso:</strong> {paciente.peso} kg</p>
+      <p><strong>Talla:</strong> {paciente.talla} cm</p>
+      <p><strong>Tensión Arterial:</strong> {paciente.tensionArterial}</p>
+      <p><strong>Hipertenso:</strong> {paciente.hipertenso ? 'Sí' : 'No'}</p>
+      <p><strong>Diabetes:</strong> {paciente.diabetes ? 'Sí' : 'No'}</p>
+      <p><strong>Asma:</strong> {paciente.asma ? 'Sí' : 'No'}</p>
+      <p><strong>Fuma:</strong> {paciente.fuma ? 'Sí' : 'No'}</p>
+      <p><strong>Antecedentes de Soplo:</strong> {paciente.antecedentesSoplo ? 'Sí' : 'No'}</p>
+      <p><strong>Arritmias:</strong> {paciente.arritmias ? 'Sí' : 'No'}</p>
+      <p><strong>Enfermedad Crónica:</strong> {paciente.enfermedadCronica ? 'Sí' : 'No'}</p>
+      <p><strong>Cirugía Previa:</strong> {paciente.cirugiaPrevia ? 'Sí' : 'No'}</p>
+      <p><strong>Alergias:</strong> {paciente.alergias || 'No tiene'}</p>
+      <p><strong>Antecedentes Familiares de Marcapaso:</strong> {paciente.antecedentesFamiliaresMarcapaso ? 'Sí' : 'No'}</p>
+      <p><strong>Desfibriladores:</strong> {paciente.desfibriladores ? 'Sí' : 'No'}</p>
+      <p><strong>Tensión Arterial Máxima:</strong> {paciente.tensionArterialMaxima}</p>
+      <p><strong>Tensión Arterial Mínima:</strong> {paciente.tensionArterialMinima}</p>
+      <p><strong>Electrocardiograma:</strong> {paciente.electrocardiograma || 'No disponible'}</p>
+    </div>
+  );
+};
 
 const EstadisticaMenor = () => {
   const [pacientes, setPacientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [mostrarDetalles, setMostrarDetalles] = useState({});
-  const [filtros, setFiltros] = useState({});
+  const navigate = useNavigate();
 
-  // Usamos el hook useAuthToken para obtener el token de autenticación
-  const token = useAuthToken();
+  // Traer el token de autenticación
+  const getToken = () => {
+    // Aquí puedes tomar el token de tu localStorage, contexto, o donde lo guardes
+    return localStorage.getItem('token'); // Asegúrate de que el token esté guardado
+  };
 
-  // Obtener pacientes menores
   useEffect(() => {
-    const fetchPacientesMenores = async () => {
-      try {
-        const response = await axios.get('https://rcvcba.vercel.app/api/pacientemenor', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Cache-Control': 'no-cache',
-          },
-        });
+    const token = getToken();
+    if (!token) {
+      // Redirige si no tienes un token
+      navigate('/login');
+      return;
+    }
 
-        // Verificar que la respuesta sea válida y contenga los datos
-        if (response.data && Array.isArray(response.data)) {
-          setPacientes(response.data);
-        } else {
-          throw new Error('La respuesta de la API no contiene pacientes');
-        }
-      } catch (err) {
-        setError(err.response ? err.response.data.message : err.message);
-      } finally {
-        setLoading(false);
-      }
+    // Configurar headers para la solicitud de la API
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
 
-    fetchPacientesMenores();
-  }, [token]);
-
-  // Función para manejar los cambios en los filtros
-  const manejarCambio = (e) => {
-    const { name, value } = e.target;
-    setFiltros(prev => ({
-      ...prev,
-      [name]: value || '', // Maneja el valor vacío como cadena vacía
-    }));
-  };
-
-  const toggleDetalles = (id) => {
-    setMostrarDetalles((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
-  };
+    // Obtener pacientes desde la API
+    axios.get('/api/pacientemenor', config)
+      .then(response => {
+        setPacientes(response.data); // Asumimos que la respuesta es un array de pacientes
+        setLoading(false);
+      })
+      .catch(err => {
+        setError('Error al obtener pacientes');
+        setLoading(false);
+      });
+  }, [navigate]);
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>{error}</div>;
   }
 
-  // Filtrar pacientes si es necesario (por ejemplo, por edad o nombre)
-  const pacientesFiltrados = pacientes.filter(paciente => {
-    // Aplica los filtros si están definidos
-    return Object.keys(filtros).every(key => 
-      paciente[key]?.toString().toLowerCase().includes(filtros[key]?.toString().toLowerCase())
-    );
-  });
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {pacientesFiltrados.slice().reverse().map((paciente) => (
-        <div key={paciente.dni} className="bg-white shadow-md rounded-lg p-4">
-          {/* Datos siempre visibles */}
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">DNI:</div>
-            <div className="text-sm text-gray-500">{paciente.dni || 'No disponible'}</div>
-          </div>
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Género:</div>
-            <div className="text-sm text-gray-500">{paciente.genero || 'No disponible'}</div>
-          </div>
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Peso:</div>
-            <div className="text-sm text-gray-500">{paciente.peso || 'No disponible'}</div>
-          </div>
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Talla:</div>
-            <div className="text-sm text-gray-500">{paciente.talla || 'No disponible'}</div>
-          </div>
-          <div className="flex justify-between items-start mb-2">
-            <div className="text-sm font-medium text-gray-900">Tensión Arterial:</div>
-            <div className="text-sm text-gray-500">{paciente.tensionArterial || 'No disponible'}</div>
-          </div>
-
-          {/* Mostrar detalles adicionales solo si están activados */}
-          {mostrarDetalles[paciente.dni] && (
-            <div className="mt-2">
-              <div className="flex justify-between items-start mb-2">
-                <div className="text-sm font-medium text-gray-900">Asma:</div>
-                <div className="text-sm text-gray-500">{paciente.asma || 'No disponible'}</div>
-              </div>
-              {/* Agregar otros detalles si es necesario */}
-            </div>
-          )}
-
-          {/* Botón "Mostrar más" o "Mostrar menos" */}
-          <button onClick={() => toggleDetalles(paciente.dni)} className="text-indigo-600 hover:text-indigo-900 mt-2">
-            {mostrarDetalles[paciente.dni] ? 'Mostrar menos' : 'Mostrar más'}
-          </button>
-        </div>
-      ))}
+    <div>
+      <h1>Estadísticas de Pacientes Menores</h1>
+      <div className="pacientes-container">
+        {pacientes.length === 0 ? (
+          <p>No hay pacientes registrados</p>
+        ) : (
+          pacientes.map((paciente) => (
+            <TarjetaPaciente key={paciente.dni} paciente={paciente} />
+          ))
+        )}
+      </div>
     </div>
   );
 };
