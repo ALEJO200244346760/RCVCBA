@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import useAuthToken from '../hooks/useAuthToken'; // Asegúrate de importar el hook para acceder al token
 
 const EstadisticaMenor = () => {
   const [pacientes, setPacientes] = useState([]);
@@ -7,13 +8,24 @@ const EstadisticaMenor = () => {
   const [error, setError] = useState(null);
   const [mostrarDetalles, setMostrarDetalles] = useState({});
 
+  // Usamos el hook useAuthToken para obtener el token de autenticación
+  const token = useAuthToken();
+
   useEffect(() => {
     const fetchPacientes = async () => {
       try {
-        const response = await axios.get('/api/pacientemenor'); // Verifica la URL de la API
-        const data = response.data;
+        // Configuración de las cabeceras para enviar el token
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}`, // Agregar el token con el prefijo Bearer
+          }
+        };
         
-        // Verificamos que la respuesta sea un array
+        // Llamada a la API de los pacientes
+        const response = await axios.get('/api/pacientemenor', config); // Asegúrate de que esta URL esté correcta
+        const data = response.data;
+
+        // Verificamos que la respuesta sea un array de pacientes
         if (Array.isArray(data)) {
           setPacientes(data);
         } else {
@@ -27,7 +39,7 @@ const EstadisticaMenor = () => {
     };
 
     fetchPacientes();
-  }, []);
+  }, [token]); // El efecto se ejecuta cada vez que el token cambia
 
   const toggleDetalles = (id) => {
     setMostrarDetalles((prevState) => ({
