@@ -16,15 +16,15 @@ public class PacientemenorController {
     @Autowired
     private PacientemenorService pacientemenorService;
 
-    // Obtener todos los pacientes
     @GetMapping("/todos")
     public ResponseEntity<List<Pacientemenor>> obtenerTodosLosPacientes() {
         List<Pacientemenor> pacientes = pacientemenorService.obtenerTodosLosPacientes();
         if (pacientes.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // Devuelve 204 si no hay pacientes
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        return ResponseEntity.ok(pacientes);
+        return ResponseEntity.ok(pacientes);  // Asegúrate de que se esté devolviendo un JSON
     }
+
 
     // Obtener paciente por DNI
     @GetMapping("/{dni}")
