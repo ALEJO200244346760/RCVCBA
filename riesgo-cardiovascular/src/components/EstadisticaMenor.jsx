@@ -17,6 +17,7 @@ const EstadisticaMenor = () => {
         const response = await axios.get('https://rcvcba.vercel.app/api/pacientemenor', {
           headers: {
             Authorization: `Bearer ${token}`,
+            'Cache-Control': 'no-cache', // Esto evita que los datos se obtengan de la caché
           },
         });
 
