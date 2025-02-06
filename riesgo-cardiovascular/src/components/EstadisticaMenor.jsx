@@ -37,6 +37,7 @@ const EstadisticaMenor = () => {
 
   // Traer el token de autenticación
   const getToken = () => {
+    // Aquí puedes tomar el token de tu localStorage, contexto, o donde lo guardes
     return localStorage.getItem('token'); // Asegúrate de que el token esté guardado
   };
 
@@ -55,27 +56,41 @@ const EstadisticaMenor = () => {
       },
     };
 
-    // Obtener pacientes desde la API
+    // Realizar la solicitud a la API
     axios.get('/api/pacientemenor', config)
       .then(response => {
-        // Verificar que la respuesta es un arreglo
+        console.log('Respuesta de la API:', response); // Verifica toda la respuesta (encabezados, datos)
+        
+        // Verificar si el tipo de contenido es JSON
+        const contentType = response.headers['content-type'];
+        if (!contentType || !contentType.includes('application/json')) {
+          console.error('La respuesta no es JSON:', response);
+          setError('La respuesta no es JSON');
+          return;
+        }
+
+        // Verifica si la respuesta es un arreglo
         if (Array.isArray(response.data)) {
-          setPacientes(response.data); // Asumimos que la respuesta es un array de pacientes
+          setPacientes(response.data);
         } else {
           setError('La respuesta de la API no es un arreglo');
+          console.error('La respuesta de la API no es un arreglo:', response.data);
         }
         setLoading(false);
       })
       .catch(err => {
+        console.error('Error al obtener pacientes:', err);
         setError('Error al obtener pacientes');
         setLoading(false);
       });
   }, [navigate]);
 
+  // Si está cargando, muestra el mensaje de carga
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  // Si hay un error, muestra el mensaje de error
   if (error) {
     return <div>{error}</div>;
   }
