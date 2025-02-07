@@ -91,11 +91,36 @@ const EstadisticaMenor = () => {
   };
 
   // Funciones para los botones
-  const handleCopy = (dni) => {
-    navigator.clipboard.writeText(dni)
-      .then(() => alert('DNI copiado al portapapeles'))
-      .catch(err => alert('Error al copiar DNI: ', err));
+  const handleCopy = (paciente) => {
+    // Concatenar todos los datos del paciente en un solo string
+    const pacienteData = `
+      Paciente: ${paciente.dni}
+      Género: ${paciente.genero}
+      Peso: ${paciente.peso} kg
+      Talla: ${paciente.talla} cm
+      Tensión Arterial: ${paciente.tensionArterial}
+      Hipertenso: ${paciente.hipertenso === 'Sí' ? 'Sí' : 'No'}
+      Diabetes: ${paciente.diabetes === 'Sí' ? 'Sí' : 'No'}
+      Asma: ${paciente.asma === 'Sí' ? 'Sí' : 'No'}
+      Fuma: ${paciente.fuma === 'Sí' ? 'Sí' : 'No'}
+      Antecedentes de Soplo: ${paciente.antecedentesSoplo === 'Sí' ? 'Sí' : 'No'}
+      Arritmias: ${paciente.arritmias === 'Sí' ? 'Sí' : 'No'}
+      Enfermedad Crónica: ${paciente.enfermedadCronica === 'Sí' ? 'Sí' : 'No'}
+      Cirugía Previa: ${paciente.cirugiaPrevia === 'Sí' ? 'Sí' : 'No'}
+      Alergias: ${paciente.alergias === 'Sí' ? 'Sí' : 'No'}
+      Antecedentes Familiares de Marcapaso: ${paciente.antecedentesFamiliaresMarcapaso === 'Sí' ? 'Sí' : 'No'}
+      Desfibriladores: ${paciente.desfibriladores === 'Sí' ? 'Sí' : 'No'}
+      Tensión Arterial Máxima: ${paciente.tensionArterialMaxima}
+      Tensión Arterial Mínima: ${paciente.tensionArterialMinima}
+      Electrocardiograma: ${paciente.electrocardiograma || 'No disponible'}
+    `;
+    
+    // Copiar los datos al portapapeles
+    navigator.clipboard.writeText(pacienteData)
+      .then(() => alert('Datos del paciente copiados al portapapeles'))
+      .catch(err => alert('Error al copiar los datos: ', err));
   };
+  
 
   const handleEdit = (id) => {
     navigate(`/editar-pacientemenor/${id}`);
