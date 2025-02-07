@@ -14,6 +14,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error en el servidor: " + ex.getMessage());
     }
 
+    @ExceptionHandler(PacienteNoEncontradoException.class)
+    public ResponseEntity<String> handlePacienteNoEncontradoException(PacienteNoEncontradoException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Paciente no encontrado: " + e.getMessage());
+    }
+
     // Manejo de excepciones personalizadas (Paciente no encontrado)
     @ExceptionHandler(PacienteNoEncontradoException.class)
     public ResponseEntity<String> handlePacienteNoEncontrado(PacienteNoEncontradoException ex) {
@@ -24,5 +30,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(jakarta.validation.ConstraintViolationException.class)
     public ResponseEntity<String> handleValidationExceptions(jakarta.validation.ConstraintViolationException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Errores de validación: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error inesperado: " + e.getMessage());
     }
 }

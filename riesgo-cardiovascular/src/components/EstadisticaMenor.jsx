@@ -80,8 +80,10 @@ const EstadisticaMenor = () => {
         console.error('Error al obtener pacientes:', err);
         if (err.response) {
           setError(`Error: ${err.response.status} - ${err.response.data.message || 'Error desconocido'}`);
+        } else if (err.request) {
+          setError('No se recibió respuesta del servidor');
         } else {
-          setError('Error al obtener pacientes');
+          setError(`Error al configurar la solicitud: ${err.message}`);
         }
       })
       .finally(() => setLoading(false));
@@ -101,12 +103,12 @@ const EstadisticaMenor = () => {
     <div>
       <h1>Estadísticas de Pacientes Menores</h1>
       <div className="pacientes-container">
-        {pacientes.length === 0 ? (
-          <p>No hay pacientes registrados</p>
-        ) : (
+        {pacientes.length ? (
           pacientes.map((paciente) => (
             <TarjetaPaciente key={paciente.dni} paciente={paciente} />
           ))
+        ) : (
+          <p>No hay pacientes registrados</p>
         )}
       </div>
     </div>
