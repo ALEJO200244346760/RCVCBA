@@ -63,8 +63,8 @@ const EstadisticaMenor = () => {
         // Verificar si el tipo de contenido es JSON
         const contentType = response.headers['content-type'];
         if (!contentType || !contentType.includes('application/json')) {
-          console.error('La respuesta no es JSON:', response);
-          setError('La respuesta no es JSON');
+          console.error('La respuesta no es JSON, es HTML:', response);
+          setError('La respuesta no es JSON, es HTML.');
           return;
         }
 
