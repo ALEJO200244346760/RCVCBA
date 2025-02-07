@@ -23,6 +23,19 @@ public class PacientemenorController {
     }
 
     // Obtener paciente por DNI
+    @GetMapping("/{dni}")
+    public ResponseEntity<Pacientemenor> obtenerPacientePorDni(@PathVariable String dni) {
+        try {
+            Pacientemenor paciente = pacientemenorService.obtenerPacientePorDni(dni);
+            if (paciente == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Devuelve 404 si no se encuentra el paciente
+            }
+            return ResponseEntity.ok(paciente); // Devuelve 200 con los datos del paciente en JSON
+        } catch (Exception e) {
+            // Si ocurre algún error, devuelve un error 500
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     // Crear o actualizar un paciente
     @PostMapping
