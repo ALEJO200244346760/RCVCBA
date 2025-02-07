@@ -56,7 +56,7 @@ const EstadisticaMenor = () => {
     };
 
     // Realizar la solicitud a la API
-    axios.get('/api/pacientemenor', config) // Cambié la URL aquí
+    axios.get('/api/pacientemenor/pacmenor', config) // Cambié la URL aquí
       .then(response => {
         console.log('Respuesta de la API:', response); // Verifica toda la respuesta (encabezados, datos)
 
