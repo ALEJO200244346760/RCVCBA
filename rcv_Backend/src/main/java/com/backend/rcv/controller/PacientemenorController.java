@@ -16,7 +16,7 @@ public class PacientemenorController {
     @Autowired
     private PacientemenorService pacientemenorService;
 
-    @GetMapping("/pacmenor")
+    @GetMapping
     public ResponseEntity<List<Pacientemenor>> obtenerTodosLosPacientes() {
         try {
             List<Pacientemenor> pacientes = pacientemenorService.obtenerTodosLosPacientes();
