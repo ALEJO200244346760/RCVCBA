@@ -55,8 +55,11 @@ const EstadisticaMenor = () => {
       },
     };
 
-    // Realizar la solicitud a la API
-    axios.get('/api/pacientemenor/pacmenor', config) // Cambié la URL aquí
+    // Configuración de la URL base para la API
+    const apiBaseURL = 'https://rcvcba-production.up.railway.app';
+
+    // Realizar la solicitud a la API de pacientes menores
+    axios.get(`${apiBaseURL}/api/pacientemenor/pacmenor`, config)
       .then(response => {
         console.log('Respuesta de la API:', response); // Verifica toda la respuesta (encabezados, datos)
 
