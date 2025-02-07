@@ -21,7 +21,13 @@ public class PacientemenorService {
 
     // Obtener todos los pacientes
     public List<Pacientemenor> obtenerTodosLosPacientes() {
-        return pacientemenorRepository.findAll(); // Devuelve la lista de todos los pacientes
+        try{
+        return pacientemenorRepository.findAll();
+        // Devuelve la lista de todos los pacientes
+        } catch (Exception e) {
+            // Log the error
+            throw new RuntimeException("Error fetching all pacientes", e);
+        }
     }
 
     // Obtener paciente por DNI

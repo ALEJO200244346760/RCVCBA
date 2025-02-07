@@ -11,17 +11,17 @@ const TarjetaPaciente = ({ paciente }) => {
       <p><strong>Peso:</strong> {paciente.peso} kg</p>
       <p><strong>Talla:</strong> {paciente.talla} cm</p>
       <p><strong>Tensión Arterial:</strong> {paciente.tensionArterial}</p>
-      <p><strong>Hipertenso:</strong> {paciente.hipertenso ? 'Sí' : 'No'}</p>
-      <p><strong>Diabetes:</strong> {paciente.diabetes ? 'Sí' : 'No'}</p>
-      <p><strong>Asma:</strong> {paciente.asma ? 'Sí' : 'No'}</p>
-      <p><strong>Fuma:</strong> {paciente.fuma ? 'Sí' : 'No'}</p>
-      <p><strong>Antecedentes de Soplo:</strong> {paciente.antecedentesSoplo ? 'Sí' : 'No'}</p>
-      <p><strong>Arritmias:</strong> {paciente.arritmias ? 'Sí' : 'No'}</p>
-      <p><strong>Enfermedad Crónica:</strong> {paciente.enfermedadCronica ? 'Sí' : 'No'}</p>
-      <p><strong>Cirugía Previa:</strong> {paciente.cirugiaPrevia ? 'Sí' : 'No'}</p>
-      <p><strong>Alergias:</strong> {paciente.alergias || 'No tiene'}</p>
-      <p><strong>Antecedentes Familiares de Marcapaso:</strong> {paciente.antecedentesFamiliaresMarcapaso ? 'Sí' : 'No'}</p>
-      <p><strong>Desfibriladores:</strong> {paciente.desfibriladores ? 'Sí' : 'No'}</p>
+      <p><strong>Hipertenso:</strong> {paciente.hipertenso === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Diabetes:</strong> {paciente.diabetes === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Asma:</strong> {paciente.asma === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Fuma:</strong> {paciente.fuma === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Antecedentes de Soplo:</strong> {paciente.antecedentesSoplo === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Arritmias:</strong> {paciente.arritmias === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Enfermedad Crónica:</strong> {paciente.enfermedadCronica === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Cirugía Previa:</strong> {paciente.cirugiaPrevia === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Alergias:</strong> {paciente.alergias === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Antecedentes Familiares de Marcapaso:</strong> {paciente.antecedentesFamiliaresMarcapaso === 'Sí' ? 'Sí' : 'No'}</p>
+      <p><strong>Desfibriladores:</strong> {paciente.desfibriladores === 'Sí' ? 'Sí' : 'No'}</p>
       <p><strong>Tensión Arterial Máxima:</strong> {paciente.tensionArterialMaxima}</p>
       <p><strong>Tensión Arterial Mínima:</strong> {paciente.tensionArterialMinima}</p>
       <p><strong>Electrocardiograma:</strong> {paciente.electrocardiograma || 'No disponible'}</p>
