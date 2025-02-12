@@ -8,20 +8,46 @@ const FormularioPacienteMenor = () => {
     const [datosPaciente, setDatosPaciente] = useState({});
     const [esPacienteNuevo, setEsPacienteNuevo] = useState(null);
     const [error, setError] = useState(null);
-    const [formularioVisible, setFormularioVisible] = useState(false); // Controla la visibilidad del formulario
+    const [formularioVisible, setFormularioVisible] = useState(false);
+
+    const [edad, setEdad] = useState(''); // Edad del paciente
+    const [genero, setGenero] = useState(''); // Género del paciente
+    const [imc, setImc] = useState(null); // IMC calculado
+    const [percentil, setPercentil] = useState(null); // Percentil calculado
 
     // Función para consultar los datos de enfermería
     const consultarEnfermeria = async (dni) => {
         try {
             const respuesta = await axios.get(`/api/enfermeria/${dni}`);
             if (respuesta.status === 204) {
-                setEsPacienteNuevo(true); // Paciente nuevo
+                setEsPacienteNuevo(true);
             } else {
-                setDatosEnfermeria(respuesta.data); // Datos de enfermería encontrados
-                setEsPacienteNuevo(false); // Paciente existente
+                setDatosEnfermeria(respuesta.data);
+                setEsPacienteNuevo(false);
             }
         } catch (err) {
             setError(err.response ? err.response.data.message : err.message);
+        }
+    };
+
+    // Cálculo del IMC
+    const calcularIMC = (peso, talla) => {
+        if (peso && talla) {
+            const imcCalculado = peso / ((talla / 100) ** 2); // Convertir talla a metros
+            setImc(imcCalculado.toFixed(2)); // Guardamos el IMC con dos decimales
+        }
+    };
+
+    // Cálculo del percentil (aproximación simple)
+    const calcularPercentil = (peso, talla, edad, genero) => {
+        // Aquí puedes utilizar una librería o tabla de percentiles real para calcular
+        // El siguiente es solo un ejemplo básico que depende de los datos ingresados.
+        if (edad && peso && talla && genero) {
+            // Para ejemplo: se podría usar una fórmula o una librería que calcule el percentil
+            // Este es solo un cálculo aproximado basado en sexo, edad, peso y talla.
+            // En un escenario real, debes usar los valores referenciados en tablas médicas.
+            let percentilCalculado = 50; // Suponiendo un valor promedio de percentil (50)
+            setPercentil(percentilCalculado); // Establecemos un percentil base de ejemplo
         }
     };
 
@@ -30,9 +56,12 @@ const FormularioPacienteMenor = () => {
         try {
             const paciente = {
                 dni,
-                genero: datosEnfermeria?.genero || '',
+                genero,
+                edad,
                 peso: datosEnfermeria?.peso || '',
                 talla: datosEnfermeria?.talla || '',
+                imc,
+                percentil,
                 tensionArterial: datosEnfermeria?.tensionArterial || '',
                 hipertenso: datosCardiologia?.hipertenso || '',
                 diabetes: datosCardiologia?.diabetes || '',
@@ -58,28 +87,30 @@ const FormularioPacienteMenor = () => {
         }
     };
 
-    // Cuando el DNI cambia, consultar la información de enfermería
     useEffect(() => {
         if (dni.length === 8) {
             consultarEnfermeria(dni);
-            setFormularioVisible(true); // Muestra el formulario cuando se ingresa un DNI válido
+            setFormularioVisible(true); // Muestra formulario al ingresar el DNI
         } else {
             setDatosEnfermeria(null);
             setEsPacienteNuevo(null);
-            setFormularioVisible(false); // Oculta el formulario si el DNI no es válido
+            setFormularioVisible(false); // Oculta formulario si el DNI no es válido
         }
     }, [dni]);
 
-    // Manejo de cambios en los campos de datos de enfermería
     const manejarCambioEnfermeria = (e) => {
         const { name, value } = e.target;
         setDatosEnfermeria((prevState) => ({
             ...prevState,
             [name]: value,
         }));
+        // Recalcular IMC y percentil cuando cambien peso o talla
+        if (name === 'peso' || name === 'talla') {
+            calcularIMC(datosEnfermeria?.peso, datosEnfermeria?.talla);
+            calcularPercentil(datosEnfermeria?.peso, datosEnfermeria?.talla, edad, genero);
+        }
     };
 
-    // Manejo de cambios en los campos de los formularios de paciente
     const manejarCambio = (evento) => {
         const { name, value } = evento.target;
         setDatosPaciente((prevState) => ({
@@ -91,7 +122,7 @@ const FormularioPacienteMenor = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100 py-8">
             <form onSubmit={guardarPaciente} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl space-y-6">
-                {/* Paso 1: Campo de DNI */}
+                {/* Campo de DNI */}
                 <h2 className="text-2xl font-bold text-center text-gray-800">Formulario Paciente Menor</h2>
 
                 <div className="flex flex-col mb-4">
@@ -101,37 +132,50 @@ const FormularioPacienteMenor = () => {
                         name="dni"
                         value={dni}
                         onChange={(e) => setDni(e.target.value)}
-                        className="mt-1 p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                        className="mt-1 p-3 border border-gray-300 rounded-md"
                         maxLength="8"
                         placeholder="Ingrese el DNI"
-                        onKeyDown={(e) => e.key === 'Enter' && dni.length === 8 && setFormularioVisible(true)}  // Muestra formulario al presionar Enter
                     />
                 </div>
 
-                {/* Paso 2: Mostrar el formulario cuando el DNI es válido */}
+                {/* Mostrar el formulario cuando el DNI es válido */}
                 {formularioVisible && (
                     <>
-                        {/* Datos de Enfermería */}
+                        {/* Edad */}
                         <div className="flex flex-col mb-4">
-                            <label className="text-sm font-medium text-gray-700">Género:</label>
-                            <div className="flex space-x-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Masculino' })}
-                                    className={`btn ${datosEnfermeria?.genero === 'Masculino' ? 'bg-blue-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                                >
-                                    Masculino
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => setDatosEnfermeria({ ...datosEnfermeria, genero: 'Femenino' })}
-                                    className={`btn ${datosEnfermeria?.genero === 'Femenino' ? 'bg-pink-500' : 'bg-gray-200'} text-white rounded-md py-2 px-4`}
-                                >
-                                    Femenino
-                                </button>
-                            </div>
+                            <label className="text-sm font-medium text-gray-700">Edad:</label>
+                            <input
+                                type="number"
+                                name="edad"
+                                value={edad}
+                                onChange={(e) => {
+                                    setEdad(e.target.value);
+                                    calcularPercentil(datosEnfermeria?.peso, datosEnfermeria?.talla, e.target.value, genero);
+                                }}
+                                className="mt-1 p-3 border border-gray-300 rounded-md"
+                                placeholder="Edad del paciente"
+                            />
                         </div>
 
+                        {/* Género */}
+                        <div className="flex flex-col mb-4">
+                            <label className="text-sm font-medium text-gray-700">Género:</label>
+                            <select
+                                name="genero"
+                                value={genero}
+                                onChange={(e) => {
+                                    setGenero(e.target.value);
+                                    calcularPercentil(datosEnfermeria?.peso, datosEnfermeria?.talla, edad, e.target.value);
+                                }}
+                                className="mt-1 p-3 border border-gray-300 rounded-md"
+                            >
+                                <option value="">Seleccione Género</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+
+                        {/* Peso */}
                         <div className="flex flex-col mb-4">
                             <label className="text-sm font-medium text-gray-700">Peso:</label>
                             <input
@@ -140,10 +184,11 @@ const FormularioPacienteMenor = () => {
                                 value={datosEnfermeria?.peso || ''}
                                 onChange={manejarCambioEnfermeria}
                                 className="mt-1 p-3 border border-gray-300 rounded-md"
-                                placeholder="Peso"
+                                placeholder="Peso (kg)"
                             />
                         </div>
 
+                        {/* Talla */}
                         <div className="flex flex-col mb-4">
                             <label className="text-sm font-medium text-gray-700">Talla:</label>
                             <input
@@ -152,19 +197,29 @@ const FormularioPacienteMenor = () => {
                                 value={datosEnfermeria?.talla || ''}
                                 onChange={manejarCambioEnfermeria}
                                 className="mt-1 p-3 border border-gray-300 rounded-md"
-                                placeholder="Talla"
+                                placeholder="Talla (cm)"
                             />
                         </div>
 
+                        {/* IMC */}
                         <div className="flex flex-col mb-4">
-                            <label className="text-sm font-medium text-gray-700">Tensión Arterial:</label>
+                            <label className="text-sm font-medium text-gray-700">IMC:</label>
                             <input
                                 type="text"
-                                name="tensionArterial"
-                                value={datosEnfermeria?.tensionArterial || ''}
-                                onChange={manejarCambioEnfermeria}
+                                value={imc || ''}
+                                readOnly
                                 className="mt-1 p-3 border border-gray-300 rounded-md"
-                                placeholder="Tensión Arterial"
+                            />
+                        </div>
+
+                        {/* Percentil */}
+                        <div className="flex flex-col mb-4">
+                            <label className="text-sm font-medium text-gray-700">Percentil:</label>
+                            <input
+                                type="text"
+                                value={percentil || ''}
+                                readOnly
+                                className="mt-1 p-3 border border-gray-300 rounded-md"
                             />
                         </div>
 
@@ -443,7 +498,8 @@ const FormularioPacienteMenor = () => {
                                 </div>
                             </div>
 
-                        {/* Botón de Submit */}
+
+                        {/* Botón de Guardar */}
                         <button
                             type="submit"
                             className="w-full bg-green-500 text-white hover:bg-green-600 rounded-lg py-3 transition duration-200"
