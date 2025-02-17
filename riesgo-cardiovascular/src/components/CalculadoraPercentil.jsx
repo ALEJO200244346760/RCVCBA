@@ -46,7 +46,7 @@ const percentilesSistolicFem = {
     20: { 50: 105, 90: 110, 95: 115, 9512: 157 },
 };  
 
-const FormularioPaciente = () => {
+const App = () => {
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [sex, setSex] = useState('masculino'); // Default sex is male
@@ -130,4 +130,4 @@ const FormularioPaciente = () => {
   );
 };
 
-export default FormularioPaciente;
+export default App;
