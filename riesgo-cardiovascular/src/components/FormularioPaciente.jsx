@@ -44,12 +44,13 @@ const percentilesSistolicFem = {
     18: { 50: 103, 90: 108, 95: 113, 9512: 151 },
     19: { 50: 104, 90: 109, 95: 114, 9512: 154 },
     20: { 50: 105, 90: 110, 95: 115, 9512: 157 },
-};  
+};
+
 
 const FormularioPaciente = () => {
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
-  const [sex, setSex] = useState('masculino'); // Default sex is male
+  const [sex, setSex] = useState('masculino');
   const [result, setResult] = useState(null);
 
   const handleAgeChange = (e) => {
@@ -65,17 +66,14 @@ const FormularioPaciente = () => {
   };
 
   const calculatePercentile = () => {
-    // Validación
     if (!age || !height) {
       alert("Por favor, ingresa todos los datos.");
       return;
     }
 
-    // Convertir edad y talla a enteros
     const ageNum = parseInt(age);
     const heightNum = parseInt(height);
 
-    // Aquí llamamos a una función para buscar los percentiles
     const percentile = findPercentile(ageNum, heightNum, sex);
 
     if (percentile) {
@@ -86,46 +84,74 @@ const FormularioPaciente = () => {
   };
 
   const findPercentile = (age, height, sex) => {
-    // Escoger la tabla según el sexo
     const percentiles = sex === 'masculino' ? percentilesSistolic : percentilesSistolicFem;
     const agePercentiles = percentiles[age];
 
     if (!agePercentiles) return null;
 
-    // Definir los rangos de altura para los percentiles
     if (height <= 50) return agePercentiles[50];
     if (height <= 90) return agePercentiles[90];
     if (height <= 95) return agePercentiles[95];
-    return agePercentiles[9512]; // Para alturas superiores a 95
+    return agePercentiles[9512];
   };
 
   return (
-    <div>
-      <h1>Calculadora de Percentil de Presión Arterial</h1>
-      <div>
-        <label>
-          Edad (años):
-          <input type="number" value={age} onChange={handleAgeChange} />
-        </label>
-      </div>
-      <div>
-        <label>
-          Talla en cm:
-          <input type="number" value={height} onChange={handleHeightChange} />
-        </label>
-      </div>
-      <div>
-        <label>
-          Sexo:
-          <select value={sex} onChange={handleSexChange}>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">Calculadora de Percentil de Presión Arterial</h1>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2" htmlFor="age">
+            Edad (años):
+          </label>
+          <input
+            id="age"
+            type="number"
+            value={age}
+            onChange={handleAgeChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Ingresa la edad"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2" htmlFor="height">
+            Talla en cm:
+          </label>
+          <input
+            id="height"
+            type="number"
+            value={height}
+            onChange={handleHeightChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Ingresa la talla"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2" htmlFor="sex">
+            Sexo:
+          </label>
+          <select
+            id="sex"
+            value={sex}
+            onChange={handleSexChange}
+            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
             <option value="masculino">Masculino</option>
             <option value="femenino">Femenino</option>
           </select>
-        </label>
-      </div>
-      <button onClick={calculatePercentile}>Calcular Percentil</button>
+        </div>
+        <button
+          onClick={calculatePercentile}
+          className="w-full py-3 bg-blue-500 text-white rounded-md font-semibold hover:bg-blue-600 transition duration-300"
+        >
+          Calcular Percentil
+        </button>
 
-      {result && <div>{result}</div>}
+        {result && (
+          <div className="mt-6 text-center text-lg text-gray-800 font-medium">
+            {result}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
