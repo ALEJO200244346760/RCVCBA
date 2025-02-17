@@ -1,157 +1,165 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
-const percentilesSistolic = {
-    1: { 50: 85, 90: 90, 95: 95, 9512: 102 },
-    2: { 50: 88, 90: 93, 95: 98, 9512: 105 },
-    3: { 50: 90, 90: 95, 95: 100, 9512: 110 },
-    4: { 50: 92, 90: 97, 95: 102, 9512: 115 },
-    5: { 50: 93, 90: 98, 95: 103, 9512: 118 },
-    6: { 50: 94, 90: 99, 95: 105, 9512: 120 },
-    7: { 50: 95, 90: 100, 95: 106, 9512: 122 },
-    8: { 50: 96, 90: 101, 95: 107, 9512: 124 },
-    9: { 50: 97, 90: 102, 95: 108, 9512: 126 },
-    10: { 50: 98, 90: 103, 95: 109, 9512: 128 },
-    11: { 50: 99, 90: 104, 95: 110, 9512: 130 },
-    12: { 50: 100, 90: 105, 95: 111, 9512: 132 },
-    13: { 50: 101, 90: 106, 95: 112, 9512: 134 },
-    14: { 50: 102, 90: 107, 95: 113, 9512: 136 },
-    15: { 50: 103, 90: 108, 95: 114, 9512: 138 },
-    16: { 50: 104, 90: 109, 95: 115, 9512: 140 },
-    17: { 50: 105, 90: 110, 95: 116, 9512: 142 },
-    18: { 50: 106, 90: 111, 95: 117, 9512: 144 },
-    19: { 50: 107, 90: 112, 95: 118, 9512: 146 },
-    20: { 50: 108, 90: 113, 95: 119, 9512: 148 },
+// Datos de referencia para percentiles de presión arterial
+const bloodPressureData = {
+  male: [
+    { age: 1, height: 77, systolic: 90, diastolic: 50, percentile: 50 },
+    { age: 1, height: 80, systolic: 95, diastolic: 53, percentile: 90 },
+    { age: 2, height: 85, systolic: 96, diastolic: 55, percentile: 50 },
+    { age: 2, height: 90, systolic: 102, diastolic: 58, percentile: 90 },
+    { age: 3, height: 95, systolic: 98, diastolic: 56, percentile: 50 },
+    { age: 3, height: 100, systolic: 105, diastolic: 60, percentile: 90 },
+  ],
+  female: [
+    { age: 1, height: 76, systolic: 88, diastolic: 48, percentile: 50 },
+    { age: 1, height: 79, systolic: 94, diastolic: 52, percentile: 90 },
+    { age: 2, height: 84, systolic: 92, diastolic: 54, percentile: 50 },
+    { age: 2, height: 89, systolic: 100, diastolic: 57, percentile: 90 },
+    { age: 3, height: 94, systolic: 97, diastolic: 55, percentile: 50 },
+    { age: 3, height: 99, systolic: 104, diastolic: 59, percentile: 90 },
+  ],
 };
 
-const percentilesSistolicFem = {
-    1: { 50: 80, 90: 85, 95: 90, 9512: 98 },
-    2: { 50: 85, 90: 90, 95: 95, 9512: 103 },
-    3: { 50: 87, 90: 93, 95: 98, 9512: 106 },
-    4: { 50: 89, 90: 94, 95: 99, 9512: 109 },
-    5: { 50: 90, 90: 95, 95: 100, 9512: 112 },
-    6: { 50: 91, 90: 96, 95: 101, 9512: 115 },
-    7: { 50: 92, 90: 97, 95: 102, 9512: 118 },
-    8: { 50: 93, 90: 98, 95: 103, 9512: 121 },
-    9: { 50: 94, 90: 99, 95: 104, 9512: 124 },
-    10: { 50: 95, 90: 100, 95: 105, 9512: 127 },
-    11: { 50: 96, 90: 101, 95: 106, 9512: 130 },
-    12: { 50: 97, 90: 102, 95: 107, 9512: 133 },
-    13: { 50: 98, 90: 103, 95: 108, 9512: 136 },
-    14: { 50: 99, 90: 104, 95: 109, 9512: 139 },
-    15: { 50: 100, 90: 105, 95: 110, 9512: 142 },
-    16: { 50: 101, 90: 106, 95: 111, 9512: 145 },
-    17: { 50: 102, 90: 107, 95: 112, 9512: 148 },
-    18: { 50: 103, 90: 108, 95: 113, 9512: 151 },
-    19: { 50: 104, 90: 109, 95: 114, 9512: 154 },
-    20: { 50: 105, 90: 110, 95: 115, 9512: 157 },
+// Función para encontrar la talla más cercana en la tabla
+const findClosestHeight = (data, age, height) => {
+  const ageFiltered = data.filter((entry) => entry.age == age);
+  if (!ageFiltered.length) return null;
+
+  return ageFiltered.reduce((prev, curr) =>
+    Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
+  );
 };
 
+// Calcula el percentil de presión arterial
+const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
+  const dataset = bloodPressureData[gender];
+  const closest = findClosestHeight(dataset, age, height);
+
+  if (!closest) return { error: "Datos no encontrados en la tabla" };
+
+  let systolicPercentile = systolic >= closest.systolic ? "≥90" : "50";
+  let diastolicPercentile = diastolic >= closest.diastolic ? "≥90" : "50";
+
+  return {
+    systolicPercentile,
+    diastolicPercentile,
+    riskLevel:
+      systolic >= closest.systolic + 12 || diastolic >= closest.diastolic + 12
+        ? "Hipertensión"
+        : systolic >= closest.systolic + 6 || diastolic >= closest.diastolic + 6
+        ? "Prehipertensión"
+        : "Normal",
+  };
+};
 
 const FormularioPaciente = () => {
-  const [age, setAge] = useState('');
-  const [height, setHeight] = useState('');
-  const [sex, setSex] = useState('masculino');
+  const [formData, setFormData] = useState({
+    age: "",
+    height: "",
+    gender: "male",
+    systolic: "",
+    diastolic: "",
+  });
+
   const [result, setResult] = useState(null);
 
-  const handleAgeChange = (e) => {
-    setAge(e.target.value);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleHeightChange = (e) => {
-    setHeight(e.target.value);
-  };
-
-  const handleSexChange = (e) => {
-    setSex(e.target.value);
-  };
-
-  const calculatePercentile = () => {
-    if (!age || !height) {
-      alert("Por favor, ingresa todos los datos.");
-      return;
-    }
-
-    const ageNum = parseInt(age);
-    const heightNum = parseInt(height);
-
-    const percentile = findPercentile(ageNum, heightNum, sex);
-
-    if (percentile) {
-      setResult(`El percentil de presión arterial es: ${percentile}`);
-    } else {
-      setResult('No se encontraron datos para esta combinación de edad, talla y sexo.');
-    }
-  };
-
-  const findPercentile = (age, height, sex) => {
-    const percentiles = sex === 'masculino' ? percentilesSistolic : percentilesSistolicFem;
-    const agePercentiles = percentiles[age];
-
-    if (!agePercentiles) return null;
-
-    if (height <= 50) return agePercentiles[50];
-    if (height <= 90) return agePercentiles[90];
-    if (height <= 95) return agePercentiles[95];
-    return agePercentiles[9512];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const calculation = calculatePercentile(formData);
+    setResult(calculation);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">Calculadora de Percentil de Presión Arterial</h1>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="age">
-            Edad (años):
-          </label>
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-semibold text-center text-blue-600 mb-6">Calculadora de Presión Arterial</h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="flex flex-col">
+          <label className="text-lg font-medium text-gray-700">Edad (años):</label>
           <input
-            id="age"
             type="number"
-            value={age}
-            onChange={handleAgeChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="Ingresa la edad"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="height">
-            Talla en cm:
-          </label>
+
+        <div className="flex flex-col">
+          <label className="text-lg font-medium text-gray-700">Talla (cm):</label>
           <input
-            id="height"
             type="number"
-            value={height}
-            onChange={handleHeightChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="Ingresa la talla"
+            name="height"
+            value={formData.height}
+            onChange={handleChange}
+            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
           />
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-medium mb-2" htmlFor="sex">
-            Sexo:
-          </label>
+
+        <div className="flex flex-col">
+          <label className="text-lg font-medium text-gray-700">Género:</label>
           <select
-            id="sex"
-            value={sex}
-            onChange={handleSexChange}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
           </select>
         </div>
+
+        <div className="flex flex-col">
+          <label className="text-lg font-medium text-gray-700">Presión Sistólica (mmHg):</label>
+          <input
+            type="number"
+            name="systolic"
+            value={formData.systolic}
+            onChange={handleChange}
+            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-lg font-medium text-gray-700">Presión Diastólica (mmHg):</label>
+          <input
+            type="number"
+            name="diastolic"
+            value={formData.diastolic}
+            onChange={handleChange}
+            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
         <button
-          onClick={calculatePercentile}
-          className="w-full py-3 bg-blue-500 text-white rounded-md font-semibold hover:bg-blue-600 transition duration-300"
+          type="submit"
+          className="w-full mt-4 py-3 px-4 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Calcular Percentil
         </button>
+      </form>
 
-        {result && (
-          <div className="mt-6 text-center text-lg text-gray-800 font-medium">
-            {result}
-          </div>
-        )}
-      </div>
+      {result && (
+        <div className={`mt-6 p-4 rounded-lg ${result.riskLevel === "Hipertensión" ? 'bg-red-100 text-red-700' : result.riskLevel === "Prehipertensión" ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'}`}>
+          {result.error ? (
+            <p className="text-center text-lg font-medium">{result.error}</p>
+          ) : (
+            <>
+              <h2 className="text-2xl font-semibold mb-4">Resultados:</h2>
+              <p className="text-lg">Percentil Sistólico: <span className="font-semibold">{result.systolicPercentile}</span></p>
+              <p className="text-lg">Percentil Diastólico: <span className="font-semibold">{result.diastolicPercentile}</span></p>
+              <h3 className="text-xl font-semibold mt-4">Riesgo: <span className="text-lg font-medium">{result.riskLevel}</span></h3>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
