@@ -27,7 +27,7 @@ const bloodPressureData = {
     { age: 1, height: 84, systolic: 104, percentile: 90 },
   ],
   "male-diastolic": [
-    { age: 1, height: 77, diastolic: 40, percentile: 50 },
+    { age: 1, height: 77, diastolic: 40, percentile: 90 },
     { age: 1, height: 80, diastolic: 41, percentile: 50 },
     { age: 1, height: 82, diastolic: 42, percentile: 50 },
     { age: 1, height: 84, diastolic: 43, percentile: 50 },
