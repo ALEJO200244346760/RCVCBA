@@ -1,62 +1,56 @@
 import { useState } from "react";
 
-// Datos de referencia para percentiles de presión arterial
+// Datos de referencia para percentiles de presión arterial, separados por sistólica y diastólica
 const bloodPressureData = {
-    male: [
-      { age: 1, height: 77, systolic: 85, diastolic: 40, percentile: 50 },
-      { age: 1, height: 80, systolic: 88, diastolic: 41, percentile: 50 },
-      { age: 1, height: 82, systolic: 90, diastolic: 42, percentile: 50 },
-      { age: 1, height: 84, systolic: 95, diastolic: 43, percentile: 50 },
-      { age: 1, height: 86, systolic: 98, diastolic: 44, percentile: 50 },
-      { age: 1, height: 87.9, systolic: 100, diastolic: 45, percentile: 50 },
-      { age: 1, height: 77, systolic: 98, diastolic: 52, percentile: 90 },
-      { age: 1, height: 80, systolic: 101, diastolic: 53, percentile: 90 },
-      { age: 1, height: 82, systolic: 104, diastolic: 54, percentile: 90 },
-      { age: 1, height: 84, systolic: 107, diastolic: 55, percentile: 90 },
-      { age: 1, height: 86, systolic: 110, diastolic: 56, percentile: 90 },
-      { age: 1, height: 87.9, systolic: 114, diastolic: 57, percentile: 90 },
-      
-      { age: 2, height: 85, systolic: 87, diastolic: 43, percentile: 50 },
-      { age: 2, height: 90, systolic: 91, diastolic: 45, percentile: 50 },
-      { age: 2, height: 95, systolic: 95, diastolic: 47, percentile: 50 },
-      { age: 2, height: 100, systolic: 98, diastolic: 48, percentile: 50 },
-      { age: 2, height: 105, systolic: 102, diastolic: 50, percentile: 50 },
-      { age: 2, height: 85, systolic: 101, diastolic: 54, percentile: 90 },
-      { age: 2, height: 90, systolic: 106, diastolic: 56, percentile: 90 },
-      { age: 2, height: 95, systolic: 110, diastolic: 58, percentile: 90 },
-      { age: 2, height: 100, systolic: 113, diastolic: 59, percentile: 90 },
-      { age: 2, height: 105, systolic: 118, diastolic: 60, percentile: 90 },
-  
-      { age: 3, height: 95, systolic: 90, diastolic: 48, percentile: 50 },
-      { age: 3, height: 100, systolic: 95, diastolic: 50, percentile: 50 },
-      { age: 3, height: 105, systolic: 98, diastolic: 52, percentile: 50 },
-      { age: 3, height: 110, systolic: 102, diastolic: 54, percentile: 50 },
-      { age: 3, height: 95, systolic: 105, diastolic: 55, percentile: 90 },
-      { age: 3, height: 100, systolic: 109, diastolic: 56, percentile: 90 },
-      { age: 3, height: 105, systolic: 113, diastolic: 58, percentile: 90 },
-      { age: 3, height: 110, systolic: 117, diastolic: 60, percentile: 90 },
-    ],
-  
-    female: [
-      { age: 1, height: 76, systolic: 83, diastolic: 38, percentile: 50 },
-      { age: 1, height: 79, systolic: 86, diastolic: 40, percentile: 50 },
-      { age: 1, height: 81, systolic: 89, diastolic: 42, percentile: 50 },
-      { age: 1, height: 84, systolic: 92, diastolic: 44, percentile: 50 },
-      { age: 1, height: 76, systolic: 95, diastolic: 50, percentile: 90 },
-      { age: 1, height: 79, systolic: 98, diastolic: 52, percentile: 90 },
-      { age: 1, height: 81, systolic: 101, diastolic: 54, percentile: 90 },
-      { age: 1, height: 84, systolic: 104, diastolic: 56, percentile: 90 },
-  
-      { age: 2, height: 84, systolic: 85, diastolic: 42, percentile: 50 },
-      { age: 2, height: 89, systolic: 88, diastolic: 44, percentile: 50 },
-      { age: 2, height: 94, systolic: 92, diastolic: 46, percentile: 50 },
-      { age: 2, height: 99, systolic: 96, diastolic: 48, percentile: 50 },
-      { age: 2, height: 84, systolic: 99, diastolic: 54, percentile: 90 },
-      { age: 2, height: 89, systolic: 103, diastolic: 56, percentile: 90 },
-      { age: 2, height: 94, systolic: 106, diastolic: 58, percentile: 90 },
-      { age: 2, height: 99, systolic: 110, diastolic: 60, percentile: 90 },
-    ],
-  };  
+  "male-systolic": [
+    { age: 1, height: 77, systolic: 85, percentile: 50 },
+    { age: 1, height: 80, systolic: 88, percentile: 50 },
+    { age: 1, height: 82, systolic: 90, percentile: 50 },
+    { age: 1, height: 84, systolic: 95, percentile: 50 },
+    { age: 1, height: 86, systolic: 98, percentile: 50 },
+    { age: 1, height: 87.9, systolic: 100, percentile: 50 },
+    { age: 1, height: 77, systolic: 98, percentile: 90 },
+    { age: 1, height: 80, systolic: 101, percentile: 90 },
+    { age: 1, height: 82, systolic: 104, percentile: 90 },
+    { age: 1, height: 84, systolic: 107, percentile: 90 },
+    { age: 1, height: 86, systolic: 110, percentile: 90 },
+    { age: 1, height: 87.9, systolic: 114, percentile: 90 },
+  ],
+  "female-systolic": [
+    { age: 1, height: 76, systolic: 83, percentile: 50 },
+    { age: 1, height: 79, systolic: 86, percentile: 50 },
+    { age: 1, height: 81, systolic: 89, percentile: 50 },
+    { age: 1, height: 84, systolic: 92, percentile: 50 },
+    { age: 1, height: 76, systolic: 95, percentile: 90 },
+    { age: 1, height: 79, systolic: 98, percentile: 90 },
+    { age: 1, height: 81, systolic: 101, percentile: 90 },
+    { age: 1, height: 84, systolic: 104, percentile: 90 },
+  ],
+  "male-diastolic": [
+    { age: 1, height: 77, diastolic: 40, percentile: 50 },
+    { age: 1, height: 80, diastolic: 41, percentile: 50 },
+    { age: 1, height: 82, diastolic: 42, percentile: 50 },
+    { age: 1, height: 84, diastolic: 43, percentile: 50 },
+    { age: 1, height: 86, diastolic: 44, percentile: 50 },
+    { age: 1, height: 87.9, diastolic: 45, percentile: 50 },
+    { age: 1, height: 77, diastolic: 52, percentile: 90 },
+    { age: 1, height: 80, diastolic: 53, percentile: 90 },
+    { age: 1, height: 82, diastolic: 54, percentile: 90 },
+    { age: 1, height: 84, diastolic: 55, percentile: 90 },
+    { age: 1, height: 86, diastolic: 56, percentile: 90 },
+    { age: 1, height: 87.9, diastolic: 57, percentile: 90 },
+  ],
+  "female-diastolic": [
+    { age: 1, height: 76, diastolic: 38, percentile: 50 },
+    { age: 1, height: 79, diastolic: 40, percentile: 50 },
+    { age: 1, height: 81, diastolic: 42, percentile: 50 },
+    { age: 1, height: 84, diastolic: 44, percentile: 50 },
+    { age: 1, height: 76, diastolic: 50, percentile: 90 },
+    { age: 1, height: 79, diastolic: 52, percentile: 90 },
+    { age: 1, height: 81, diastolic: 54, percentile: 90 },
+    { age: 1, height: 84, diastolic: 56, percentile: 90 },
+  ],
+};
 
 // Función para encontrar la talla más cercana en la tabla
 const findClosestHeight = (data, age, height) => {
@@ -70,23 +64,32 @@ const findClosestHeight = (data, age, height) => {
 
 // Calcula el percentil de presión arterial
 const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
-  const dataset = bloodPressureData[gender];
-  const closest = findClosestHeight(dataset, age, height);
+  const systolicDataset = bloodPressureData[`${gender}-systolic`];
+  const diastolicDataset = bloodPressureData[`${gender}-diastolic`];
+  
+  const closestSystolic = findClosestHeight(systolicDataset, age, height);
+  const closestDiastolic = findClosestHeight(diastolicDataset, age, height);
 
-  if (!closest) return { error: "Datos no encontrados en la tabla" };
+  if (!closestSystolic || !closestDiastolic) return { error: "Datos no encontrados en la tabla" };
 
-  let systolicPercentile = systolic >= closest.systolic ? "≥90" : "50";
-  let diastolicPercentile = diastolic >= closest.diastolic ? "≥90" : "50";
+  // Se toma el percentil más alto de ambos
+  const systolicPercentile = systolic >= closestSystolic.systolic ? closestSystolic.percentile : 50;
+  const diastolicPercentile = diastolic >= closestDiastolic.diastolic ? closestDiastolic.percentile : 50;
+  const highestPercentile = Math.max(systolicPercentile, diastolicPercentile);
+
+  // Determina el riesgo con el percentil más alto
+  const riskLevel =
+    systolic >= closestSystolic.systolic + 12 || diastolic >= closestDiastolic.diastolic + 12
+      ? "Hipertensión"
+      : systolic >= closestSystolic.systolic + 6 || diastolic >= closestDiastolic.diastolic + 6
+      ? "Prehipertensión"
+      : "Normal";
 
   return {
     systolicPercentile,
     diastolicPercentile,
-    riskLevel:
-      systolic >= closest.systolic + 12 || diastolic >= closest.diastolic + 12
-        ? "Hipertensión"
-        : systolic >= closest.systolic + 6 || diastolic >= closest.diastolic + 6
-        ? "Prehipertensión"
-        : "Normal",
+    highestPercentile,
+    riskLevel,
   };
 };
 
