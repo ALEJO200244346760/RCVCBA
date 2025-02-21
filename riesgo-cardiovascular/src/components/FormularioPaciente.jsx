@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { bloodPressureData } from "./sara";
 
+// Función para encontrar la altura más cercana en la tabla
+const findClosestHeight = (data, age, height) => {
+  const ageFiltered = data.filter((entry) => entry.age === age);
+  if (!ageFiltered.length) return null;
+
+  return ageFiltered.reduce((prev, curr) =>
+    Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
+  );
+};
+
 // Función para calcular el percentil de un valor comparado con una lista
 const calculatePercentileRank = (value, data) => {
   const sortedData = data.sort((a, b) => a - b); // Ordenar los valores en la tabla
@@ -22,21 +32,17 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
   const systolicDataset = bloodPressureData[`${gender}-systolic`];
   const diastolicDataset = bloodPressureData[`${gender}-diastolic`];
 
-  // Filtrar los datos por edad y altura
-  const systolicDataForAgeAndHeight = systolicDataset.filter(
-    (entry) => entry.age === age && entry.height === height
-  );
-  const diastolicDataForAgeAndHeight = diastolicDataset.filter(
-    (entry) => entry.age === age && entry.height === height
-  );
+  // Buscar la altura más cercana para sistólica y diastólica
+  const closestSystolic = findClosestHeight(systolicDataset, age, height);
+  const closestDiastolic = findClosestHeight(diastolicDataset, age, height);
 
-  if (!systolicDataForAgeAndHeight.length || !diastolicDataForAgeAndHeight.length) {
+  if (!closestSystolic || !closestDiastolic) {
     return { error: "Datos no encontrados en la tabla" };
   }
 
-  // Calcular percentiles para sistólica y diastólica
-  const systolicPercentile = calculatePercentileRank(systolic, systolicDataForAgeAndHeight.map(item => item.systolic));
-  const diastolicPercentile = calculatePercentileRank(diastolic, diastolicDataForAgeAndHeight.map(item => item.diastolic));
+  // Calcular percentiles para sistólica y diastólica usando las alturas más cercanas
+  const systolicPercentile = calculatePercentileRank(systolic, systolicDataset.map(item => item.systolic));
+  const diastolicPercentile = calculatePercentileRank(diastolic, diastolicDataset.map(item => item.diastolic));
 
   // Determinar el riesgo con el percentil más alto
   const riskLevel =
