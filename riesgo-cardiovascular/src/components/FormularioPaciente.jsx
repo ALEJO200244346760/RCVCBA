@@ -3,13 +3,14 @@ import { bloodPressureData } from "./sara";
 
 // Función para encontrar la talla más cercana en la tabla
 const findClosestHeight = (data, age, height) => {
-  const filteredByAge = data.filter((entry) => entry.age === age);
-  if (!filteredByAge.length) return null;
-
-  return filteredByAge.reduce((prev, curr) =>
-    Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
-  );
-};
+    const filteredByAge = data.filter((entry) => entry.age === age);
+    if (!filteredByAge.length) return null; // Si no hay datos para la edad, devolvemos null
+  
+    return filteredByAge.reduce((prev, curr) =>
+      Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
+    );
+  };
+  
 
 // Función para determinar el percentil correcto
 const getPercentile = (data, value) => {
