@@ -36,10 +36,14 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
     const closestSystolic = findClosestHeight(systolicDataset, age, height);
     const closestDiastolic = findClosestHeight(diastolicDataset, age, height);
   
-    // Si no se encuentra datos cercanos en la tabla, retornar un mensaje
+    // Asegurarse de que encontramos datos cercanos
     if (!closestSystolic || !closestDiastolic) {
       return { error: "No se pudieron encontrar datos cercanos en la tabla." };
     }
+  
+    // Extraer las presiones sistólica y diastólica más cercanas
+    const systolicValue = closestSystolic.systolic;
+    const diastolicValue = closestDiastolic.diastolic;
   
     // Calcular percentiles para sistólica y diastólica usando las alturas más cercanas
     const systolicPercentile = calculatePercentileRank(systolic, systolicDataset.map(item => item.systolic));
@@ -59,9 +63,8 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
       highestPercentile: Math.max(systolicPercentile, diastolicPercentile),
       riskLevel,
     };
-  };
+  };  
   
-
 const FormularioPaciente = () => {
   const [formData, setFormData] = useState({
     age: "",
@@ -163,7 +166,7 @@ const FormularioPaciente = () => {
           ) : (
             <>
               <h2 className="text-2xl font-semibold mb-4">Resultados:</h2>
-              <p className="text-lg">Percentiil Sistólico: <span className="font-semibold">{result.systolicPercentile}</span></p>
+              <p className="text-lg">Percentil Sistólico: <span className="font-semibold">{result.systolicPercentile}</span></p>
               <p className="text-lg">Percentil Diastólico: <span className="font-semibold">{result.diastolicPercentile}</span></p>
               <h3 className="text-xl font-semibold mt-4">Riesgo: <span className="text-lg font-medium">{result.riskLevel}</span></h3>
             </>
