@@ -161,7 +161,7 @@ const FormularioPaciente = () => {
           ) : (
             <>
               <h2 className="text-2xl font-semibold mb-4">Resultados:</h2>
-              <p className="text-lg">Percentil Sistólico: <span className="font-semibold">{result.systolicPercentile}</span></p>
+              <p className="text-lg">Percentiil Sistólico: <span className="font-semibold">{result.systolicPercentile}</span></p>
               <p className="text-lg">Percentil Diastólico: <span className="font-semibold">{result.diastolicPercentile}</span></p>
               <h3 className="text-xl font-semibold mt-4">Riesgo: <span className="text-lg font-medium">{result.riskLevel}</span></h3>
             </>
