@@ -56,6 +56,11 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
   }
 
   console.log("✅ Talla más cercana encontrada:", closestSystolic.height);
+  console.log("🔍 Revisando datos de male-systolic:", bloodPressureData["male-systolic"]);
+console.log("🔍 ¿Hay datos con age === 1?:", 
+  bloodPressureData["male-systolic"].some(entry => entry.age === 1)
+);
+
 
   const systolicPercentile = getPercentile(
     systolicDataset.filter((entry) => entry.height === closestSystolic.height),
