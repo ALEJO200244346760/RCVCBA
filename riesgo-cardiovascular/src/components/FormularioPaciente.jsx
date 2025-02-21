@@ -3,17 +3,19 @@ import { bloodPressureData } from "./sara";
 
 // Función para encontrar la talla más cercana
 const findClosestHeight = (data, age, height) => {
-  console.log("🔍 Buscando datos para edad:", age, " altura:", height);
+    console.log("🔍 Buscando datos para edad:", age, " altura:", height);
   
-  const filteredByAge = data.filter((entry) => entry.age === age);
-  console.log("🎯 Datos filtrados por edad:", filteredByAge);
-
-  if (!filteredByAge.length) return null; // Si no hay datos, retornamos null
-
-  return filteredByAge.reduce((prev, curr) =>
-    Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
-  );
-};
+    // Convertimos `age` a número para que coincida con los datos del JSON
+    const filteredByAge = data.filter((entry) => Number(entry.age) === Number(age));
+  
+    console.log("🎯 Datos filtrados por edad:", filteredByAge);
+  
+    if (!filteredByAge.length) return null;
+  
+    return filteredByAge.reduce((prev, curr) =>
+      Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
+    );
+  };  
 
 // Función para encontrar el percentil correcto
 const getPercentile = (data, value, type) => {
@@ -56,11 +58,6 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
   }
 
   console.log("✅ Talla más cercana encontrada:", closestSystolic.height);
-  console.log("🔍 Revisando datos de male-systolic:", bloodPressureData["male-systolic"]);
-console.log("🔍 ¿Hay datos con age === 1?:", 
-  bloodPressureData["male-systolic"].some(entry => entry.age === 1)
-);
-
 
   const systolicPercentile = getPercentile(
     systolicDataset.filter((entry) => entry.height === closestSystolic.height),
@@ -114,9 +111,18 @@ const FormularioPaciente = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const calculation = calculatePercentile(formData);
+  
+    const calculation = calculatePercentile({
+      ...formData,
+      age: Number(formData.age), // Convertimos a número
+      height: Number(formData.height), // Convertimos a número
+      systolic: Number(formData.systolic),
+      diastolic: Number(formData.diastolic),
+    });
+  
     setResult(calculation);
   };
+  
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
