@@ -3,13 +3,18 @@ import { bloodPressureData } from "./sara";
 
 // Función para encontrar el valor más cercano de altura
 const findClosestHeight = (dataset, age, height) => {
-  const closest = dataset.filter(item => item.age === age)
-    .reduce((prev, curr) => {
-      return Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev;
-    });
-  return closest;
-};
-
+    const closest = dataset.filter(item => item.age === age)
+      .reduce((prev, curr) => {
+        // Permitir un rango de ±5 cm alrededor de la altura ingresada
+        if (Math.abs(curr.height - height) <= 5) {
+          return Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev;
+        }
+        return prev;
+      }, {});
+  
+    return closest.height ? closest : null; // Retornar null si no se encuentra una altura cercana
+  };
+  
 // Función para calcular el percentil de un valor comparado con una lista
 const calculatePercentileRank = (value, dataset) => {
   const sorted = dataset.sort((a, b) => a - b);
