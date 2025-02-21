@@ -1,4 +1,4 @@
-const bloodPressureData = {
+export const bloodPressureData = {
     "male-systolic": [
       { age: 1, height: 77.2, systolic: 85, percentile: 50 },
       { age: 1, height: 77.2, systolic: 98, percentile: 90 },
