@@ -3,16 +3,16 @@ import { bloodPressureData } from "./sara";
 
 // Función para encontrar la talla más cercana en la tabla
 const findClosestHeight = (data, age, height) => {
-  const ageFiltered = data.filter((entry) => entry.age == age);
-  if (!ageFiltered.length) return null;
-
-  return ageFiltered.reduce((prev, curr) =>
-    Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
-  );
-};
-
-// Calcula el percentil de presión arterial
-const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
+    const ageFiltered = data.filter((entry) => entry.age == age);
+    if (!ageFiltered.length) return null;
+  
+    return ageFiltered.reduce((prev, curr) =>
+      Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
+    );
+  };
+  
+  // Calcula el percentil de presión arterial
+  const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
     const systolicDataset = bloodPressureData[`${gender}-systolic`];
     const diastolicDataset = bloodPressureData[`${gender}-diastolic`];
     
@@ -21,9 +21,19 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
   
     if (!closestSystolic || !closestDiastolic) return { error: "Datos no encontrados en la tabla" };
   
-    // Se obtiene el percentil exacto basado en la comparación con el valor más cercano en los datos
-    const systolicPercentile = systolic >= closestSystolic.systolic ? closestSystolic.percentile : 50;
-    const diastolicPercentile = diastolic >= closestDiastolic.diastolic ? closestDiastolic.percentile : 50;
+    // Calculamos el percentil correcto basándonos en los valores de los datos más cercanos
+    let systolicPercentile = 50;
+    let diastolicPercentile = 50;
+  
+    // Percentil de la presión sistólica
+    if (systolic >= closestSystolic.systolic) {
+      systolicPercentile = closestSystolic.percentile;
+    }
+  
+    // Percentil de la presión diastólica
+    if (diastolic >= closestDiastolic.diastolic) {
+      diastolicPercentile = closestDiastolic.percentile;
+    }
   
     // Determina el riesgo con el percentil más alto
     const riskLevel =
@@ -39,7 +49,6 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
       riskLevel,
     };
   };
-  
   
 
 const FormularioPaciente = () => {
