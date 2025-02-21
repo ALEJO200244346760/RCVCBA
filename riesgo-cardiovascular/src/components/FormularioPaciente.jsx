@@ -2,60 +2,67 @@ import { useState } from "react";
 import { bloodPressureData } from "./sara";
 
 // Función para encontrar la talla más cercana en la tabla
-// Función para encontrar la talla más cercana en la tabla
 const findClosestHeight = (data, age, height) => {
-    const ageFiltered = data.filter((entry) => entry.age == age);
-    if (!ageFiltered.length) return null;
-  
-    return ageFiltered.reduce((prev, curr) =>
-      Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
-    );
+  const filteredByAge = data.filter((entry) => entry.age === age);
+  if (!filteredByAge.length) return null;
+
+  return filteredByAge.reduce((prev, curr) =>
+    Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
+  );
+};
+
+// Función para determinar el percentil correcto
+const getPercentile = (data, value) => {
+  let percentile = 50; // Por defecto
+
+  for (let i = 0; i < data.length; i++) {
+    if (value === data[i].systolic || value === data[i].diastolic) {
+      return data[i].percentile;
+    } else if (value < data[i].systolic || value < data[i].diastolic) {
+      return data[i].percentile;
+    }
+  }
+
+  return percentile;
+};
+
+// Calcula el percentil de presión arterial
+const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
+  const systolicDataset = bloodPressureData[`${gender}-systolic`];
+  const diastolicDataset = bloodPressureData[`${gender}-diastolic`];
+
+  const closestSystolic = findClosestHeight(systolicDataset, age, height);
+  const closestDiastolic = findClosestHeight(diastolicDataset, age, height);
+
+  if (!closestSystolic || !closestDiastolic) return { error: "Datos no encontrados en la tabla" };
+
+  const systolicPercentile = getPercentile(
+    systolicDataset.filter((entry) => entry.height === closestSystolic.height),
+    systolic
+  );
+
+  const diastolicPercentile = getPercentile(
+    diastolicDataset.filter((entry) => entry.height === closestDiastolic.height),
+    diastolic
+  );
+
+  const highestPercentile = Math.max(systolicPercentile, diastolicPercentile);
+
+  // Determina el riesgo con el percentil más alto
+  const riskLevel =
+    highestPercentile >= 95
+      ? "Hipertensión"
+      : highestPercentile >= 90
+      ? "Prehipertensión"
+      : "Normal";
+
+  return {
+    systolicPercentile,
+    diastolicPercentile,
+    highestPercentile,
+    riskLevel,
   };
-  
-  // Calcula el percentil de presión arterial
-  const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
-    const systolicDataset = bloodPressureData[`${gender}-systolic`];
-    const diastolicDataset = bloodPressureData[`${gender}-diastolic`];
-    
-    const closestSystolic = findClosestHeight(systolicDataset, age, height);
-    const closestDiastolic = findClosestHeight(diastolicDataset, age, height);
-  
-    if (!closestSystolic || !closestDiastolic) return { error: "Datos no encontrados en la tabla" };
-  
-    // Ajuste del cálculo del percentil
-    let systolicPercentile = 50; // Default value if not found
-    let diastolicPercentile = 50; // Default value if not found
-  
-    // Percentil de la presión sistólica
-    const systolicFiltered = systolicDataset.filter(entry => entry.age === age && entry.height === closestSystolic.height);
-    for (const record of systolicFiltered) {
-      if (systolic >= record.systolic) {
-        systolicPercentile = record.percentile;
-      }
-    }
-  
-    // Percentil de la presión diastólica
-    const diastolicFiltered = diastolicDataset.filter(entry => entry.age === age && entry.height === closestDiastolic.height);
-    for (const record of diastolicFiltered) {
-      if (diastolic >= record.diastolic) {
-        diastolicPercentile = record.percentile;
-      }
-    }
-  
-    // Determina el riesgo con el percentil más alto
-    const riskLevel =
-      systolic >= closestSystolic.systolic + 12 || diastolic >= closestDiastolic.diastolic + 12
-        ? "Hipertensión"
-        : systolic >= closestSystolic.systolic + 6 || diastolic >= closestDiastolic.diastolic + 6
-        ? "Prehipertensión"
-        : "Normal";
-  
-    return {
-      systolicPercentile,
-      diastolicPercentile,
-      riskLevel,
-    };
-  };  
+};
 
 const FormularioPaciente = () => {
   const [formData, setFormData] = useState({
