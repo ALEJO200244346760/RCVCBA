@@ -1,30 +1,20 @@
 import { useState } from "react";
-import { bloodPressureData } from "./sara"; // Asegúrate de que este archivo tenga los datos correctos.
+import { bloodPressureData } from "./sara";
 
-// Función para encontrar la altura más cercana en la tabla
-const findClosestHeight = (data, age, height) => {
-  const ageFiltered = data.filter((entry) => entry.age === age);
-  if (!ageFiltered.length) return null;
-
-  return ageFiltered.reduce((prev, curr) =>
-    Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev
-  );
+// Función para encontrar el valor más cercano de altura
+const findClosestHeight = (dataset, age, height) => {
+  const closest = dataset.filter(item => item.age === age)
+    .reduce((prev, curr) => {
+      return Math.abs(curr.height - height) < Math.abs(prev.height - height) ? curr : prev;
+    });
+  return closest;
 };
 
 // Función para calcular el percentil de un valor comparado con una lista
-const calculatePercentileRank = (value, data) => {
-  const sortedData = data.sort((a, b) => a - b); // Ordenar los valores en la tabla
-  let rank = 0;
-
-  for (let i = 0; i < sortedData.length; i++) {
-    if (value < sortedData[i]) {
-      rank = i;
-      break;
-    }
-  }
-
-  // El percentil se calcula con base en la posición
-  return Math.floor((rank / sortedData.length) * 100);
+const calculatePercentileRank = (value, dataset) => {
+  const sorted = dataset.sort((a, b) => a - b);
+  let rank = sorted.findIndex(item => item >= value);
+  return (rank / sorted.length) * 100; // Cálculo del percentil
 };
 
 // Función para encontrar el percentil
@@ -32,24 +22,24 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
   const systolicDataset = bloodPressureData[`${gender}-systolic`];
   const diastolicDataset = bloodPressureData[`${gender}-diastolic`];
 
-  // Buscar la altura más cercana para sistólica y diastólica
+  // Buscar el dato más cercano para presión sistólica y diastólica
   const closestSystolic = findClosestHeight(systolicDataset, age, height);
   const closestDiastolic = findClosestHeight(diastolicDataset, age, height);
 
-  // Asegurarse de que encontramos datos cercanos
+  // Verificar si se encontró algún dato cercano
   if (!closestSystolic || !closestDiastolic) {
     return { error: "No se pudieron encontrar datos cercanos en la tabla." };
   }
 
-  // Extraer las presiones sistólica y diastólica más cercanas
+  // Obtener las presiones sistólica y diastólica más cercanas
   const systolicValue = closestSystolic.systolic;
   const diastolicValue = closestDiastolic.diastolic;
 
-  // Calcular percentiles para sistólica y diastólica usando las alturas más cercanas
+  // Calcular percentiles para sistólica y diastólica usando los datos más cercanos
   const systolicPercentile = calculatePercentileRank(systolic, systolicDataset.map(item => item.systolic));
   const diastolicPercentile = calculatePercentileRank(diastolic, diastolicDataset.map(item => item.diastolic));
 
-  // Determinar el riesgo con el percentil más alto
+  // Determinar el nivel de riesgo según el percentil más alto
   const riskLevel =
     systolicPercentile >= 95 || diastolicPercentile >= 95
       ? "Hipertensión"
@@ -82,18 +72,6 @@ const FormularioPaciente = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validar si los datos ingresados son correctos
-    if (
-      !formData.age ||
-      !formData.height ||
-      !formData.systolic ||
-      !formData.diastolic
-    ) {
-      setResult({ error: "Por favor, complete todos los campos." });
-      return;
-    }
-
     const calculation = calculatePercentile(formData);
     setResult(calculation);
   };
