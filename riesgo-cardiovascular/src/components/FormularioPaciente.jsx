@@ -101,6 +101,7 @@ const FormularioPaciente = () => {
     gender: "male",
     systolic: "",
     diastolic: "",
+    fechaNacimiento: "", // Agregamos el campo de fecha de nacimiento
   });
 
   const [result, setResult] = useState(null);
@@ -140,14 +141,15 @@ const FormularioPaciente = () => {
         </div>
 
         <div>
-        <label htmlFor="fecha-nacimiento">Fecha de Nacimiento:</label>
-        <input
+          <label htmlFor="fecha-nacimiento">Fecha de Nacimiento:</label>
+          <input
             type="date"
             id="fecha-nacimiento"
-            value={fechaNacimiento}
+            name="fechaNacimiento" // Aseguramos que el nombre del campo sea el correcto
+            value={formData.fechaNacimiento}
             onChange={handleChange}
-        />
-        <p>Fecha seleccionada: {fechaNacimiento}</p>
+            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         <div className="flex flex-col">
