@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { bloodPressureData } from "./sara";
 
 // Función para encontrar la talla más cercana
@@ -96,7 +96,6 @@ const calculatePercentile = ({ age, height, gender, systolic, diastolic }) => {
 
 const FormularioPaciente = () => {
   const [formData, setFormData] = useState({
-    age: "",
     height: "",
     gender: "male",
     systolic: "",
@@ -106,8 +105,28 @@ const FormularioPaciente = () => {
 
   const [result, setResult] = useState(null);
 
+  // Función para calcular la edad
+  const calculateAge = (birthdate) => {
+    if (!birthdate) return 0;
+    const birthDate = new Date(birthdate);
+    const currentDate = new Date();
+    const age = currentDate.getFullYear() - birthDate.getFullYear();
+    const monthDifference = currentDate.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && currentDate.getDate() < birthDate.getDate())) {
+      return age - 1;
+    }
+    return age;
+  };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Si el campo es fecha de nacimiento, actualizamos la edad automáticamente
+    if (name === "fechaNacimiento") {
+      const calculatedAge = calculateAge(value);
+      setFormData({ ...formData, age: calculatedAge });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -128,18 +147,7 @@ const FormularioPaciente = () => {
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-3xl font-semibold text-center text-blue-600 mb-6">Calculadora de Presión Arterial</h1>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="flex flex-col">
-          <label className="text-lg font-medium text-gray-700">Edad (años):</label>
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-        </div>
-
+        
         <div>
           <label htmlFor="fecha-nacimiento">Fecha de Nacimiento:</label>
           <input
@@ -148,6 +156,17 @@ const FormularioPaciente = () => {
             name="fechaNacimiento" // Aseguramos que el nombre del campo sea el correcto
             value={formData.fechaNacimiento}
             onChange={handleChange}
+            className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-lg font-medium text-gray-700">Edad (años):</label>
+          <input
+            type="number"
+            name="age"
+            value={formData.age}
+            readOnly // Hacemos este campo de solo lectura ya que se calcula automáticamente
             className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
