@@ -122,7 +122,6 @@ const FormularioPaciente = () => {
   
     setResult(calculation);
   };
-  
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
@@ -138,6 +137,17 @@ const FormularioPaciente = () => {
             className="mt-2 p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
+        </div>
+
+        <div>
+        <label htmlFor="fecha-nacimiento">Fecha de Nacimiento:</label>
+        <input
+            type="date"
+            id="fecha-nacimiento"
+            value={fechaNacimiento}
+            onChange={handleChange}
+        />
+        <p>Fecha seleccionada: {fechaNacimiento}</p>
         </div>
 
         <div className="flex flex-col">
