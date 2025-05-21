@@ -157,6 +157,7 @@ export const listaMedicacionPrescripcion = [
     "Bisoprolol 2,5 mg cada 12 Hs",
     "Nebivolol 10 mg por día",
     "Nebivolol 5 mg por día",
+    "Espironolactona 25 mg por día",
     "Otros",
 ];
 
