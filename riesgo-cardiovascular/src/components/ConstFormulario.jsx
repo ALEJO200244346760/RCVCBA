@@ -37,12 +37,13 @@ export const DatosPacienteInicial = {
 export const Advertencia = {
             '<10% Bajo': `-Realizar el cálculo de riesgo cardiovascular cada 12 meses.
 -Mantener un estilo de vida más saludable.
--Mejorar la calidad del sueño logrando al menos siete horas continuas.
 -Actividad física y recreativa que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
 -Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
+-Hábitos de sueños saludables.
+-Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control y luego semestral o anual.
             `,
             '>10% <20% Moderado': `-Realizar el cálculo de riesgo cardiovascular cada 6 meses.
@@ -50,11 +51,12 @@ export const Advertencia = {
 -Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos  e interconsultas indicados.
 -Realización de estudios complementarios indicados por el profesional de la salud.
 -Mantener un estilo de vida más saludable.
--Mejorar la calidad del sueño logrando al menos siete horas continuas.
 - Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
 -Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.***-Evitar hábitos tóxicos.
 -Revisión de su salud mental.
+-Hábitos de sueños saludables.
+-Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral.
 -Contemplar el uso de estatinas de baja o moderada intensidad si no tiene contraindicaciones prescriptas por su médico.
@@ -64,12 +66,13 @@ export const Advertencia = {
 -Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos e interconsultas indicados.
 -Realización de estudios complementarios e interconsultas adecuadas indicados por el profesional de la salud.
 -Mantener un estilo de vida más saludable.
--Mejorar la calidad del sueño logrando al menos siete horas continuas.
 -Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
 -Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
+-Hábitos de sueños saludables.
+-Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `,
@@ -78,12 +81,13 @@ export const Advertencia = {
 -Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos e interconsultas indicados.
 -Realización de estudios complementarios e interconsultas adecuadas indicados por el profesional de la salud.
 -Mantener un estilo de vida más saludable.
--Mejorar la calidad del sueño logrando al menos siete horas continuas.
 -Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
 -Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
+-Hábitos de sueños saludables.
+-Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `,
@@ -92,12 +96,13 @@ export const Advertencia = {
 -Revisar apego y adherencia al cumplimiento de los tratamientos, medicamentos e interconsultas indicados.
 -Realización de estudios complementarios e interconsultas adecuadas indicados por el profesional de la salud.
 -Mantener un estilo de vida más saludable.
--Mejorar la calidad del sueño logrando al menos siete horas continuas.
 -Actividad física y recreativa controlada y monitorizada idealmente en un centro de rehabilitación que incluya ejercicios aeróbicos (como caminata bicicleta baile natación) y otros ejercicios anaeróbicos (como levantamiento de pesas en tren superior o brazos y espalda y tren inferior como piernas y muslos, comenzando con cargas de menor a mayor peso gradualmente). Realizarlos al menos tres veces por semana, o bien logrando 150 minutos semanales.
 -Vigilar el perfil del riesgo con el control de la presión arterial y un análisis de laboratorio de colesterol y glucemia.
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
+-Hábitos de sueños saludables.
+-Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `
