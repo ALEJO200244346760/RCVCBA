@@ -209,10 +209,9 @@ function Estadisticas() {
   };
 
   const copiarDatos = (paciente) => {
-    // Obtener el nivel de riesgo como string
     const nivelRiesgoTexto = paciente.nivelRiesgo;
     const recomendaciones = Advertencia[nivelRiesgoTexto] || "No hay recomendaciones disponibles.";
-
+  
     const datos = `
       ID: ${paciente.id}      FECHA DE REGISTRO: ${paciente.fechaRegistro}      DNI: ${paciente.cuil}     TELEFONO: ${paciente.telefono}      Edad: ${paciente.edad}      Obra Social: ${paciente.obra}     Género: ${paciente.genero}
       HIPERTENSO: ${paciente.hipertenso}      Diabetes: ${paciente.diabetes}      Fumador: ${paciente.fumador}      exFumador: ${paciente.exfumador}
@@ -221,25 +220,24 @@ function Estadisticas() {
       ACV: ${paciente.acv}      RENAL: ${paciente.renal}      PULMONAR: ${paciente.pulmonar}      INFARTO: ${paciente.infarto}
       Nivel de Riesgo: ${nivelRiesgoTexto}
       NOTIFICACION DE RIESGO: ${paciente.notificacionRiesgo}
-      CONSULTA: ${paciente.consulta}
-      PRÁCTICA: ${paciente.practica}
-      HIPERTENCION ARTERIAL: ${paciente.hipertensionArterial}
-      MEDICACION PRESCRIPCION: ${paciente.medicacionPrescripcion}
-      MEDICACION DISPENSA: ${paciente.medicacionDispensa}
-      TABAQUISMO: ${paciente.tabaquismo}
-      LABORATORIO: ${paciente.laboratorio}
+      ${paciente.consulta ? `CONSULTA: ${paciente.consulta}` : ""}
+      ${paciente.practica ? `PRÁCTICA: ${paciente.practica}` : ""}
+      ${paciente.hipertensionArterial ? `HIPERTENSION ARTERIAL: ${paciente.hipertensionArterial}` : ""}
+      ${paciente.medicacionPrescripcion ? `MEDICACION PRESCRIPCION: ${paciente.medicacionPrescripcion}` : ""}
+      ${paciente.medicacionDispensa ? `MEDICACION DISPENSA: ${paciente.medicacionDispensa}` : ""}
+      ${paciente.tabaquismo ? `TABAQUISMO: ${paciente.tabaquismo}` : ""}
+      ${paciente.laboratorio ? `LABORATORIO: ${paciente.laboratorio}` : ""}
       ELECTROCARDIOGRAMA Ritmo sinusal, frecuencia cardíaca y eje normal, sin trastornos agudos del segmento ST y T sin alteraciones en el sistema de conducción, sin Arritmias, intervalo QT dentro de lo normal
       EXAMEN CARDIOVASCULAR Dentro de lo normal sin signos de descompensación
       No refiere angor disnea palpitaciones mareos edemas entre otros
       RECOMENDACIONES:
       ${recomendaciones}
     `;
-
+  
     navigator.clipboard.writeText(datos)
       .then(() => alert('Datos copiados al portapapeles'))
       .catch(err => console.error('Error al copiar los datos:', err));
   };
-
 
   if (loading) return <p>Cargando...</p>;
 

@@ -43,7 +43,7 @@ export const Advertencia = {
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
 -Hábitos de sueños saludables.
--Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
+-Controlar periódicamente su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102cm en el hombre, para prevenir la diabetes.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control y luego semestral o anual.
             `,
             '>10% <20% Moderado': `-Realizar el cálculo de riesgo cardiovascular cada 6 meses.
@@ -56,7 +56,7 @@ export const Advertencia = {
 -Alimentación saludable recomendada en lo posible por un nutricionista o profesional de la salud.***-Evitar hábitos tóxicos.
 -Revisión de su salud mental.
 -Hábitos de sueños saludables.
--Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
+-Controlar periódicamente su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102cm en el hombre, para prevenir la diabetes.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral.
 -Contemplar el uso de estatinas de baja o moderada intensidad si no tiene contraindicaciones prescriptas por su médico.
@@ -72,7 +72,7 @@ export const Advertencia = {
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
 -Hábitos de sueños saludables.
--Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
+-Controlar periódicamente su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102cm en el hombre, para prevenir la diabetes.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `,
@@ -87,7 +87,7 @@ export const Advertencia = {
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
 -Hábitos de sueños saludables.
--Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
+-Controlar periódicamente su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102cm en el hombre, para prevenir la diabetes.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `,
@@ -102,7 +102,7 @@ export const Advertencia = {
 -Evitar hábitos tóxicos.
 -Revisión de su salud mental.
 -Hábitos de sueños saludables.
--Controlar periódicamente su presión arterial, su peso y su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102 en el hombre.
+-Controlar periódicamente su diámetro de cintura, intentando llegar a menos de 88cm en la mujer, y menos de 102cm en el hombre, para prevenir la diabetes.
 -Revisar el calendario de vacunas en enfermería.
 -Si es hipertenso el seguimiento es mensual hasta alcanzar el control de la TA y luego trimestral. Se sugiere bajas dosis de aspirina y estatinas de alta intensidad si no tiene contraindicaciones prescriptas por su médico.
             `
