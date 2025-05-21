@@ -164,7 +164,12 @@ export const listaMedicacionPrescripcion = [
 export const listaMedicacionDispensa = [
 
     "Metformina 500 mg dos por dia",
+    "Metformina 850 mg dos por dia",
+    "Metformina 1000 mg dos por dia",
     "Atorvastatina 10 mg uno por día",
+    "Atorvastatina 20 mg uno por día",
+    "Atorvastatina 40 mg uno por día",
+    "Atorvastatina 80 mg uno por día",
     "Aspirina 100 mg una por día",
     "OTRO",
 ];
