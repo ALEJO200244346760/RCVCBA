@@ -142,13 +142,22 @@ export const listaHipertensionArterial = [
 export const listaMedicacionPrescripcion = [
 
     "Enalapril 10 mg cada 12 Hs",
+    "Enalapril 5 mg cada 12 Hs",
+    "Losartan 25 mg cada 12 Hs",
     "Losartan 50 mg cada 12 Hs",
     "Amlodipina 10 mg cada12 Hs",
+    "Amlodipina 5 mg cada12 Hs",
     "Hidroclorotiazida 25 mg cada 12 Hs",
     "Furosemida 20 mg cada 12 Hs",
     "Valsartán 160 mg cada 12 Hs",
+    "Valsartán 80 mg cada 12 Hs",
     "Carvedilol 25 mg cada 12 Hs",
-    "Otro",
+    "Carvedilol 12,5 mg cada 12 Hs",
+    "Bisoprolol 5 mg cada 12 Hs",
+    "Bisoprolol 2,5 mg cada 12 Hs",
+    "Nebivolol 10 mg por día",
+    "Nebivolol 5 mg por día",
+    "Otros",
 ];
 
 export const listaMedicacionDispensa = [

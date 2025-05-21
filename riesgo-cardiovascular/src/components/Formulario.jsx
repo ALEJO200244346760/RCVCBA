@@ -220,7 +220,7 @@ const Formulario = () => {
         }
     
         if (presionArterial < 50 || presionArterial > 250) {
-            setError('La tensión arterial debe estar entre 80 y 250.');
+            setError('La tensión arterial debe estar entre 60 y 250.');
             return false;
         }
     
@@ -804,9 +804,6 @@ const Formulario = () => {
                                 <p><strong>Medicacion Dispensa:</strong> {pacienteEncontrado.medicacionDispensa}</p>
                                 <p><strong>Tabaquismo:</strong> {pacienteEncontrado.tabaquismo}</p>
                                 <p><strong>Laboratorio:</strong> {pacienteEncontrado.laboratorio}</p>
-
-
-                                {/* Resto de datos del paciente... */}
                             </>
                         ) : (
                             <p>No se encontraron datos del paciente.</p>
@@ -1080,7 +1077,7 @@ const Formulario = () => {
                                     style={{ appearance: 'none' }}
                                 />
                                 <div className="mt-2 flex space-x-2">
-                                    {[120, 140, 160, 180].map(valor => (
+                                    {[80, 90, 100, 110, 120, 130, 140, 160, 180, 200, 220, 240].map(valor => (
                                         <button
                                             key={valor}
                                             type="button"
@@ -1090,11 +1087,6 @@ const Formulario = () => {
                                             {valor}
                                         </button>
                                     ))}
-                                    <button
-                                        type="button"
-                                        className={`p-2 border rounded ${datosPaciente.presionArterial > 180 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
-                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: 181 }))}
-                                        >+180</button>
                                 </div>
                             </div>
 
@@ -1110,7 +1102,7 @@ const Formulario = () => {
                                     style={{ appearance: 'none' }}
                                 />
                                 <div className="mt-2 flex space-x-2">
-                                    {[80, 90, 100, 110].map(valor => (
+                                    {[60, 70, 80, 90, 100, 110, 120, 130].map(valor => (
                                         <button
                                             key={valor}
                                             type="button"
@@ -1122,9 +1114,9 @@ const Formulario = () => {
                                     ))}
                                     <button
                                         type="button"
-                                        className={`p-2 border rounded ${datosPaciente.taMin > 110 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                        className={`p-2 border rounded ${datosPaciente.taMin > 130 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
                                         onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, taMin: 111 }))}
-                                        >+110</button>
+                                        >+130</button>
                                 </div>
                             </div>
 
@@ -1258,18 +1250,6 @@ const Formulario = () => {
                                 </div>
                             ))}
 
-                            <h3 className="text-lg font-semibold mt-4 mb-2">CONSULTA</h3>
-                            {listaConsulta.map((medicamento, index) => (
-                                <div key={index}>
-                                    <input
-                                        type="checkbox"
-                                        value={medicamento}
-                                        onChange={(e) => handleMedicamentoChange('consulta', e)}
-                                    />
-                                    <label className="ml-2">{medicamento}</label>
-                                </div>
-                            ))}
-
                             <h3 className="text-lg font-semibold mt-4 mb-2">PRÁCTICA</h3>
                             {listaPractica.map((medicamento, index) => (
                                 <div key={index}>
@@ -1277,18 +1257,6 @@ const Formulario = () => {
                                         type="checkbox"
                                         value={medicamento}
                                         onChange={(e) => handleMedicamentoChange('practica', e)}
-                                    />
-                                    <label className="ml-2">{medicamento}</label>
-                                </div>
-                            ))}
-                            
-                            <h3 className="text-lg font-semibold mt-4 mb-2">HIPERTENSION ARTERIAL</h3>
-                            {listaHipertensionArterial.map((medicamento, index) => (
-                                <div key={index}>
-                                    <input
-                                        type="checkbox"
-                                        value={medicamento}
-                                        onChange={(e) => handleMedicamentoChange('hipertensionArterial', e)}
                                     />
                                     <label className="ml-2">{medicamento}</label>
                                 </div>
