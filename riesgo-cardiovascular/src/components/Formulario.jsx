@@ -79,7 +79,6 @@ const Formulario = () => {
 
     const hasCardiologoRole = Array.isArray(roles) && roles.includes('ROLE_CARDIOLOGO');
 
-
     useEffect(() => {
         axiosInstance.get('/api/pacientes')
             .then(response => {
@@ -181,102 +180,57 @@ const Formulario = () => {
             genero,
             cuil,
             diabetes,
-            medicolesterol,
             fumador,
             exfumador,
             presionArterial,
-            taMin,
             colesterol,
-            hipertenso,
+            infarto,
             acv,
             renal,
-            pulmonar,
-            infarto,
-            peso,
-            talla,
-            cintura
+            pulmonar
         } = datosPaciente;
-
-        if (!edad || !cuil || !peso || !talla || !cintura || !genero || !diabetes || !medicolesterol || !fumador || !exfumador || !presionArterial || !taMin || !hipertenso || !acv || !renal || !pulmonar || !infarto) {
+    
+        if (
+            !edad ||
+            !genero ||
+            !cuil ||
+            !diabetes ||
+            !fumador ||
+            !exfumador ||
+            !presionArterial ||
+            !colesterol ||
+            !infarto ||
+            !acv ||
+            !renal ||
+            !pulmonar
+        ) {
             setError('Por favor, complete todos los campos obligatorios.');
             return false;
         }
     
-        // Verificar que todos los campos obligatorios tengan respuesta
-        if (!cuil || cuil.length < 7) {
-            setError('El DNI debe tener al menos 7 dígitos.');
-            return false;
-        }
-        if (!edad || edad < 1 || edad > 120) {
-            setError('La edad debe estar entre 1 y 120 años.');
-            return false;
-        }
-        if (!genero) {
-            setError('Por favor, seleccione un género.');
-            return false;
-        }
-        if (!diabetes) {
-            setError('Por favor, indique si tiene diabetes.');
-            return false;
-        }
-        if (!medicolesterol) {
-            setError('Por favor, indique si toma medicamentos para el colesterol.');
-            return false;
-        }
-        if (!fumador) {
-            setError('Por favor, indique si es fumador.');
-            return false;
-        }
-        if (!exfumador) {
-            setError('Por favor, indique si es exfumador.');
-            return false;
-        }
-        if (!presionArterial || presionArterial < 80 || presionArterial > 250) {
-            setError('La Tensión arterial máxima debe estar entre 80 y 250.');
-            return false;
-        }
-        if (!taMin || taMin < 70 || taMin > 150) {
-            setError('La tensión arterial mínima debe estar entre 70 y 150.');
-            return false;
-        }
-        if (nivelColesterolConocido && (colesterol < 150 || colesterol > 400) && colesterol !== 'No') {
-            setError('El colesterol debe estar entre 150 y 400, o "No".');
-            return false;
-        }
-        if (!hipertenso) {
-            setError('Por favor, indique si es hipertenso.');
-            return false;
-        }
-        if (!acv) {
-            setError('Por favor, indique si ha tenido un ACV.');
-            return false;
-        }
-        if (!renal) {
-            setError('Por favor, indique si tiene enfermedad renal crónica.');
-            return false;
-        }
-        if (!pulmonar) {
-            setError('Por favor, indique si tiene enfermedad pulmonar.');
-            return false;
-        }
-        if (!infarto) {
-            setError('Por favor, indique si ha tenido un infarto.');
-            return false;
-        }
-        if (!peso || peso < 35 || peso > 300) {
-            setError('El peso debe estar entre 35 y 300 kg.');
-            return false;
-        }
-        if (!talla || talla < 130 || talla > 230) {
-            setError('La talla debe estar entre 130 y 230 cm.');
-            return false;
-        }
-        if (!cintura || cintura < 30 || cintura > 300) {
-            setError('La cintura debe estar entre 30 y 300 cm.');
+        // Validaciones específicas
+        if (cuil.length < 7) {
+            setError('El CUIL debe tener al menos 7 dígitos.');
             return false;
         }
     
-        setError(''); // Limpiar el error si todas las validaciones pasan
+        if (edad < 1 || edad > 120) {
+            setError('La edad debe estar entre 1 y 120 años.');
+            return false;
+        }
+    
+        if (presionArterial < 50 || presionArterial > 250) {
+            setError('La tensión arterial debe estar entre 80 y 250.');
+            return false;
+        }
+    
+        if (colesterol !== 'No' && (colesterol < 150 || colesterol > 400)) {
+            setError('El colesterol debe estar entre 150 y 400, o ser "No".');
+            return false;
+        }
+    
+        // Si todo está bien
+        setError('');
         return true;
     };
 
@@ -701,7 +655,7 @@ const Formulario = () => {
                                     style={{ appearance: 'none' }}
                                 />
                                 <div className="mt-2 flex space-x-2">
-                                    {[120, 140, 160, 180].map(valor => (
+                                    {[80, 90, 100, 110, 120, 130, 140, 160, 180, 200, 220, 240].map(valor => (
                                         <button
                                             key={valor}
                                             type="button"
@@ -711,11 +665,6 @@ const Formulario = () => {
                                             {valor}
                                         </button>
                                     ))}
-                                    <button
-                                        type="button"
-                                        className={`p-2 border rounded ${datosPaciente.presionArterial > 180 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
-                                        onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, presionArterial: 181 }))}
-                                        >+180</button>
                                 </div>
                             </div>
 
@@ -731,7 +680,7 @@ const Formulario = () => {
                                     style={{ appearance: 'none' }}
                                 />
                                 <div className="mt-2 flex space-x-2">
-                                    {[80, 90, 100, 110].map(valor => (
+                                    {[60, 70, 80, 90, 100, 110, 120, 130].map(valor => (
                                         <button
                                             key={valor}
                                             type="button"
@@ -743,9 +692,9 @@ const Formulario = () => {
                                     ))}
                                     <button
                                         type="button"
-                                        className={`p-2 border rounded ${datosPaciente.taMin > 110 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
+                                        className={`p-2 border rounded ${datosPaciente.taMin > 130 ? 'bg-indigo-500 text-white' : 'bg-white text-gray-700'}`}
                                         onClick={() => setDatosPaciente(prevDatos => ({ ...prevDatos, taMin: 111 }))}
-                                        >+110</button>
+                                        >+130</button>
                                 </div>
                             </div>
 
