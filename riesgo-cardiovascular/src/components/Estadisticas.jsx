@@ -252,8 +252,8 @@ function Estadisticas() {
       
       <div className="mb-6 flex flex-col md:flex-row items-start gap-4">
         <div className="flex-1">
+          {/* Filtros - Primera fila */}
           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Filtros */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Edad</label>
               <select
@@ -270,6 +270,7 @@ function Estadisticas() {
                 <option value="71+">Mayores de 71</option>
               </select>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">¿Obra Social?</label>
               <select
@@ -283,6 +284,7 @@ function Estadisticas() {
                 <option value="No">No</option>
               </select>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">Género</label>
               <select
@@ -296,6 +298,7 @@ function Estadisticas() {
                 <option value="Femenino">Femenino</option>
               </select>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">¿Diabetes?</label>
               <select
@@ -309,6 +312,7 @@ function Estadisticas() {
                 <option value="No">No</option>
               </select>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">¿Fumador?</label>
               <select
@@ -322,8 +326,9 @@ function Estadisticas() {
                 <option value="No">No</option>
               </select>
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-gray-700">¿exFumador?</label>
+              <label className="block text-sm font-medium text-gray-700">¿Exfumador?</label>
               <select
                 name="exfumador"
                 value={filtros.exfumador || ''}
@@ -335,6 +340,7 @@ function Estadisticas() {
                 <option value="No">No</option>
               </select>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">Tensión Máxima</label>
               <select
@@ -363,6 +369,7 @@ function Estadisticas() {
                 <option value="si">Sí</option>
                 <option value="no">No</option>
               </select>
+
               {nivelColesterolConocido === 'si' && (
                 <select
                   name="nivelColesterol"
@@ -371,7 +378,7 @@ function Estadisticas() {
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
                   <option value="">Seleccione un Nivel</option>
-                  <option value="4">Muy Bajo (&lt;154) </option>
+                  <option value="4">Muy Bajo (&lt;154)</option>
                   <option value="5">Bajo (155 - 192)</option>
                   <option value="6">Moderado (193 - 231)</option>
                   <option value="7">Alto (232 - 269)</option>
@@ -381,6 +388,7 @@ function Estadisticas() {
             </div>
           </div>
 
+          {/* Filtros - Segunda fila */}
           <div className="mb-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Nivel de Riesgo</label>
@@ -398,6 +406,7 @@ function Estadisticas() {
                 <option value=">40% Crítico">Crítico</option>
               </select>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">IMC</label>
               <select
@@ -456,8 +465,8 @@ function Estadisticas() {
                 <option value="Sí">Sí</option>
                 <option value="No">No</option>
               </select>
-
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">Cintura</label>
               <select
@@ -473,6 +482,7 @@ function Estadisticas() {
                 <option value="102+">Mayor de 102</option>
               </select>
             </div>
+
             <div>
               <label className="block text-sm font-medium text-gray-700">Doctor</label>
               <select
@@ -487,9 +497,9 @@ function Estadisticas() {
                 <option value="doctor3">Doctor 3</option>
               </select>
             </div>
-
           </div>
 
+          {/* Botón de aplicar filtros */}
           <button
             onClick={aplicarFiltros}
             className="mt-4 px-4 py-2 bg-indigo-600 text-white font-bold rounded-md shadow-sm hover:bg-indigo-700"
