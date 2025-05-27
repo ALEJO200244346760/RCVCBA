@@ -32,6 +32,11 @@ function Estadisticas() {
   const navigate = useNavigate();
   const [mostrarDetalles, setMostrarDetalles] = useState({}); // Estado para mostrar detalles de cada paciente
   const [mostrarGraficos, setMostrarGraficos] = useState(false);
+  const [mostrarFiltros, setMostrarFiltros] = useState(false);
+
+  const toggleFiltros = () => {
+    setMostrarFiltros(!mostrarFiltros);
+  };
 
   const toggleDetalles = (id) => {
     setMostrarDetalles((prev) => ({
