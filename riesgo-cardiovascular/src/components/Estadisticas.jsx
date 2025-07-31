@@ -533,9 +533,9 @@ function Estadisticas() {
               Aplicar Filtros
             </button>
           </div>
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
 
       {/* Gráficos */}
       {/* Pestaña para los gráficos */}
