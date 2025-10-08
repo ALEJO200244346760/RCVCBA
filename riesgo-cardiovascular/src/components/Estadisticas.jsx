@@ -231,8 +231,7 @@ function Estadisticas() {
       ${paciente.medicacionPrescripcion ? `MEDICACION PRESCRIPCION: ${paciente.medicacionPrescripcion}` : ""}
       ${paciente.medicacionDispensa ? `MEDICACION DISPENSA: ${paciente.medicacionDispensa}` : ""}
       ${paciente.tabaquismo ? `TABAQUISMO: ${paciente.tabaquismo}` : ""}
-      ${paciente.laboratorio ? `LABORATORIO: ${paciente.laboratorio}` : ""}
-      ELECTROCARDIOGRAMA Ritmo sinusal, frecuencia cardíaca y eje normal, sin trastornos agudos del segmento ST y T sin alteraciones en el sistema de conducción, sin Arritmias, intervalo QT dentro de lo normal
+      ${paciente.laboratorio ? `LABORATORIO: ${paciente.laboratorio}` : ""} ELECTROCARDIOGRAMA Ritmo sinusal, frecuencia cardíaca y eje normal, sin trastornos agudos del segmento ST y T sin alteraciones en el sistema de conducción, sin Arritmias, intervalo QT dentro de lo normal
       EXAMEN CARDIOVASCULAR Dentro de lo normal sin signos de descompensación
       No refiere angor disnea palpitaciones mareos edemas entre otros
       RECOMENDACIONES:
