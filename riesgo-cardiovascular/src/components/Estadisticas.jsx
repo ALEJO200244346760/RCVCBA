@@ -224,6 +224,11 @@ function Estadisticas() {
       IMC: ${paciente.imc}      PESO: ${paciente.peso}      TALLA: ${paciente.talla}      CINTURA: ${paciente.cintura}      
       ACV: ${paciente.acv}      RENAL: ${paciente.renal}      PULMONAR: ${paciente.pulmonar}      INFARTO: ${paciente.infarto}
       Nivel de Riesgo: ${nivelRiesgoTexto}
+      ELECTROCARDIOGRAMA Ritmo sinusal, frecuencia cardíaca y eje normal, sin trastornos agudos del segmento ST y T sin alteraciones en el sistema de conducción, sin Arritmias, intervalo QT dentro de lo normal
+      EXAMEN CARDIOVASCULAR Dentro de lo normal sin signos de descompensación
+      No refiere angor disnea palpitaciones mareos edemas entre otros
+      RECOMENDACIONES:
+      ${recomendaciones}
       NOTIFICACION DE RIESGO: ${paciente.notificacionRiesgo}
       ${paciente.consulta ? `CONSULTA: ${paciente.consulta}` : ""}
       ${paciente.practica ? `PRÁCTICA: ${paciente.practica}` : ""}
@@ -231,11 +236,7 @@ function Estadisticas() {
       ${paciente.medicacionPrescripcion ? `MEDICACION PRESCRIPCION: ${paciente.medicacionPrescripcion}` : ""}
       ${paciente.medicacionDispensa ? `MEDICACION DISPENSA: ${paciente.medicacionDispensa}` : ""}
       ${paciente.tabaquismo ? `TABAQUISMO: ${paciente.tabaquismo}` : ""}
-      ${paciente.laboratorio ? `LABORATORIO: ${paciente.laboratorio}` : ""} ELECTROCARDIOGRAMA Ritmo sinusal, frecuencia cardíaca y eje normal, sin trastornos agudos del segmento ST y T sin alteraciones en el sistema de conducción, sin Arritmias, intervalo QT dentro de lo normal
-      EXAMEN CARDIOVASCULAR Dentro de lo normal sin signos de descompensación
-      No refiere angor disnea palpitaciones mareos edemas entre otros
-      RECOMENDACIONES:
-      ${recomendaciones}
+      ${paciente.laboratorio ? `LABORATORIO: ${paciente.laboratorio}` : ""} 
     `;
   
     navigator.clipboard.writeText(datos)
